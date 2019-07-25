@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peisenli.github.io/2019/07/25/BiTree/</loc>
+    
+    <lastmod>2019-07-25T08:00:35.589Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peisenli.github.io/2019/07/25/Node2Vec/</loc>
     
     <lastmod>2019-07-25T01:12:26.720Z</lastmod>
