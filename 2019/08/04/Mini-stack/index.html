@@ -7,17 +7,16 @@
     noSupport: 'The browser does not support'
   }
 } </script><link rel="icon" href="/favicon.ico"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">空空</div><div class="author-info__description text-center">非宁静无以致远，非淡泊无以明志</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">8</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/05/12/5cd78b8a60164.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">帅的如此过分</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Mini-stack</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-04 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><p>设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。<br>push(x) – 将元素 x 推入栈中。<br>pop() – 删除栈顶的元素。<br>top() – 获取栈顶元素。<br>getMin() – 检索栈中的最小元素。<br><a id="more"></a><br>示例:<br>MinStack minStack = new MinStack();<br>minStack.push(-2);<br>minStack.push(0);<br>minStack.push(-3);<br>minStack.getMin();   –&gt; 返回 -3.<br>minStack.pop();<br>minStack.top();      –&gt; 返回 0.<br>minStack.getMin();   </p>
-<pre name="code" class="python">   
-class MinStack(object):
+<pre><code>class MinStack(object):
     def __init__(self):
-        """
+        &quot;&quot;&quot;
         initialize your data structure here.
-        """
+        &quot;&quot;&quot;
         self.stack = []                         # 定义一个基本栈，用于存储每个元素
         self.min = []                           # 定义一个最小栈，其栈顶元素是当前基本栈中的最小值
     def push(self, x):
         self.stack.append(x)                    # 把元素压入栈中
-        if not self.min or x < self.min[-1]:    # 如果最小栈为空或新元素比基本栈的最小值还要小
+        if not self.min or x &lt; self.min[-1]:    # 如果最小栈为空或新元素比基本栈的最小值还要小
             self.min.append(x)                  # 该元素是目前出现的最小值，压入最小栈
         else:                                   # 否则
             self.min.append(self.min[-1])       # 将最小栈中的栈顶元素复制一遍压入最小栈
@@ -28,9 +27,34 @@ class MinStack(object):
         return self.stack[-1]                   # 返回基本栈的栈顶元素
     def getMin(self):
         return self.min[-1]                     # 返回最小栈的栈顶元素
-</pre>
-
-
-<p>另一种方法借鉴晚上但是运行出现问题：  </p>
-<p><pre name="code" class="python"><br>class MinStack:<br>    def <strong>init</strong>(self):<br>        “””<br>        initialize your data structure here.<br>        “””<br>        self.stack = []<br>        self.min_list = []<br>        self.min = None<br>    def push(self, x: int):<br>        self.stack.append(x)<br>        if self.min == None or self.min &gt; x:<br>            self.min = x<br>    def pop(self):<br>        popStack = self.stack.pop()<br>        if len(self.stack) == 0:<br>            self.min = None<br>            return popStack<br>        if popStack == self.min:<br>            for i in self.stack:<br>                if i &lt; self.min:<br>                    self.min = i<br>                    print(“i”,i)<br>        return popStack<br>    def top(self) :<br>        return self.stack[-1]<br>    def getMin(self):<br>        print(“Min”,self.min)<br>        return self.min<br></pre><br>运行结果如下所示：<br><img src="https://i.loli.net/2019/08/04/h1iKfALyT5CNJ9P.png" alt="1564898331(1).jpg"><br>对于出栈时存在了一个栈是否被弹出问题，需要进行更正。</p>
+</code></pre><p>另一种方法借鉴晚上但是运行出现问题：  </p>
+<pre><code>class MinStack:  
+    def __init__(self):
+        &quot;&quot;&quot;
+        initialize your data structure here.
+        &quot;&quot;&quot;
+        self.stack = []
+        self.min_list = []
+        self.min = None     
+    def push(self, x: int):
+        self.stack.append(x)
+        if self.min == None or self.min &gt; x:
+            self.min = x
+    def pop(self):
+        popStack = self.stack.pop()
+        if len(self.stack) == 0:
+            self.min = None
+            return popStack
+        if popStack == self.min:
+            for i in self.stack:
+                if i &lt; self.min:
+                    self.min = i
+                    print(&quot;i&quot;,i)
+        return popStack           
+    def top(self) :
+        return self.stack[-1]
+    def getMin(self):
+        print(&quot;Min&quot;,self.min)
+        return self.min
+</code></pre><p>运行结果如下所示：<br><img src="https://i.loli.net/2019/08/04/h1iKfALyT5CNJ9P.png" alt="1564898331(1).jpg"><br>对于出栈时存在了一个栈是否被弹出问题，需要进行更正。</p>
 </div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Mini-Stack/">Mini-Stack</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/25/BiTree/"><span>BiTree</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2016 - 2019 By 空空</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
