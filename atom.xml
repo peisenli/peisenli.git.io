@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-05T04:32:44.143Z</updated>
+  <updated>2019-08-06T07:27:39.992Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode Kth Largest</title>
+    <link href="http://peisenli.github.io/2019/08/06/LeetCode-Kth-Largest/"/>
+    <id>http://peisenli.github.io/2019/08/06/LeetCode-Kth-Largest/</id>
+    <published>2019-08-06T07:21:07.000Z</published>
+    <updated>2019-08-06T07:27:39.992Z</updated>
+    
+    <content type="html"><![CDATA[<p>在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。<br>示例 1:<br>输入: [3,2,1,5,6,4] 和 k = 2<br>输出: 5<br>示例 2:<br>输入: [3,2,3,1,2,4,5,5,6] 和 k = 4<br>输出: 4<br>说明：你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。<br>思路：对输入示例进行从大到小排序后进行输出第K大的数值即可。<br><a id="more"></a><br>C语言实现：  </p><pre><code>int findKthLargest(int* nums, int numsSize, int k){int i,j,temp;for (i=0;i&lt;numsSize-1;i++){    for(j=i+1;j&lt;numsSize;j++)    {        if(*(nums+i) &lt; *(nums+j))        {            temp = *(nums+i);            *(nums+i) = *(nums+j);            *(nums+j) = temp;        }    }}return *(nums+k-1);}</code></pre><p>python实现：</p><pre><code>class Solution:    def findKthLargest(self, nums: List[int], k: int) -&gt; int:        nums.sort()        return nums[-k]</code></pre><hr><p>堆是一种经过排序的树形数据结构，每个节点都有一个值，通常我们所说的堆的数据结构是指二叉树。所以堆在数据结构中通常可以被看做是一棵树的数组对象。而且堆需要满足一下两个性质：<br>（1）堆中某个节点的值总是不大于或不小于其父节点的值；<br>（2）堆总是一棵完全二叉树。<br>堆分为两种情况，有最大堆和最小堆。将根节点最大的堆叫做最大堆或大根堆，根节点最小的堆叫做最小堆或小根堆。下图图一就是一个最大堆，图二就是一个最小堆。在一个摆放好元素的最小堆中，可以看到，父结点中的元素一定比子结点的元素要小，但对于左右结点的大小则没有规定谁大谁小。  </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。&lt;br&gt;示例 1:&lt;br&gt;输入: [3,2,1,5,6,4] 和 k = 2&lt;br&gt;输出: 5&lt;br&gt;示例 2:&lt;br&gt;输入: [3,2,3,1,2,4,5,5,6] 和 k = 4&lt;br&gt;输出: 4&lt;br&gt;说明：你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。&lt;br&gt;思路：对输入示例进行从大到小排序后进行输出第K大的数值即可。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Heap" scheme="http://peisenli.github.io/tags/Heap/"/>
+    
+  </entry>
   
   <entry>
     <title>vaildparentheses</title>
