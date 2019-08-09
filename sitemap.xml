@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peisenli.github.io/2019/08/09/Greedy-Algorithm/</loc>
+    
+    <lastmod>2019-08-09T07:13:16.848Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peisenli.github.io/2019/08/07/Leetcode23-sort-K-lists/</loc>
     
     <lastmod>2019-08-07T07:41:13.436Z</lastmod>
