@@ -14,22 +14,23 @@
 <li>找到链表的中间结点  </li>
 <li>递归对左半部分和右半部分排序  </li>
 <li><p>合并排序好的两部分链表<br>python实现归并排序：</p>
-<p>  class Solution:<br>  def sortList(self, head: ListNode) -&gt; ListNode: </p>
-<pre><code>if not head or not head.next: return head 
-slow, fast = head, head.next 
-while fast and fast.next:
-    fast, slow = fast.next.next, slow.next #fast步长为2，slow步长为1，实现中间节点的寻找
-mid, slow.next = slow.next, None  #分为Head开头和Mid开头的两个链表 
-left, right = self.sortList(head), self.sortList(mid) 
-h = res = ListNode(0)  #中间及结果存储变量
-while left and right:  #左右链表序列进行比较排序
-    if left.val &lt; right.val: 
-        h.next, left = left, left.next 
-    else: 
-        h.next, right = right, right.next 
-    h = h.next 
-h.next = left if left else right 
-return res.next
+<p>  class Solution: </p>
+<pre><code>def sortList(self, head: ListNode) -&gt; ListNode: 
+    if not head or not head.next: return head 
+    slow, fast = head, head.next 
+    while fast and fast.next:
+        fast, slow = fast.next.next, slow.next #fast步长为2，slow步长为1，实现中间节点的寻找
+    mid, slow.next = slow.next, None  #分为Head开头和Mid开头的两个链表 
+    left, right = self.sortList(head), self.sortList(mid) 
+    h = res = ListNode(0)  #中间及结果存储变量
+    while left and right:  #左右链表序列进行比较排序
+        if left.val &lt; right.val: 
+            h.next, left = left, left.next 
+        else: 
+            h.next, right = right, right.next 
+        h = h.next 
+    h.next = left if left else right 
+    return res.next
 </code></pre></li>
 </ul>
 </div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LeetCode/">LeetCode</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/08/09/Greedy-Algorithm/"><span>Greedy Algorithm</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2016 - 2019 By 空空</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

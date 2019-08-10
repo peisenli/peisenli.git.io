@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-10T13:06:26.583Z</updated>
+  <updated>2019-08-10T13:10:37.887Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://peisenli.github.io/2019/08/10/Sort-list/"/>
     <id>http://peisenli.github.io/2019/08/10/Sort-list/</id>
     <published>2019-08-10T12:55:44.000Z</published>
-    <updated>2019-08-10T13:06:26.583Z</updated>
+    <updated>2019-08-10T13:10:37.887Z</updated>
     
-    <content type="html"><![CDATA[<p>常见的排序算法比较表如下所示：</p><p><center><img src="https://i.loli.net/2019/08/10/7y58PONKUuH2g4e.png" alt="1565437239(1).png"></center></p><h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。快速排序（Quicksort）是对冒泡排序的一种改进。<br><a id="more"></a></p><h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序（MERGE-SORT）是建立在归并操作上的一种有效的排序算法,该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。<br><strong>LeetCode148:排序链表</strong><br>在 O(nlogn) 时间复杂度和常数级空间复杂度下，对链表进行排序。<br>思考：对于题目要求了复杂度参照上表可使用的算法列表进行实现。  </p><ul><li>找到链表的中间结点  </li><li>递归对左半部分和右半部分排序  </li><li><p>合并排序好的两部分链表<br>python实现归并排序：</p><p>  class Solution:<br>  def sortList(self, head: ListNode) -&gt; ListNode: </p><pre><code>if not head or not head.next: return head slow, fast = head, head.next while fast and fast.next:    fast, slow = fast.next.next, slow.next #fast步长为2，slow步长为1，实现中间节点的寻找mid, slow.next = slow.next, None  #分为Head开头和Mid开头的两个链表 left, right = self.sortList(head), self.sortList(mid) h = res = ListNode(0)  #中间及结果存储变量while left and right:  #左右链表序列进行比较排序    if left.val &lt; right.val:         h.next, left = left, left.next     else:         h.next, right = right, right.next     h = h.next h.next = left if left else right return res.next</code></pre></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>常见的排序算法比较表如下所示：</p><p><center><img src="https://i.loli.net/2019/08/10/7y58PONKUuH2g4e.png" alt="1565437239(1).png"></center></p><h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。快速排序（Quicksort）是对冒泡排序的一种改进。<br><a id="more"></a></p><h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序（MERGE-SORT）是建立在归并操作上的一种有效的排序算法,该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。<br><strong>LeetCode148:排序链表</strong><br>在 O(nlogn) 时间复杂度和常数级空间复杂度下，对链表进行排序。<br>思考：对于题目要求了复杂度参照上表可使用的算法列表进行实现。  </p><ul><li>找到链表的中间结点  </li><li>递归对左半部分和右半部分排序  </li><li><p>合并排序好的两部分链表<br>python实现归并排序：</p><p>  class Solution: </p><pre><code>def sortList(self, head: ListNode) -&gt; ListNode:     if not head or not head.next: return head     slow, fast = head, head.next     while fast and fast.next:        fast, slow = fast.next.next, slow.next #fast步长为2，slow步长为1，实现中间节点的寻找    mid, slow.next = slow.next, None  #分为Head开头和Mid开头的两个链表     left, right = self.sortList(head), self.sortList(mid)     h = res = ListNode(0)  #中间及结果存储变量    while left and right:  #左右链表序列进行比较排序        if left.val &lt; right.val:             h.next, left = left, left.next         else:             h.next, right = right, right.next         h = h.next     h.next = left if left else right     return res.next</code></pre></li></ul>]]></content>
     
     <summary type="html">
     
