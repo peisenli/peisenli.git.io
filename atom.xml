@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-10T13:10:37.887Z</updated>
+  <updated>2019-08-11T06:19:49.428Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode-求数组的子集</title>
+    <link href="http://peisenli.github.io/2019/08/11/LeetCode-%E6%B1%82%E6%95%B0%E7%BB%84%E7%9A%84%E5%AD%90%E9%9B%86/"/>
+    <id>http://peisenli.github.io/2019/08/11/LeetCode-求数组的子集/</id>
+    <published>2019-08-11T06:07:33.000Z</published>
+    <updated>2019-08-11T06:19:49.428Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="LeetCode78-子集"><a href="#LeetCode78-子集" class="headerlink" title="LeetCode78.子集"></a>LeetCode78.子集</h3><p>给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。<br>说明：解集不能包含重复的子集。<br><a id="more"></a><br>示例:<br>输入: nums = [1,2,3]<br>输出:<br>[[3],[1],[2],[1,2,3],[1,3],[2,3],[1,2],[]]    </p><p>思路：在求取数组子集时，对每个数据元进行遍历后在原有的List上进行追加即可获得元素的子集。<br>python实现：  </p><pre><code>class Solution:def subsets(self, nums: List[int]) -&gt; List[List[int]]:    result = [[]]    nums.sort()    for num in nums:            result += [item+[num] for item in result]    return result</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;LeetCode78-子集&quot;&gt;&lt;a href=&quot;#LeetCode78-子集&quot; class=&quot;headerlink&quot; title=&quot;LeetCode78.子集&quot;&gt;&lt;/a&gt;LeetCode78.子集&lt;/h3&gt;&lt;p&gt;给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。&lt;br&gt;说明：解集不能包含重复的子集。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>Sort-list</title>
