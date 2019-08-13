@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-13T03:32:47.758Z</updated>
+  <updated>2019-08-13T03:34:55.541Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -21,16 +21,13 @@
     <link href="http://peisenli.github.io/2019/08/13/LeetCode169-%E6%B1%82%E4%BC%97%E6%95%B0/"/>
     <id>http://peisenli.github.io/2019/08/13/LeetCode169-求众数/</id>
     <published>2019-08-13T03:04:28.000Z</published>
-    <updated>2019-08-13T03:32:47.758Z</updated>
+    <updated>2019-08-13T03:34:55.541Z</updated>
     
-    <content type="html"><![CDATA[<p>给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊n/2⌋ 的元素。<br>你可以假设数组是非空的，并且给定的数组总是存在众数。<br>示例 1:<br>输入: [3,2,3]<br>输出: 3<br>示例 2:<br>输入: [2,2,1,1,1,2,2]<br>输出: 2<br>来源：力扣（LeetCode）<br>解题思路：摩尔投票算法<br>从第一个数开始count=1，遇到相同的就加1，遇到不同的就减1，减到0就重新换个数开始计数，总能找到最多的那个。<br>python实现：    </p><pre><code>class Solution:    def majorityElement(self, nums: List[int]) -&gt; int:        MostF = nums[0]        count = 1;        for i in range(1,len(nums)):            if MostF == nums[i]:                count += 1            else:                count -=1                if count == 0:                      MostF = nums[i + 1]        return MostF</code></pre><p>Boyer-Moore majority vote algorithm(摩尔投票算法)是一种在线性时间O(n)和空间复杂度的情况下，在一个元素序列中查找包含最多的元素。它是以Robert S.Boyer和J Strother Moore命名的，1981年发明的，是一种典型的流算法(streaming algorithm)。<br>在它最简单的形式就是，查找最多的元素，也就是在输入中重复出现超过一半以上(n/2)的元素。如果序列中没有最多的元素，算法不能检测到正确结果，将输出其中的一个元素之一。<br>当元素重复的次数比较小的时候，对于流算法不能在小于线性空间的情况下查找频率最高的元素。</p>]]></content>
+    <content type="html"><![CDATA[<p>给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊n/2⌋ 的元素。<br>你可以假设数组是非空的，并且给定的数组总是存在众数。<br>示例 1:<br>输入: [3,2,3]<br>输出: 3<br>示例 2:<br>输入: [2,2,1,1,1,2,2]<br>输出: 2<br>来源：力扣（LeetCode）<br>解题思路：摩尔投票算法<br>从第一个数开始count=1，遇到相同的就加1，遇到不同的就减1，减到0就重新换个数开始计数，总能找到最多的那个。<br><a id="more"></a><br>python实现：    </p><pre><code>class Solution:    def majorityElement(self, nums: List[int]) -&gt; int:        MostF = nums[0]        count = 1;        for i in range(1,len(nums)):            if MostF == nums[i]:                count += 1            else:                count -=1                if count == 0:                      MostF = nums[i + 1]        return MostF</code></pre><p>Boyer-Moore majority vote algorithm(摩尔投票算法)是一种在线性时间O(n)和空间复杂度的情况下，在一个元素序列中查找包含最多的元素。它是以Robert S.Boyer和J Strother Moore命名的，1981年发明的，是一种典型的流算法(streaming algorithm)。<br>在它最简单的形式就是，查找最多的元素，也就是在输入中重复出现超过一半以上(n/2)的元素。如果序列中没有最多的元素，算法不能检测到正确结果，将输出其中的一个元素之一。<br>当元素重复的次数比较小的时候，对于流算法不能在小于线性空间的情况下查找频率最高的元素。</p>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊n/2⌋ 的元素。&lt;br&gt;你可以假设数组是非空的，并且给定的数组总是存在众数。&lt;br&gt;示例 1:&lt;br&gt;输入: [3,2,3]&lt;br&gt;输出: 3&lt;br&gt;示例 2:&lt;br&gt;输入: [2,2,1,1,1
-      
+      &lt;p&gt;给定一个大小为 n 的数组，找到其中的众数。众数是指在数组中出现次数大于 ⌊n/2⌋ 的元素。&lt;br&gt;你可以假设数组是非空的，并且给定的数组总是存在众数。&lt;br&gt;示例 1:&lt;br&gt;输入: [3,2,3]&lt;br&gt;输出: 3&lt;br&gt;示例 2:&lt;br&gt;输入: [2,2,1,1,1,2,2]&lt;br&gt;输出: 2&lt;br&gt;来源：力扣（LeetCode）&lt;br&gt;解题思路：摩尔投票算法&lt;br&gt;从第一个数开始count=1，遇到相同的就加1，遇到不同的就减1，减到0就重新换个数开始计数，总能找到最多的那个。&lt;br&gt;
     
     </summary>
     
