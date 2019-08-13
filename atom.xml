@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-12T03:54:28.469Z</updated>
+  <updated>2019-08-13T01:32:16.356Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图的基本概念</title>
+    <link href="http://peisenli.github.io/2019/08/13/%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
+    <id>http://peisenli.github.io/2019/08/13/图的基本概念/</id>
+    <published>2019-08-13T01:28:03.000Z</published>
+    <updated>2019-08-13T01:32:16.356Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="图的基本概念"><a href="#图的基本概念" class="headerlink" title="  图的基本概念 "></a><center>  图的基本概念 </center></h2><p><strong>图结构特点：</strong><br>图(Graph)是一种较线性表和树更为复杂的数据结构。在线性表中，数据元素之间仅有线性关系，即每个数据元素只有一个直接前驱和一个直接后继；在树形结构中，数据元素 之间有着明显的层次关系，虽然每一层上的数据元素可能和下一层中多个元素(孩子) 相关，但只能和上一层中一个元素(双亲)相关；而在图形结构中，结点之间 的关系可以是任意的，任意两个数据元素之间都可能相关。   </p><a id="more"></a><hr><p><strong>图的定义：</strong><br>Graph=(V,E)，V：顶点(数据元素)的有穷非空集合；E：边的有穷集合。<br>无向图：每条边都是无方向的<br>有向图：每条边都是有方向的  </p><p><center><img src="https://i.loli.net/2019/08/13/jDrKtBVpOiHXWhY.png" alt="1565658564(1).jpg"></center><br>完全图：任意两个点都有一条边相连。<br>有向完全图边数：n(n-1)<br>无向完全图边数：n(n-1)/2<br>稀疏图：有很少边或弧的图。<br>稠密图：有较多边或弧的图。<br>网：边/弧带权的图。<br>邻接：有边/弧相连的两个顶点之间的关系。存在(vi, vj)，则称vi和vj互为邻接点；存在&lt;vi, vj&gt;，则称vi邻接到vj， vj邻接于vi。<br>关联(依附)：边/弧与顶点之间的关系。存在(vi, vj)/ &lt;vi, vj&gt;， 则称该边/弧关联于vi和vj。<br>顶点的度：与该顶点相关联的边的数目，记为TD(v)<br>在有向图中, 顶点的度等于该顶点的入度与出度之和。<br>顶点 v 的入度是以 v 为终点的有向边的条数, 记作 ID(v)<br>顶点 v 的出度是以 v 为始点的有向边的条数, 记作OD(v)<br>路径：接续的边构成的顶点序列。<br>路径长度：路径上边或弧的数目/权值之和。<br>回路(环)：第一个顶点和最后一个顶点相同的路径。<br>简单路径：除路径起点和终点可以相同外，其余顶点均不相同的路径。<br>简单回路(简单环)：除路径起点和终点相同外，其余顶点均不相同的路径。  </p><p><center><img src="https://i.loli.net/2019/08/13/jACpbBO4NJFxMXz.png" alt="图片1.png"></center><br>在无（有）向图G=( V, E )中，若对任何两个顶点 v、u 都存在从v 到 u 的路径，则称G是连通图（强连通图）。  </p><p><center><img src="https://i.loli.net/2019/08/13/cAGOqHbg9ZmktjD.png" alt="tu.png"></center><br>权与网：图中边或弧所具有的相关数称为权。表明从一个顶点到另一个顶点的距离或耗费。带权的图称为网。<br>子图：设有两个图G=（V，{E}）、G1=（V1，{E1}），若V1  V，E1  E，则称 G1是G的子图。例:(b)、(c) 是 (a) 的子图。  </p><h2 id><a href="#" class="headerlink" title></a><center><img src="https://i.loli.net/2019/08/13/SMVnxFU8oTlirfZ.png" alt="ww.jpg"></center></h2><p>极大连通子图意思是：该子图是 G 连通子图，将G 的任何不在该子图中的顶点加入，子图不再连通。<br>有向图极大强连通子图意思是：该子图是G的强连通子图，将D的任何不在该子图中的顶点加入，子图不再是强连通的。<br>极小连通子图：该子图是G 的连通子图，在该子图中删除任何一条边，子图不再连通。<br>生成树：包含无向图G 所有顶点的极小连通子图。<br>生成森林：对非连通图，由各个连通分量的生成树的集合。        </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;图的基本概念&quot;&gt;&lt;a href=&quot;#图的基本概念&quot; class=&quot;headerlink&quot; title=&quot;  图的基本概念 &quot;&gt;&lt;/a&gt;&lt;center&gt;  图的基本概念 &lt;/center&gt;&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;图结构特点：&lt;/strong&gt;&lt;br&gt;图(Graph)是一种较线性表和树更为复杂的数据结构。在线性表中，数据元素之间仅有线性关系，即每个数据元素只有一个直接前驱和一个直接后继；在树形结构中，数据元素 之间有着明显的层次关系，虽然每一层上的数据元素可能和下一层中多个元素(孩子) 相关，但只能和上一层中一个元素(双亲)相关；而在图形结构中，结点之间 的关系可以是任意的，任意两个数据元素之间都可能相关。   &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Graph" scheme="http://peisenli.github.io/tags/Graph/"/>
+    
+  </entry>
   
   <entry>
     <title>位运算-异或</title>
