@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-13T03:34:55.541Z</updated>
+  <updated>2019-08-13T07:22:31.705Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图的遍历问题</title>
+    <link href="http://peisenli.github.io/2019/08/13/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86%E9%97%AE%E9%A2%98/"/>
+    <id>http://peisenli.github.io/2019/08/13/图的遍历问题/</id>
+    <published>2019-08-13T07:04:08.000Z</published>
+    <updated>2019-08-13T07:22:31.705Z</updated>
+    
+    <content type="html"><![CDATA[<p>图的遍历：从图中某个顶点出发游历图，访遍图中其余顶点，并且使图中的每个顶点仅被访问一次的过程。我们可以设置一个全局型标志数组visited来标志某个顶点是否被访问过，未访问的值为0，访问过的值为1。<br><a id="more"></a></p><h3 id="深度优先搜索遍历"><a href="#深度优先搜索遍历" class="headerlink" title="深度优先搜索遍历"></a>深度优先搜索遍历</h3><p>深度优先搜索遍历类似于树的先序遍历。假定给定图G的初态是所有顶点均未被访问过，在G中任选一个顶点i作为遍历的初始点，则深度优先搜索遍历可定义如下：<br>(1)首先访问顶点i，并将其访问标记置为访问过，即visited[i]=1；<br>(2)然后搜索与顶点i有边相连的下一个顶点j，若j未被访问过，则访问它，并将j的访问标记置为访问过，visited[j]=1，然后从j开始重复此过程，若j已访问，再看与i有边相连的其它顶点；<br>(3)若与i有边相连的顶点都被访问过，则退回到前一个访问顶点并重复刚才过程，直到图中所有顶点都被访问完为止。<br>若图是连通的或强连通的，则从图中某一个顶点出发可以访问到图中所有顶点，否则只能访问到一部分顶点。另外，从刚才写出的遍历结果可以看出，从某一个顶点出发的遍历结果是不唯一的。但是,若我们给定图的存贮结构,则从某一顶点出发的遍历结果应是唯一的。<br><strong>用邻接矩阵实现图的深度优先搜索</strong></p><pre><code>void dfs (int i)          /* 从顶点i 出发遍历*/{       int j;                                                               visit(i);               /*输出访问顶点*/    visited[i]=1;       /*全局数组访问标记置1表示已经访问*/    for(j=1; j&lt;=n; j++)         if((A[i][j]==1)&amp;&amp;(!visited[j]))        dfs(j);        }</code></pre><p>时间复杂度为:O(n2)<br><strong>用邻接表实现图的深度优先搜索</strong></p><pre><code>void  dfs1(int i){      link *p;       visit(head[i]) ;       //输出访问顶点    visted[i]=1;        //全局数组访问标记置为1表示已访问    p=head[i].link;    while (p!=NULL)    {          if(!visited[p-&gt;adjvex]) //如果p指向的邻接点未被访问过            dfs1(p-&gt;adjvex);           p=p-&gt;next;    }}</code></pre><p>而当以邻接表作图的存储结构时，找邻接点所需时间为O(e)，其中e为无向图中边的数或有向图中弧的数。由此，当以邻接表作存储结构时，深度优先搜索遍历图的时间复杂度为O(n＋e)。<br><strong>非连通图的深度优先搜索</strong><br>若图是非连通的或非强连通图，则从图中某一个顶点出发。不能用深度优先搜索访问到图中所有顶点，而只能访问到一个连通子图（既连通分量）或只能访问到一个强连通子图（即强连通分量）。这时，可以在每个连通分量或每个强连通分量中都选一个顶点，进行深度优先搜索遍历，最后将每个连通分量或每个强连通分量的遍历结果合起来，则得到整个非连通图的遍历结果。<br>遍历算法实现与连通图的只有一点不同，即对所有顶点进行循环，反复调用连通图的深度优先搜索遍历算法即可。</p><hr><h3 id="广度优先搜索遍历"><a href="#广度优先搜索遍历" class="headerlink" title="广度优先搜索遍历"></a>广度优先搜索遍历</h3><p>广度优先搜索遍历类似于树的按层次遍历。设图G的初态是所有顶点均未访问，在G 中任选一顶点i作为初始点，则广度优先搜索的基本思想是：<br>(1)首先访问顶点i，并将其访问标志置为已被访问，即visited[i]=1；<br>(2)接着依次访问与顶点i有边相连的所有顶点W1，W2，…，Wt；<br>(3)然后再按顺序访问与W1，W2，…，Wt有边相连又未曾访问过的顶点；<br>依此类推，直到图中所有顶点都被访问完为止 。   </p><pre><code>void bfs(Graph g ,vtx * v）{   visit(v); visited[v]=1; INIQUEUE(Q);ENQUEUE(Q,v); while (!EMPTY(Q)){     DLQUEUE(Q,v); //队头元素出队     w=FIRSTADJ(g,v);        //求v的邻接点    while (w!=0)    {         if(!visited[w])         {             visit(w);             visited[w]=1;                        ENQUEUE(Q,w);         }         w=NEXTADJ(g,v,w);//求下一邻接点     } } }//bfs </code></pre><p><strong>用邻接矩阵实现图的广度优先搜索遍历</strong><br>算法描述如下：</p><pre><code>void  bfs(int  i)      //从顶点i出发遍历{      int  Q[n+1] ;       //Q为队列    int  f,r,j ;        // f,r分别为队列头，尾指针    f=r=0 ;             //设置空队列    visit(v[i]) ;       // 输出访问顶点    visited[i]=1 ;      //全局数组标记置1表示已经访问    r++; q[r]=i ;       //入队列    while (f&lt;r)     {           f++;         i=q[f] ;       //出队列           for (j=1; j&lt;=n; j++)               if ((A[i][j]==1)&amp;&amp;(!visited[j]))            {                  visit(v[j]);                     visited[j]=1;                     r++; q[r]=j;            }    }   }</code></pre><p><strong>用邻接表实现图的广序优先搜索遍历</strong><br>算法描述如下：</p><pre><code>void  BFSl(int i){      int  q[n+1] ;                               //定义队列    int  f,r ;      E_NODE *p ;             //P为搜索指针    f=r=0 ;      visit(head[i]) ;    visited[i]=1; r++; q[r]=i ;                //进队    while (f&lt;r)       {         f++ ; i=q[f] ;    //出队  p=head[i].link ;          while  (p!=NULL)        {               if(!visited[p-&gt;adjvex])                 {                      visit(head[p-&gt;adjvex].vertex;                    visited[p-&gt;adjvex]=1;                       r++;q[r]=p-&gt;adjvex;                 }            p=p-&gt;next;         }    }  }</code></pre><p><strong>非连通图的广度优先搜索</strong><br>若图是非连通的或非强连通图，则从图中某一个顶点出发。不能用广度优先搜索遍历访问到图中所有顶点，而只能访问到一个连通子图（既连通分量）或只能访问到一个强连通子图（既强连通分量）。这时，可以在每个连通分量或每个强连通分量中都选一个顶点，进行广度优先搜索遍历，最后将每个连通分量或每个强连通分量的遍历结果合起来，则得到整个非连通图或非强连通图的广度优先搜索遍历序列。<br>遍历算法实现与连通图的只有一点不同，即对所有顶点进行循环，反复调用连通图的广度优先搜索遍历算法即可。  </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;图的遍历：从图中某个顶点出发游历图，访遍图中其余顶点，并且使图中的每个顶点仅被访问一次的过程。我们可以设置一个全局型标志数组visited来标志某个顶点是否被访问过，未访问的值为0，访问过的值为1。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Data Struct" scheme="http://peisenli.github.io/tags/Data-Struct/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode169.求众数</title>
