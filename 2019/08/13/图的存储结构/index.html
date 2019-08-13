@@ -51,8 +51,22 @@ void  creatadj(int n,int e,int t) /*n为顶点数,e为边数,t为1~4,分别表�
 <h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>图的邻接表存储方法是一种顺序分配与链式分配相结合的存储方法，它包括两部分：一部分是单链表，用来存放边的信息；另一部分是数组，主要用来存放顶点本身的数据信息。<br><strong>有向图：</strong>  </p>
 <p><center><img src="https://i.loli.net/2019/08/13/sz1qmV6A5EdBNKb.png" alt="1565662180(1).jpg"><br>有向图的邻接表表示</center><br>出度：OD(Vi)＝单链出边表中链接的结点数<br>入度：ID(Vi)＝邻接点域为Vi的弧个数<br>结论：<br>（1）第i 个链表中结点数目为顶点i的出度；<br>（2）所有链表中结点数目为图中弧数；<br>（3）占用的存储单元数目为n+e 。<br><strong>无向图：</strong>  </p>
 <p><center><img src="https://i.loli.net/2019/08/13/9MOj6Fop7kiV1qG.png" alt="1565662132(1).jpg"><br>无向图的邻接表表示</center><br>注：邻接表不唯一，因各个边结点的链入顺序是任意的<br>空间效率为O(n+2e)。<br>若是稀疏图(e&lt;&lt;n2)，比邻接矩阵表示法O(n2)省空间。<br>结论：<br>（1）第i 个链表中结点数目为顶点i的度；<br>（2）所有链表中结点数目的一半为图中边数；<br>（3）占用的存储单元数目为n+2e 。<br><strong>邻接表优缺点：</strong><br>优：空间效率高；容易寻找顶点的邻接点；<br>缺：判断两顶点间是否有边或弧，需搜索两结点对应的单链表，没有邻接矩阵方便。<br><strong>与邻接矩阵对比：</strong><br>① 对于任一确定的无向图，邻接矩阵是唯一的（行列号与顶点编号一致），但邻接表不唯一（链接次序与顶点编号无关）。<br>② 邻接矩阵的空间复杂度为O(n2),而邻接表的空间复杂度为O(n+e)。<br>③ 邻接矩阵多用于稠密图；而邻接表多用于稀疏图</p>
-<h3 id="十字链表"><a href="#十字链表" class="headerlink" title="十字链表"></a>十字链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/fT7IYKbRoOXiqQN.png" width="250" hegiht="100" align="center"><br>    弧结点：<br>    typedef  struct  arcnode<br>    {<br>        int   tailvex,  headvex;        //弧尾、弧头在表头数组中位置<br>         struct   arcnode   <em>hlink；//指向弧头相同的下一条弧<br>         struct   arcnode   </em>tlink;    //指向弧尾相同的下一条弧<br>    }AD;<br>    顶点结点：<br>    typedef  struct  dnode<br>    {<br>        int   data;  //存与顶点有关信息<br>         struct   arcnode   <em>firstin；//指向以该顶点为弧头的第一个弧结点<br>         struct   arcnode   </em>firstout; //指向以该顶点为弧尾的第一个弧结点<br>    }DD;</p>
-<h3 id="多重链表"><a href="#多重链表" class="headerlink" title="多重链表"></a>多重链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/tEPCrjLlOzBwXY5.png" width="250" hegiht="200" align="center"></p>
+<h3 id="十字链表"><a href="#十字链表" class="headerlink" title="十字链表"></a>十字链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/fT7IYKbRoOXiqQN.png" width="250" hegiht="100" align="left">  </p>
+<pre><code>弧结点：
+typedef  struct  arcnode
+{   
+    int   tailvex,  headvex;        //弧尾、弧头在表头数组中位置
+     struct   arcnode   *hlink；//指向弧头相同的下一条弧
+     struct   arcnode   *tlink;    //指向弧尾相同的下一条弧
+}AD;    
+顶点结点：
+typedef  struct  dnode
+{   
+    int   data;  //存与顶点有关信息
+     struct   arcnode   *firstin；//指向以该顶点为弧头的第一个弧结点
+     struct   arcnode   *firstout; //指向以该顶点为弧尾的第一个弧结点
+}DD;
+</code></pre><h3 id="多重链表"><a href="#多重链表" class="headerlink" title="多重链表"></a>多重链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/tEPCrjLlOzBwXY5.png" width="250" hegiht="200" align="left">  </p>
 <pre><code>边结点：
 typedef   struct  node
 {   
