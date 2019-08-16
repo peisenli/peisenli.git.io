@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-14T03:08:09.628Z</updated>
+  <updated>2019-08-16T09:28:36.792Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode104-二叉树的最大深度</title>
+    <link href="http://peisenli.github.io/2019/08/16/LeetCode104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/"/>
+    <id>http://peisenli.github.io/2019/08/16/LeetCode104-二叉树的最大深度/</id>
+    <published>2019-08-16T09:22:45.000Z</published>
+    <updated>2019-08-16T09:28:36.792Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个二叉树，找出其最大深度。<br>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。<br>说明: 叶子节点是指没有子节点的节点。<br>示例：<br>给定二叉树 [3,9,20,null,null,15,7]，  </p><pre><code>  3   / \  9  20    /  \   15   7  </code></pre><p>返回它的最大深度 3 。<br><a id="more"></a><br>python递归实现：</p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def maxDepth(self, root: TreeNode) -&gt; int:        if not root:            return 0        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))# 方法二 迭代class Solution:    &quot;&quot;&quot;    迭代法    &quot;&quot;&quot;    def maxDepth(self, root):        stack = []                                              # 定义一个空栈，栈中的元素是结点及其对应的深度        if root:                                                # 如果根结点不为空            stack.append((root, 1))                             # 则将根节点及其对应深度1组成的元组入栈        max_depth = 0                                           # 初始化最大深度为零        while stack:                                            # 当栈非空时            tree_node, cur_depth = stack.pop()                  # 弹出栈顶结点及其对应的深度            if tree_node:                                       # 如果该结点不为空                max_depth = max(max_depth, cur_depth)           # 更新当前最大深度，如果该结点深度更大的话                stack.append((tree_node.left, cur_depth+1))     # 将该结点的左孩子结点及其对应深度压入栈中                stack.append((tree_node.right, cur_depth+1))    # 将该结点的右孩子结点及其对应深度压入栈中        return max_depth</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给定一个二叉树，找出其最大深度。&lt;br&gt;二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。&lt;br&gt;说明: 叶子节点是指没有子节点的节点。&lt;br&gt;示例：&lt;br&gt;给定二叉树 [3,9,20,null,null,15,7]，  &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  3  
+ / \  
+9  20  
+  /  \  
+ 15   7  
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;返回它的最大深度 3 。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode231-2的幂</title>
@@ -411,26 +437,6 @@
     
     
       <category term="MPICH  分布式" scheme="http://peisenli.github.io/tags/MPICH-%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Chat based on Socket</title>
-    <link href="http://peisenli.github.io/2019/05/11/Chat-based-on-Socket/"/>
-    <id>http://peisenli.github.io/2019/05/11/Chat-based-on-Socket/</id>
-    <published>2019-05-11T13:35:33.000Z</published>
-    <updated>2019-07-13T10:53:48.147Z</updated>
-    
-    <content type="html"><![CDATA[<p>套接字库加载：<br>Socket socket=new Socket();<br>ServerSocket server=new ServerSocket();<br><a id="more"></a><br>套接字初始化：<br>客户端：</p><p>public void setUpNet(){</p><pre><code>    try{        Socket s=new Socket(ipInput.getText(),25003);        InputStreamReader StreamReader=new InputStreamReader(s.getInputStream());        reader=new BufferedReader(StreamReader);        writer=new PrintWriter(s.getOutputStream());        System.out.println(&quot;connect is vivasible!&quot;);        JOptionPane.showMessageDialog(null, &quot;连接成功&quot;);    }catch(IOException ex){        ex.printStackTrace();        JOptionPane.showMessageDialog(null, &quot;连接失败&quot;);    }}  </code></pre><p>服务端： </p><p>openServiceBtn.addActionListener(new ActionListener(){</p><pre><code>@Overridepublic void actionPerformed(ActionEvent e) {    // TODO Auto-generated method stub    try{        ServerSocket ss=new ServerSocket(25003);        while(true){            Socket s=ss.accept();            socketList.add(s);            final DataInputStream bufIn = new DataInputStream(                    s.getInputStream());            final BufferedOutputStream bufOut= new BufferedOutputStream(                    s.getOutputStream());            new Thread(new ServerThread(s)).start();            }    }catch(Exception e3){        JOptionPane.showConfirmDialog(null,&quot;&quot;);    }}});</code></pre><p>接收聊天内容线程：</p><p>public class ClientThread implements Runnable {</p><pre><code>@Overridepublic void run() {    // TODO Auto-generated method stub</code></pre><p>String content;<br>try{</p><pre><code>while((content=reader.readLine())!=null){    System.out.println(&quot;read:&quot;+content);    chatJText.append(content+&quot;\n&quot;);}</code></pre><p>}catch(Exception e){<br>    e.printStackTrace();<br>}<br>        }</p><pre><code>}</code></pre><p>聊天内容发送按钮：(类本身作为监听器)  </p><p>if(e.getSource()==sendBtn){<br>            try{<br>    //读取TextFiled中获取数据<br>        writer.println(nameInput.getText()+”说：”+inputTfd.getText());<br>        writer.flush();}<br>            catch(Exception ex){<br>                ex.printStackTrace();<br>            }<br>            inputTfd.setText(“”);<br>            inputTfd.requestFocus();<br>        }</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;套接字库加载：&lt;br&gt;Socket socket=new Socket();&lt;br&gt;ServerSocket server=new ServerSocket();&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Socket" scheme="http://peisenli.github.io/tags/Socket/"/>
     
   </entry>
   
