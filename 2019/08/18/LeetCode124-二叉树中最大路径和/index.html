@@ -16,7 +16,7 @@
 </code></pre><p>输出: 6</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum" target="_blank" rel="noopener">https://leetcode-cn.com/problems/binary-tree-maximum-path-sum</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<br><a id="more"></a><br>思路：<br>对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:   1. 其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径   </p>
 <ol start="2">
-<li><p>左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径</p>
+<li><p>左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径  </p>
 <h1 id="Definition-for-a-binary-tree-node"><a href="#Definition-for-a-binary-tree-node" class="headerlink" title="Definition for a binary tree node."></a>Definition for a binary tree node.</h1><h1 id="class-TreeNode"><a href="#class-TreeNode" class="headerlink" title="class TreeNode:"></a>class TreeNode:</h1><h1 id="def-init-self-x"><a href="#def-init-self-x" class="headerlink" title="def init(self, x):"></a>def <strong>init</strong>(self, x):</h1><h1 id="self-val-x"><a href="#self-val-x" class="headerlink" title="self.val = x"></a>self.val = x</h1><h1 id="self-left-None"><a href="#self-left-None" class="headerlink" title="self.left = None"></a>self.left = None</h1><h1 id="self-right-None"><a href="#self-right-None" class="headerlink" title="self.right = None"></a>self.right = None</h1><p> class Solution:</p>
 <pre><code>res = float(&apos;-inf&apos;)
 def maxPathSum(self, root: TreeNode) -&gt; int:
