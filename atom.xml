@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-16T09:28:36.792Z</updated>
+  <updated>2019-08-18T06:31:22.169Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode124-二叉树中最大路径和</title>
+    <link href="http://peisenli.github.io/2019/08/18/LeetCode124-%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/"/>
+    <id>http://peisenli.github.io/2019/08/18/LeetCode124-二叉树中最大路径和/</id>
+    <published>2019-08-18T06:21:54.000Z</published>
+    <updated>2019-08-18T06:31:22.169Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个非空二叉树，返回其最大路径和。</p><p>本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。</p><p>示例 1:</p><p>输入: [1,2,3]</p><pre><code>  1 / \2   3</code></pre><p>输出: 6</p><p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum" target="_blank" rel="noopener">https://leetcode-cn.com/problems/binary-tree-maximum-path-sum</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<br><a id="more"></a><br>思路：<br>对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:   1. 其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径   </p><ol start="2"><li><p>左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径</p><h1 id="Definition-for-a-binary-tree-node"><a href="#Definition-for-a-binary-tree-node" class="headerlink" title="Definition for a binary tree node."></a>Definition for a binary tree node.</h1><h1 id="class-TreeNode"><a href="#class-TreeNode" class="headerlink" title="class TreeNode:"></a>class TreeNode:</h1><h1 id="def-init-self-x"><a href="#def-init-self-x" class="headerlink" title="def init(self, x):"></a>def <strong>init</strong>(self, x):</h1><h1 id="self-val-x"><a href="#self-val-x" class="headerlink" title="self.val = x"></a>self.val = x</h1><h1 id="self-left-None"><a href="#self-left-None" class="headerlink" title="self.left = None"></a>self.left = None</h1><h1 id="self-right-None"><a href="#self-right-None" class="headerlink" title="self.right = None"></a>self.right = None</h1><p> class Solution:</p><pre><code>res = float(&apos;-inf&apos;)def maxPathSum(self, root: TreeNode) -&gt; int:    self.getMax(root)    return self.resdef getMax(self,root):    if not root:        return 0    # 如果子树路径和为负则应当置0表示最大路径不包含子树    left = max(0, self.getMax(root.left))    right = max(0, self.getMax(root.right))    # 以当前节点为根节点,判断在该节点包含左右子树的路径和是否大于当前最大路径和    self.res = max(self.res, root.val + left + right)    # 当前节点作为父节点的一个子节点和父节点连接的话则需取【单端的最大值】返回    return max(left, right) + root.val</code></pre></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给定一个非空二叉树，返回其最大路径和。&lt;/p&gt;
+&lt;p&gt;本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。&lt;/p&gt;
+&lt;p&gt;示例 1:&lt;/p&gt;
+&lt;p&gt;输入: [1,2,3]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  1
+ / \
+2   3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;输出: 6&lt;/p&gt;
+&lt;p&gt;来源：力扣（LeetCode）&lt;br&gt;链接：&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-maximum-path-sum&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode-cn.com/problems/binary-tree-maximum-path-sum&lt;/a&gt;&lt;br&gt;著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode104-二叉树的最大深度</title>
@@ -417,26 +445,6 @@
     
     
       <category term="network security" scheme="http://peisenli.github.io/tags/network-security/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MPI Programming Project</title>
-    <link href="http://peisenli.github.io/2019/05/11/MPI-Programming-Project/"/>
-    <id>http://peisenli.github.io/2019/05/11/MPI-Programming-Project/</id>
-    <published>2019-05-11T13:44:31.000Z</published>
-    <updated>2019-07-13T10:53:48.149Z</updated>
-    
-    <content type="html"><![CDATA[<p>一、实验目的<br>1、掌握分布式并行计算基础<br>2、掌握MPI分布式并行基本操作<br>3、利用MPI进行程序设计，寻找1000000000以内的素数<br>二、实验环境<br>PC、Ubuntu16.04、MPICH<br>三、实验要求<br>Part 1: Modify the parallel Sieve of Eratosthenes program in class so that the program  does NOT set aside memory for even integers.<br><a id="more"></a><br>Part 2: Modify the parallel Sieve of Eratosthenes program in Part 1 so that each process of the program finds its own sieving primes via local computations instead of broadcasts.<br>四、实验步骤<br>1、在进行MPI程序设计之前确保Ubuntu、GCC环境可用之后再进行MPICH安装，如下所示安装GCC环境后确保正常。<br><img src="https://i.loli.net/2019/05/11/5cd6d2bbde6c0.png" alt="1.png"><br>2、进行MPI程序设计需要进行MPICH安装，直接使用sudo apt-get install –y mpich,如下图所示，已经安装完成。<br><img src="https://i.loli.net/2019/05/11/5cd6d2bb5e7b7.png" alt="图片1.png"><br>安装完成后进行MPI环境测试，确保正常使用，使用mpicc –v进行查看是否安装成功。<br><img src="https://i.loli.net/2019/05/11/5cd6d2bbeee22.png" alt="图片2.png"><br>3、使用老师所给的例程进行环境测试，进行编译运行，编译如下：<br><img src="https://i.loli.net/2019/05/11/5cd6d2bb9a97f.png" alt="图片3.png"><br>使用mpicc sieve0.c –o sieve0.o –lm命令后生成可执行文件sieve.o，使用mpirun –np 8 ./sieve.o 10000000000进行测试出现一下情况。<br><img src="https://i.loli.net/2019/05/11/5cd6d2bbb5feb.png" alt="图片4.png"><br>需要在使用此命令行时添加参数–allow-run-as-root后正常，环境安装完成。当改变参数时发现程序运行时间无多大变化，如下所示：<br><img src="https://i.loli.net/2019/05/11/5cd6d2bbb31a7.png" alt="图片5.png"><br>进行排查后发现自己的电脑的参数无法达到8进程所以使用4进程和8进程时间无多大区别，弄清自己PC的型号最大为4个进程再进行实验设计。<br><img src="https://i.loli.net/2019/05/11/5cd6d39d6f679.png" alt="图片6.png"><br>4、根据实验要求进行程序设计，完成Part1内容，预先对寻求素数中的偶数进行移除处理，不再为偶数进行计算。当移除偶数时，需要对每个进程中存取数组进行从新定义，每个进程的最低值和最高值如下所示：<br><img src="https://i.loli.net/2019/05/11/5cd6d39d71936.png" alt="图片7.png"><br>由于数据每个进程分配会出现不一致性，其处理方式如下所示：</p><pre><code>proc0_size = (n - 1) / p;if ((3 + 2*(proc0_size-1)) &lt; (int) sqrt((double) (3+2*(n-1)))) {  if (!id) printf (&quot;Too many processes\n&quot;);  MPI_Finalize();  exit (1);}</code></pre><p>Part1之中去除偶数之后在进程中进行计算的核心代码如下所示：<br><img src="https://i.loli.net/2019/05/11/5cd6d39d864d7.png" alt="图片8.png"><br>5、根据实验要求对Part2进行程序设计，其主要修改如下图所示，对每个进程的分配如下所示：<br><img src="https://i.loli.net/2019/05/11/5cd6d39d82ba9.png" alt="图片9.png"><br>在原来设计的基础之上不进行数据广播，需要进行进程本地内存使用保存数据，在每个进程中进行素数检查。<br><img src="https://i.loli.net/2019/05/11/5cd6d39d952df.png" alt="图片10.png"><br>6、根据具体的实验进行对比，完成MPI实验报告设计<br>五、实验结果<br>根据不同的实验方法进行程序设计，在具体的实验中得到实验结果，时间(s)效果如下所示：<br>|process     |Sieve0         |Part1            | Part2       |<br>| ——–   | —–:        | :—-:       | :—–:     |<br>|2             |209.828280     |108.456367    |343.496301   |<br>|4             |182.311808     |96.609751        |202.671327   |<br><img src="https://i.loli.net/2019/05/11/5cd6d39dbbfe0.png" alt="图片11.png"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一、实验目的&lt;br&gt;1、掌握分布式并行计算基础&lt;br&gt;2、掌握MPI分布式并行基本操作&lt;br&gt;3、利用MPI进行程序设计，寻找1000000000以内的素数&lt;br&gt;二、实验环境&lt;br&gt;PC、Ubuntu16.04、MPICH&lt;br&gt;三、实验要求&lt;br&gt;Part 1: Modify the parallel Sieve of Eratosthenes program in class so that the program  does NOT set aside memory for even integers.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="MPICH  分布式" scheme="http://peisenli.github.io/tags/MPICH-%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
