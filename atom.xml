@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-21T13:24:23.857Z</updated>
+  <updated>2019-08-21T13:28:14.457Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -21,16 +21,13 @@
     <link href="http://peisenli.github.io/2019/08/21/LeetCode235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/"/>
     <id>http://peisenli.github.io/2019/08/21/LeetCode235-二叉搜索树的最近公共祖先/</id>
     <published>2019-08-21T12:07:00.000Z</published>
-    <updated>2019-08-21T13:24:23.857Z</updated>
+    <updated>2019-08-21T13:28:14.457Z</updated>
     
-    <content type="html"><![CDATA[<p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。<br>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”<br>例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]<br><img src="https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png" alt="binarysearchtree_improved.png"><br>示例 1:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8<br>输出: 6<br>解释: 节点 2 和节点 8 的最近公共祖先是 6。<br>示例 2:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4<br>输出: 2<br>解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。<br>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉搜索树中。  </p><p>算法<br>从根节点开始遍历树<br>如果节点 p 和节点 q 都在右子树上，那么以右孩子为根节点继续 1 的操作<br>如果节点 p 和节点 q 都在左子树上，那么以左孩子为根节点继续 1 的操作<br>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 p 和节点 q 的 LCA 了  </p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def lowestCommonAncestor(self, root: &apos;TreeNode&apos;, p: &apos;TreeNode&apos;, q: &apos;TreeNode&apos;) -&gt; &apos;TreeNode&apos;:        # Value of current node or parent node.        parent_val = root.val        # Value of p        p_val = p.val        # Value of q        q_val = q.val        # If both p and q are greater than parent        if p_val &gt; parent_val and q_val &gt; parent_val:                return self.lowestCommonAncestor(root.right, p, q)        # If both p and q are lesser than parent        elif p_val &lt; parent_val and q_val &lt; parent_val:                return self.lowestCommonAncestor(root.left, p, q)        # We have found the split point, i.e. the LCA node.        else:            return root  </code></pre>]]></content>
+    <content type="html"><![CDATA[<p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。<br>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”<br>例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]<br><img src="https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png" alt="binarysearchtree_improved.png"><br>示例 1:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8<br>输出: 6<br>解释: 节点 2 和节点 8 的最近公共祖先是 6。<br>示例 2:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4<br>输出: 2<br>解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。<br>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉搜索树中。<br><a id="more"></a><br>算法<br>从根节点开始遍历树<br>如果节点 p 和节点 q 都在右子树上，那么以右孩子为根节点继续 1 的操作<br>如果节点 p 和节点 q 都在左子树上，那么以左孩子为根节点继续 1 的操作<br>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 p 和节点 q 的 LCA 了  </p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def lowestCommonAncestor(self, root: &apos;TreeNode&apos;, p: &apos;TreeNode&apos;, q: &apos;TreeNode&apos;) -&gt; &apos;TreeNode&apos;:        # Value of current node or parent node.        parent_val = root.val        # Value of p        p_val = p.val        # Value of q        q_val = q.val        # If both p and q are greater than parent        if p_val &gt; parent_val and q_val &gt; parent_val:                return self.lowestCommonAncestor(root.right, p, q)        # If both p and q are lesser than parent        elif p_val &lt; parent_val and q_val &lt; parent_val:                return self.lowestCommonAncestor(root.left, p, q)        # We have found the split point, i.e. the LCA node.        else:            return root  </code></pre>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。&lt;br&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;br&gt;例如，给定
-      
+      &lt;p&gt;给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。&lt;br&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;br&gt;例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png&quot; alt=&quot;binarysearchtree_improved.png&quot;&gt;&lt;br&gt;示例 1:&lt;br&gt;输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8&lt;br&gt;输出: 6&lt;br&gt;解释: 节点 2 和节点 8 的最近公共祖先是 6。&lt;br&gt;示例 2:&lt;br&gt;输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4&lt;br&gt;输出: 2&lt;br&gt;解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。&lt;br&gt;说明:&lt;br&gt;所有节点的值都是唯一的。&lt;br&gt;p、q 为不同节点且均存在于给定的二叉搜索树中。&lt;br&gt;
     
     </summary>
     
