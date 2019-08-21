@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-19T11:08:17.528Z</updated>
+  <updated>2019-08-21T13:24:23.857Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -17,13 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>LeetCode235-二叉搜索树的最近公共祖先</title>
+    <link href="http://peisenli.github.io/2019/08/21/LeetCode235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/"/>
+    <id>http://peisenli.github.io/2019/08/21/LeetCode235-二叉搜索树的最近公共祖先/</id>
+    <published>2019-08-21T12:07:00.000Z</published>
+    <updated>2019-08-21T13:24:23.857Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。<br>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”<br>例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]<br><img src="https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png" alt="binarysearchtree_improved.png"><br>示例 1:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8<br>输出: 6<br>解释: 节点 2 和节点 8 的最近公共祖先是 6。<br>示例 2:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4<br>输出: 2<br>解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。<br>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉搜索树中。  </p><p>算法<br>从根节点开始遍历树<br>如果节点 p 和节点 q 都在右子树上，那么以右孩子为根节点继续 1 的操作<br>如果节点 p 和节点 q 都在左子树上，那么以左孩子为根节点继续 1 的操作<br>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 p 和节点 q 的 LCA 了  </p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def lowestCommonAncestor(self, root: &apos;TreeNode&apos;, p: &apos;TreeNode&apos;, q: &apos;TreeNode&apos;) -&gt; &apos;TreeNode&apos;:        # Value of current node or parent node.        parent_val = root.val        # Value of p        p_val = p.val        # Value of q        q_val = q.val        # If both p and q are greater than parent        if p_val &gt; parent_val and q_val &gt; parent_val:                return self.lowestCommonAncestor(root.right, p, q)        # If both p and q are lesser than parent        elif p_val &lt; parent_val and q_val &lt; parent_val:                return self.lowestCommonAncestor(root.left, p, q)        # We have found the split point, i.e. the LCA node.        else:            return root  </code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。&lt;br&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;br&gt;例如，给定
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LeetCode230-二叉搜索树中第k小的元素</title>
     <link href="http://peisenli.github.io/2019/08/19/LeetCode230-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%AC%ACk%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0/"/>
     <id>http://peisenli.github.io/2019/08/19/LeetCode230-二叉搜索树中第k小的元素/</id>
     <published>2019-08-19T10:51:40.000Z</published>
-    <updated>2019-08-19T11:08:17.528Z</updated>
+    <updated>2019-08-19T11:11:51.452Z</updated>
     
-    <content type="html"><![CDATA[<p>给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。<br>说明：<br>你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。<br>示例 1:<br>输入: root = [3,1,4,null,2], k = 1  </p><pre><code>  3 / \1   4 \  2</code></pre><p>输出: 1<br>示例 2:<br>输入: root = [5,3,6,2,4,null,null,1], k = 3  </p><pre><code>      5     / \    3   6   / \  2   4 /1</code></pre><p>输出: 3<br>进阶：<br>如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 k 小的值，你将如何优化 kthSmallest 函数？<br>思路分析：利用“二叉搜索树”在“中序遍历”以后，得到的是有序数组，那么我们就中序遍历好了，遍历到第k个数即可。<br><a id="more"></a></p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def kthSmallest(self, root: TreeNode, k: int) -&gt; int:        # 模拟系统栈的方式实现，是一种比较通用的做法，        # 可以作为二叉树的三种非递归遍历        # 0 表示当前遍历到它，1 表示压入栈        # 刚开始是 1 ，不要写成 0 了        stack = [(1, root)]        while stack:            command, node = stack.pop()            if node is None:                # 不能写 return ，这不是递归                continue            if command == 0:                k -= 1                if k == 0:                    return node.val            else:                # 此时 command == 1 的时候，表示递归遍历到的                # 注意：写的时候倒过来写                stack.append((1, node.right))                stack.append((0, node))                stack.append((1, node.left))</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。<br>说明：<br>你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。<br>示例 1:<br>输入: root = [3,1,4,null,2], k = 1  </p><pre><code>  3 / \1   4 \  2</code></pre><p>输出: 1<br>示例 2:<br>输入: root = [5,3,6,2,4,null,null,1], k = 3  </p><pre><code>      5     / \    3   6   / \  2   4 /1</code></pre><p>输出: 3<br>进阶：<br>如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 k 小的值，你将如何优化 kthSmallest 函数？<br>思路分析：利用“二叉搜索树”在“中序遍历”以后，得到的是有序数组，那么我们就中序遍历好了，遍历到第k个数即可。<br><a id="more"></a></p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def kthSmallest(self, root: TreeNode, k: int) -&gt; int:        # 模拟系统栈的方式实现，是一种比较通用的做法，        # 可以作为二叉树的三种非递归遍历        # 0 表示当前遍历到它，1 表示压入栈        # 刚开始是 1 ，不要写成 0 了        stack = [(1, root)]        while stack:            command, node = stack.pop()            if node is None:                # 不能写 return ，这不是递归                continue            if command == 0:                k -= 1                if k == 0:                    return node.val            else:                # 此时 command == 1 的时候，表示递归遍历到的                # 注意：写的时候倒过来写                stack.append((1, node.right))                stack.append((0, node))                stack.append((1, node.left))</code></pre><hr><p>二叉查找树（Binary Search Tree），（又：二叉搜索树，二叉排序树）它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。  </p>]]></content>
     
     <summary type="html">
     
@@ -435,28 +458,6 @@
     
     
       <category term="Network Embedding" scheme="http://peisenli.github.io/tags/Network-Embedding/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Resume</title>
-    <link href="http://peisenli.github.io/2019/07/13/Resume/"/>
-    <id>http://peisenli.github.io/2019/07/13/Resume/</id>
-    <published>2019-07-13T11:21:08.000Z</published>
-    <updated>2019-08-04T07:23:04.205Z</updated>
-    
-    <content type="html"><![CDATA[<p><div style="float:right"><img src="https://i.loli.net/2019/07/06/5d2091a117fd054997.png" width="200"></div>   </p><h4 id="PeisenLi"><a href="#PeisenLi" class="headerlink" title="PeisenLi"></a><span style="color:#e33a00"><strong>PeisenLi</strong></span></h4><p><strong>硕士/计算机科学与技术<br>本科/电子信息工程<br>Github：<a href="http://github.com/peisenli" target="_blank" rel="noopener">http://github.com/peisenli</a> </strong><br><strong>Skill：多项大学生创新创业项目及电子类全国大学生竞赛经验</strong></p><h6 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a><span style="color:#fd3300"><strong>联系方式</strong></span></h6><p><strong>Email：<a href="mailto:peisenli1@gmail.com" target="_blank" rel="noopener">peisenli1@gmail.com</a><br>QQ：577602601<br>电话：17628090959</strong><br><a id="more"></a></p><h3 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a><span style="color:#e33a00"><strong>项目经历</strong></span></h3><p><strong>• 2015年中央高校科研项目“移动式机械手臂的设计”<br>• 2015年大学生创新创业项目“基于MK60的智能车设计”<br>• 2016年大学生创新创业项目“基于STM32的智能探测机器”<br>• 2017年本科生科研项目“基于互联网语音技术的智能家居管理系统”</strong></p><h3 id="获奖证书"><a href="#获奖证书" class="headerlink" title="获奖证书"></a><span style="color:#e33a00"><strong>获奖证书</strong></span></h3><p><strong>• 优秀学生干部<br>• 2015年中国机器人大赛旅游类二等奖<br>• “博创杯”全国大学生嵌入式大赛一等奖<br>• 2015年全国大学生电子设计大赛省一等奖<br>• 2016年中国机器人大赛水下巡游组一等奖<br>• 2016年中国机器人大赛擂台标准组二等奖</strong></p><h3 id="专业技能"><a href="#专业技能" class="headerlink" title="专业技能"></a><span style="color:#e33a00"><strong>专业技能</strong></span></h3><p><strong>• 熟练C/C++语言嵌入式程序设计<br>• 熟悉JAVA、Python、Android程序设计<br>• 熟练使用51单片机、MK60以及Cubieboard板卡<br>• 具有较强的专业英语阅读能力，轻松阅读国外专业相关文档<br>• 硬件检测员实习经验：需求设计测试用例，执行测试和收集测试结果，找出硬件问题并书写测试报告；发现并提出产品的功能和性能问题；</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;div style=&quot;float:right&quot;&gt;&lt;img src=&quot;https://i.loli.net/2019/07/06/5d2091a117fd054997.png&quot; width=&quot;200&quot;&gt;&lt;/div&gt;   &lt;/p&gt;
-&lt;h4 id=&quot;PeisenLi&quot;&gt;&lt;a href=&quot;#PeisenLi&quot; class=&quot;headerlink&quot; title=&quot;PeisenLi&quot;&gt;&lt;/a&gt;&lt;span style=&quot;color:#e33a00&quot;&gt;&lt;strong&gt;PeisenLi&lt;/strong&gt;&lt;/span&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;硕士/计算机科学与技术&lt;br&gt;本科/电子信息工程&lt;br&gt;Github：&lt;a href=&quot;http://github.com/peisenli&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://github.com/peisenli&lt;/a&gt; &lt;/strong&gt;&lt;br&gt;&lt;strong&gt;Skill：多项大学生创新创业项目及电子类全国大学生竞赛经验&lt;/strong&gt;&lt;/p&gt;
-&lt;h6 id=&quot;联系方式&quot;&gt;&lt;a href=&quot;#联系方式&quot; class=&quot;headerlink&quot; title=&quot;联系方式&quot;&gt;&lt;/a&gt;&lt;span style=&quot;color:#fd3300&quot;&gt;&lt;strong&gt;联系方式&lt;/strong&gt;&lt;/span&gt;&lt;/h6&gt;&lt;p&gt;&lt;strong&gt;Email：&lt;a href=&quot;mailto:peisenli1@gmail.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;peisenli1@gmail.com&lt;/a&gt;&lt;br&gt;QQ：577602601&lt;br&gt;电话：17628090959&lt;/strong&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Resume" scheme="http://peisenli.github.io/tags/Resume/"/>
     
   </entry>
   
