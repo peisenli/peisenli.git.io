@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-26T11:52:19.195Z</updated>
+  <updated>2019-08-26T11:54:51.153Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -17,22 +17,22 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>LeetCode146-LRU缓存机制</title>
     <link href="http://peisenli.github.io/2019/08/26/LeetCode146-LRU%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
     <id>http://peisenli.github.io/2019/08/26/LeetCode146-LRU缓存机制/</id>
-    <published>2019-08-26T11:43:56.578Z</published>
-    <updated>2019-08-26T11:52:19.195Z</updated>
+    <published>2019-08-26T11:43:56.000Z</published>
+    <updated>2019-08-26T11:54:51.153Z</updated>
     
-    <content type="html"><![CDATA[<hr><p>title: LeetCode146-LRU缓存机制<br>date: 2019-08-26 19:43:56</p><h2 id="tags-LeetCode"><a href="#tags-LeetCode" class="headerlink" title="tags: LeetCode"></a>tags: LeetCode</h2><p>运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。<br>获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。<br>写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。<br>进阶:<br>你是否可以在 O(1) 时间复杂度内完成这两种操作？<br>示例:<br>LRUCache cache = new LRUCache( 2 /<em> 缓存容量 </em>/ );<br>cache.put(1, 1);<br>cache.put(2, 2);<br>cache.get(1);       // 返回  1<br>cache.put(3, 3);    // 该操作会使得密钥 2 作废<br>cache.get(2);       // 返回 -1 (未找到)<br>cache.put(4, 4);    // 该操作会使得密钥 1 作废<br>cache.get(1);       // 返回 -1 (未找到)<br>cache.get(3);       // 返回  3<br>cache.get(4);       // 返回  4   </p><a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<p>运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。<br>获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。<br>写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。<br>进阶:<br>你是否可以在 O(1) 时间复杂度内完成这两种操作？<br>示例:<br>LRUCache cache = new LRUCache( 2 /<em> 缓存容量 </em>/ );<br>cache.put(1, 1);<br>cache.put(2, 2);<br>cache.get(1);       // 返回  1<br>cache.put(3, 3);    // 该操作会使得密钥 2 作废<br>cache.get(2);       // 返回 -1 (未找到)<br>cache.put(4, 4);    // 该操作会使得密钥 1 作废<br>cache.get(1);       // 返回 -1 (未找到)<br>cache.get(3);       // 返回  3<br>cache.get(4);       // 返回  4   </p><a id="more"></a><p>思路</p>]]></content>
     
     <summary type="html">
     
-      &lt;hr&gt;
-&lt;p&gt;title: LeetCode146-LRU缓存机制&lt;br&gt;date: 2019-08-26 19:43:56&lt;/p&gt;
-&lt;h2 id=&quot;tags-LeetCode&quot;&gt;&lt;a href=&quot;#tags-LeetCode&quot; class=&quot;headerlink&quot; title=&quot;tags: LeetCode&quot;&gt;&lt;/a&gt;tags: LeetCode&lt;/h2&gt;&lt;p&gt;运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。&lt;br&gt;获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。&lt;br&gt;写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。&lt;br&gt;进阶:&lt;br&gt;你是否可以在 O(1) 时间复杂度内完成这两种操作？&lt;br&gt;示例:&lt;br&gt;LRUCache cache = new LRUCache( 2 /&lt;em&gt; 缓存容量 &lt;/em&gt;/ );&lt;br&gt;cache.put(1, 1);&lt;br&gt;cache.put(2, 2);&lt;br&gt;cache.get(1);       // 返回  1&lt;br&gt;cache.put(3, 3);    // 该操作会使得密钥 2 作废&lt;br&gt;cache.get(2);       // 返回 -1 (未找到)&lt;br&gt;cache.put(4, 4);    // 该操作会使得密钥 1 作废&lt;br&gt;cache.get(1);       // 返回 -1 (未找到)&lt;br&gt;cache.get(3);       // 返回  3&lt;br&gt;cache.get(4);       // 返回  4   &lt;/p&gt;
+      &lt;p&gt;运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。&lt;br&gt;获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。&lt;br&gt;写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。&lt;br&gt;进阶:&lt;br&gt;你是否可以在 O(1) 时间复杂度内完成这两种操作？&lt;br&gt;示例:&lt;br&gt;LRUCache cache = new LRUCache( 2 /&lt;em&gt; 缓存容量 &lt;/em&gt;/ );&lt;br&gt;cache.put(1, 1);&lt;br&gt;cache.put(2, 2);&lt;br&gt;cache.get(1);       // 返回  1&lt;br&gt;cache.put(3, 3);    // 该操作会使得密钥 2 作废&lt;br&gt;cache.get(2);       // 返回 -1 (未找到)&lt;br&gt;cache.put(4, 4);    // 该操作会使得密钥 1 作废&lt;br&gt;cache.get(1);       // 返回 -1 (未找到)&lt;br&gt;cache.get(3);       // 返回  3&lt;br&gt;cache.get(4);       // 返回  4   &lt;/p&gt;
     
     </summary>
     
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
     
   </entry>
   
