@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-28T06:50:14.646Z</updated>
+  <updated>2019-08-28T09:06:08.535Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图-拓扑排序</title>
+    <link href="http://peisenli.github.io/2019/08/28/%E5%9B%BE-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
+    <id>http://peisenli.github.io/2019/08/28/图-拓扑排序/</id>
+    <published>2019-08-28T08:59:21.000Z</published>
+    <updated>2019-08-28T09:06:08.535Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p><strong>1.定义</strong><br>给出有向图G=(V,E)，对于V中的顶点的线性序列(vi1,vi2,…,vin)，如果满足如下条件：若在G中从顶点 vi 到vj有一条路经，则在序列中顶点vi必在顶点 vj之前；则称该序列为 G的一个拓扑序列(Topological order)。构造有向图的一个拓扑序列的过程称为拓扑排序(Topological sort)。<br><strong>2.说明</strong><br>(1)在AOV网中，若不存在回路，则所有活动可排成一个线性序列，使得每个活动的所有前驱活动都排在该活动的前面，那么该序列为拓扑序列。<br>(2)拓扑序列不是唯一的。<br>(3)AOV网不一定都存在拓扑序列。<br>在AOV网中，&lt;i,j&gt;有向边表示i活动应先于j活动开始，即i活动必须完成后，j活动才可以开始，并称i为j的直接前驱，j为i的直接后继。这种前驱与后继的关系有传递性，此外，任何活动i不能以它自己作为自己的前驱或后继，这叫做反自反性。从前驱和后继的传递性和反自反性来看，AOV网中不能出现有向回路(或称有向环)。在AOV网中如果出现了有向环，则意味着某项活动应以自己作为先决条件，工程将无法进行。对程序流程而言，将出现死循环。<br>因此，对给定的AOV网，应先判断它是否存在有向环。判断AOV网是否有有向环的方法是对该AOV网进行拓扑排序，将AOV网中顶点排列成一个线性有序序列，若该线性序列中包含AOV网全部顶点，则AOV网无环，否则，AOV网中存在有向环，该AOV网所代表的工程是不可行的。<br><strong>3、拓扑序列的实际意义是:</strong><br>如果按照拓扑序列中的顶点次序进行每一项活动，就能够保证在开始每一项活动时，他的所有前驱活动均已完成，从而使整个工程顺序执行。  </p><h3 id="拓扑排序方法"><a href="#拓扑排序方法" class="headerlink" title="拓扑排序方法"></a>拓扑排序方法</h3><p>(1)在AOV网中选一个入度为0的顶点(没有前驱)且输出之；<br>(2)从AOV网中删除此顶点及该顶点发出来的所有有向边；<br>(3)重复(1)、(2)两步，直到AOV网中所有顶点都被输出或网中不存在入度为0的顶点。<br>从拓扑排序步骤可知，若在第3步中，网中所有顶点都被输出，则表明网中无有向环，拓扑排序成功。若仅输出部分顶点，网中已不存在入度为0的顶点，则表明网中有有向环，拓扑排序不成功。因此，一个AOV网的拓扑序列是不唯一的。  </p><p>###算法步骤###<br>在执行拓扑排序的过程中，当某个顶点的入度为零时，就将此顶点输出，同时将该顶点的所有后续顶点的入度减1，为了避免重复检测入度为零的顶点，设立一个栈，以存放入度为零的顶点。执行拓扑排序的算法步骤如下：<br>（1）输入有向边的序列，建立相应的邻接表。<br>（2）查找邻接表中入度为零的顶点，让入度为零的顶点入栈。<br>（3）当栈不空时<br>（a）使用退栈操作，取得栈顶的顶点j并输出。<br>（b）在邻接表的第j个链表中，查找顶点j的所有后续顶点k，将顶点k的入度减1。若顶点k的入度变为零，则顶点k进栈，转步骤（3）<br>（4）当栈空时，若有向图的所有顶点都输出，则拓扑排序过程正常结束，否则，有向图存在回路。<br>如果给定的有向图有n个顶点和m条边，那么建立邻接表的时间为O(m)，在拓扑排序的过程中，查找入度为零的顶点的时间为O(n)，顶点进栈及退栈输出共执行n次，入度减1的操作执行m次，所以，总的执行时间为O(m+n)。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;拓扑排序&quot;&gt;&lt;a href=&quot;#拓扑排序&quot; class=&quot;headerlink&quot; title=&quot;拓扑排序&quot;&gt;&lt;/a&gt;拓扑排序&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1.定义&lt;/strong&gt;&lt;br&gt;给出有向图G=(V,E)，对于V中的顶点的线性序列(vi1,vi2,…,v
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>图-最短路径问题</title>
@@ -429,26 +450,6 @@
     
     
       <category term="leetcode" scheme="http://peisenli.github.io/tags/leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode Kth Largest</title>
-    <link href="http://peisenli.github.io/2019/08/06/LeetCode-Kth-Largest/"/>
-    <id>http://peisenli.github.io/2019/08/06/LeetCode-Kth-Largest/</id>
-    <published>2019-08-06T07:21:07.000Z</published>
-    <updated>2019-08-06T07:27:39.992Z</updated>
-    
-    <content type="html"><![CDATA[<p>在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。<br>示例 1:<br>输入: [3,2,1,5,6,4] 和 k = 2<br>输出: 5<br>示例 2:<br>输入: [3,2,3,1,2,4,5,5,6] 和 k = 4<br>输出: 4<br>说明：你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。<br>思路：对输入示例进行从大到小排序后进行输出第K大的数值即可。<br><a id="more"></a><br>C语言实现：  </p><pre><code>int findKthLargest(int* nums, int numsSize, int k){int i,j,temp;for (i=0;i&lt;numsSize-1;i++){    for(j=i+1;j&lt;numsSize;j++)    {        if(*(nums+i) &lt; *(nums+j))        {            temp = *(nums+i);            *(nums+i) = *(nums+j);            *(nums+j) = temp;        }    }}return *(nums+k-1);}</code></pre><p>python实现：</p><pre><code>class Solution:    def findKthLargest(self, nums: List[int], k: int) -&gt; int:        nums.sort()        return nums[-k]</code></pre><hr><p>堆是一种经过排序的树形数据结构，每个节点都有一个值，通常我们所说的堆的数据结构是指二叉树。所以堆在数据结构中通常可以被看做是一棵树的数组对象。而且堆需要满足一下两个性质：<br>（1）堆中某个节点的值总是不大于或不小于其父节点的值；<br>（2）堆总是一棵完全二叉树。<br>堆分为两种情况，有最大堆和最小堆。将根节点最大的堆叫做最大堆或大根堆，根节点最小的堆叫做最小堆或小根堆。下图图一就是一个最大堆，图二就是一个最小堆。在一个摆放好元素的最小堆中，可以看到，父结点中的元素一定比子结点的元素要小，但对于左右结点的大小则没有规定谁大谁小。  </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。&lt;br&gt;示例 1:&lt;br&gt;输入: [3,2,1,5,6,4] 和 k = 2&lt;br&gt;输出: 5&lt;br&gt;示例 2:&lt;br&gt;输入: [3,2,3,1,2,4,5,5,6] 和 k = 4&lt;br&gt;输出: 4&lt;br&gt;说明：你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。&lt;br&gt;思路：对输入示例进行从大到小排序后进行输出第K大的数值即可。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Heap" scheme="http://peisenli.github.io/tags/Heap/"/>
     
   </entry>
   
