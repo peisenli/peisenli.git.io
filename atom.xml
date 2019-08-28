@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-28T02:56:18.434Z</updated>
+  <updated>2019-08-28T06:50:14.646Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图-最短路径问题</title>
+    <link href="http://peisenli.github.io/2019/08/28/%E5%9B%BE-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://peisenli.github.io/2019/08/28/图-最短路径问题/</id>
+    <published>2019-08-28T06:48:01.000Z</published>
+    <updated>2019-08-28T06:50:14.646Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>最短路径问题</strong>是图论研究中的一个经典算法问题， 旨在寻找图（由结点和路径组成的）中两结点之间的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。Dijkstra算法能得出最短路径的最优解，但由于它遍历计算的节点很多，所以效率低。<br>单源点最短路径是指：给定一个出发点(单源点)和一个有向网G=(V，E),求出源点到其它各顶点之间的最短路径。<br>迪杰斯特拉(Dijkstra)在做了大量观察后,首先提出了按路径长度递增序产生各顶点的最短路径算法,我们称之为<strong>迪杰斯特拉算法</strong>。<br><strong>算法的基本思想是:</strong>把图中顶点集合分成两组，第一组为集合S，存放已求出其最短路径的顶点，第二组为尚未确定最短路径的顶点集合是V-S（用U表示），其中V为网中所有顶点集合。按最短路径长度递增的顺序逐个把U中的顶点加到S中，直到S中包含全部顶点，而U为空。在加入的过程中，总保持从源点v到S中各顶点的最短路径长度不大于从源点v到U中任何顶点的最短路径长度。此外，每个顶点对应一个距离，S中的顶点的距离就是从v到此顶点的最短路径长度，U中的顶点的距离从v到此顶点只包括S中的顶点为中间顶点的当前最短路径长度。<br>（1）初始时，S只包含源点，S={v}，v的距离为0。U包含除v外的其他顶点，U中顶点的距离为顶点的权或∞ 。<br>（2）从U中选取一个距离最小的顶点k，把k加入到S中<br>（3）以k 作为新考虑的中间点，修改U中各顶点的距离。<br>（4）重复步骤（2）、（3）直到所有顶点都包含在S中。<br>时间复杂度：O（V^3）<br><a id="more"></a></p><center><img src="https://i.loli.net/2019/08/28/UwrRpzbHsENFiaY.png" alt="TIM图片20190828143649.png"><br><img src="https://i.loli.net/2019/08/28/J4hFigydBtOeLQp.png" alt="TIM图片20190828143701.png">  </center><pre><code>//有权图的Dijikstra(遍历整个数组寻找最小路径顶点)bool Dijikstra(int vertex){    //根据初始结点初始化距离数组与路径数组     for(int i = 0 ; i &lt; this-&gt;Nv+1 ; i++){        //在构造函数里dist已经全部初始化为MAX        //G存在边时为权重，没有边时为MAX         this-&gt;dist[i] = this-&gt;G[vertex][i];        if(this-&gt;dist[i] &lt; MAX){            this-&gt;path[i] = vertex;        }    }    this-&gt;dist[vertex] = 0;        //初始结点的距离为０    this-&gt;collected[vertex] = 1;    //初始结点标记为已收录     while(1){        //V是未被收录定点中dist最小者         int V = this-&gt;FindMinVertex();         if(V == -1){//未找到这样的V则跳出循环             break;        }         this-&gt;collected[V] = 1;//标记为已经被收录         //遍历图中每个顶点         for(int w = 1 ; w &lt; this-&gt;Nv+1 ; w++){            //若w是V的邻接点且未被收录             if(this-&gt;collected[w] == 0 &amp;&amp; this-&gt;G[V][w] &lt; MAX){                if(this-&gt;G[V][w] &lt; 0){//存在负边时                     return false;    //结束算法                 }                //若收录V使得dist[w]变小                 if(this-&gt;dist[V] + this-&gt;G[V][w] &lt; this-&gt;dist[w]){                    //更新dist[w]                     this-&gt;dist[w] = this-&gt;dist[V] = this-&gt;G[V][w];                     this-&gt;path[w] = V;//更新路径                 }             }         }     }    return true;}</code></pre><p>最短路径算法中的<strong>Floyd算法</strong>，这是针对多源最短路径的一个经典算法。<br><strong>算法思想：</strong><br>Floyd算法是一个经典的动态规划算法。用通俗的语言来描述的话，首先我们的目标是寻找从点i到点j的最短路径。从动态规划的角度看问题，我们需要为这个目标重新做一个诠释（这个诠释正是动态规划最富创造力的精华所在）。<br>从任意节点i到任意节点j的最短路径不外乎2种可能，一是直接从i到j，二是从i经过若干个节点k到j。所以，我们假设Dis(i,j)为节点u到节点v的最短路径的距离，对于每一个节点k，我们检查Dis(i,k) + Dis(k,j) &lt; Dis(i,j)是否成立，如果成立，证明从i到k再到j的路径比i直接到j的路径短，我们便设置Dis(i,j) = Dis(i,k) + Dis(k,j)，这样一来，当我们遍历完所有节点k，Dis(i,j)中记录的便是i到j的最短路径的距离。<br>时间复杂度：O（V^3）<br><strong>算法过程：</strong><br>1）首先把初始化距离dist数组为图的邻接矩阵，路径数组path初始化为-1。其中对于邻接矩阵中的数首先初始化为正无穷，如果两个顶点存在边则初始化为权重。<br>2）对于每一对顶点 u 和 v，看看是否存在一个顶点 w 使得从 u 到 w 再到 v 比己知的路径更短。如果是就更新它。<br>状态转移方程为<br>如果 dist[i][k]+dist[k][j] &lt; dist[i][j]<br>则   dist[i][j] = dist[i][k]+dist[k][j]  </p><pre><code>bool Floyd(){    for(int k = 1 ; k &lt; this-&gt;Nv+1 ; k++){    //k代表中间顶点         for(int i = 1  ; i &lt; this-&gt;Nv+1 ; i++){//i代表起始顶点             for(int j = 1 ; j &lt; this-&gt;Nv+1 ; j++){//j代表终点                 if(this-&gt;dist[i][k] + this-&gt;dist[k][j] &lt; this-&gt;dist[i][j]){                    this-&gt;dist[i][j] = this-&gt;dist[i][k] + this-&gt;dist[k][j];                    if(i == j &amp;&amp; this-&gt;dist[i][j] &lt; 0){//发现了负值圈                         return false;                    }                    this-&gt;path[i][j] = k;                }                                }        }    }    return true; }</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;最短路径问题&lt;/strong&gt;是图论研究中的一个经典算法问题， 旨在寻找图（由结点和路径组成的）中两结点之间的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。Dijkstra算法能得出最短路径的最优解，但由于它遍历计算的节点很多，所以效率低。&lt;br&gt;单源点最短路径是指：给定一个出发点(单源点)和一个有向网G=(V，E),求出源点到其它各顶点之间的最短路径。&lt;br&gt;迪杰斯特拉(Dijkstra)在做了大量观察后,首先提出了按路径长度递增序产生各顶点的最短路径算法,我们称之为&lt;strong&gt;迪杰斯特拉算法&lt;/strong&gt;。&lt;br&gt;&lt;strong&gt;算法的基本思想是:&lt;/strong&gt;把图中顶点集合分成两组，第一组为集合S，存放已求出其最短路径的顶点，第二组为尚未确定最短路径的顶点集合是V-S（用U表示），其中V为网中所有顶点集合。按最短路径长度递增的顺序逐个把U中的顶点加到S中，直到S中包含全部顶点，而U为空。在加入的过程中，总保持从源点v到S中各顶点的最短路径长度不大于从源点v到U中任何顶点的最短路径长度。此外，每个顶点对应一个距离，S中的顶点的距离就是从v到此顶点的最短路径长度，U中的顶点的距离从v到此顶点只包括S中的顶点为中间顶点的当前最短路径长度。&lt;br&gt;（1）初始时，S只包含源点，S={v}，v的距离为0。U包含除v外的其他顶点，U中顶点的距离为顶点的权或∞ 。&lt;br&gt;（2）从U中选取一个距离最小的顶点k，把k加入到S中&lt;br&gt;（3）以k 作为新考虑的中间点，修改U中各顶点的距离。&lt;br&gt;（4）重复步骤（2）、（3）直到所有顶点都包含在S中。&lt;br&gt;时间复杂度：O（V^3）&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Data Struct" scheme="http://peisenli.github.io/tags/Data-Struct/"/>
+    
+  </entry>
   
   <entry>
     <title>图的生成树问题</title>
@@ -429,30 +449,6 @@
     
     
       <category term="Heap" scheme="http://peisenli.github.io/tags/Heap/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vaildparentheses</title>
-    <link href="http://peisenli.github.io/2019/08/05/vaildparentheses/"/>
-    <id>http://peisenli.github.io/2019/08/05/vaildparentheses/</id>
-    <published>2019-08-05T04:23:02.000Z</published>
-    <updated>2019-08-05T04:32:44.143Z</updated>
-    
-    <content type="html"><![CDATA[<p><center><strong>栈在括号匹配中的应用问题</strong></center><br>算法思想：  </p><ul><li>初始设置一个空栈，顺序读入括号  </li><li>若是右括号，则使之置于栈顶的最急迫期待得以消解，或者是不合法的情况（括号序列不匹配，退出程序）  </li><li><p>若是左括号，则作为新的更急迫的期待压入栈中，自然使原有的在栈中的所未消解的期待解决降了一级。算法结束时，栈为空，否则括号序列不匹配。   </p><a id="more"></a><p>Python实现：  </p><p>  class Solution:</p><pre><code>def isValid(self, s: str) -&gt; bool:    temp_str = []       #存放临时开括号    LeftParentheses = [&quot;(&quot;,&quot;[&quot;,&quot;{&quot;]    #左括号查找    vaildParentheses = [&quot;()&quot;,&quot;[]&quot;,&quot;{}&quot;]  #有效括号匹配    for cha in s:        if cha in LeftParentheses:       #如果是左括号就放入temp_str中            temp_str.append(cha)        else:            if not temp_str:             #如果temp_str为空，返回False                return False            else:                temp_cha = temp_str.pop() + cha     #出栈，组合                if temp_cha not in vaildParentheses:                    return False    if not temp_str:                      #判断是栈是否为空        return True    else:        return False</code></pre></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;center&gt;&lt;strong&gt;栈在括号匹配中的应用问题&lt;/strong&gt;&lt;/center&gt;&lt;br&gt;算法思想：  &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;初始设置一个空栈，顺序读入括号  &lt;/li&gt;
-&lt;li&gt;若是右括号，则使之置于栈顶的最急迫期待得以消解，或者是不合法的情况（括号序列不匹配，退出程序）  &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;若是左括号，则作为新的更急迫的期待压入栈中，自然使原有的在栈中的所未消解的期待解决降了一级。算法结束时，栈为空，否则括号序列不匹配。   &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="stack" scheme="http://peisenli.github.io/tags/stack/"/>
     
   </entry>
   
