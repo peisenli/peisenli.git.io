@@ -1,0 +1,146 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>图的生成树问题 | 帅的如此过分</title><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><link rel="icon" href="/favicon.ico"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、无向图的连通分量和生成树"><span class="toc-number">1.</span> <span class="toc-text">一、无向图的连通分量和生成树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、生成树"><span class="toc-number">1.1.</span> <span class="toc-text">1、生成树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2．生成森林"><span class="toc-number">1.2.</span> <span class="toc-text">2．生成森林</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3．最小生成树"><span class="toc-number">1.3.</span> <span class="toc-text">3．最小生成树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、求最小生成树"><span class="toc-number">2.</span> <span class="toc-text">二、求最小生成树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-克鲁斯卡尔算法基本思想"><span class="toc-number">2.1.</span> <span class="toc-text">1. 克鲁斯卡尔算法基本思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-普里姆-prim-算法思想"><span class="toc-number">2.2.</span> <span class="toc-text">2. 普里姆(prim)算法思想</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">空空</div><div class="author-info__description text-center">非宁静无以致远，非淡泊无以明志</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">28</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">15</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/05/12/5cd78b8a60164.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">帅的如此过分</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">图的生成树问题</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-28 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><h2 id="一、无向图的连通分量和生成树"><a href="#一、无向图的连通分量和生成树" class="headerlink" title="一、无向图的连通分量和生成树"></a>一、无向图的连通分量和生成树</h2><p>若图是连通的或强连通的，则从图中某一个顶点出发可以访问到图中所有顶点；<br>若图是非连通的或非强连通图，则需从图中多个顶点出发搜索访问。而每一次从一个新的起始点出发进行搜索过程中得到的顶点访问序列恰为每个连通分量中的顶点集。  </p>
+<h3 id="1、生成树"><a href="#1、生成树" class="headerlink" title="1、生成树"></a>1、生成树</h3><p>深度优先搜索遍历算法及广度优先搜索遍历算法中遍历图过程中历经边的集合和顶点集合一起构成连通图的极小连通子图。它是连通图的一颗生成树。<br>生成树：是一个极小连通子图，它含有图中全部n个顶点，但只有n-1条边。<br>由深度优先搜索遍历得到的生成树，称为深度优先生成树，由广度优先搜索遍历得到的生成树，称为广度优先生成树。图中无向图G7的两种生成树见 图(a)、(b)。<br><img src="https://i.loli.net/2019/08/28/Q6cGY2loXtgzDxe.png" alt="生成shu.png"></p>
+<h3 id="2．生成森林"><a href="#2．生成森林" class="headerlink" title="2．生成森林"></a>2．生成森林</h3><p>若一个图是非连通图或非强连通图，但有若干个连通分量或若干个强连通分量，则通过深度优先搜索遍历或广度优先搜索遍历，不可以得到生成树，但可以得到生成森林，且若非连通图有 n 个顶点，m 个连通分量或强连通分量，则可以遍历得到m棵生成树，合起来为生成森林，森林中包含n-m条树边。<br>生成森林可以利用非连通图的深度优先搜索遍历或非连通图的广度优先搜索遍历算法得到。   </p>
+<h3 id="3．最小生成树"><a href="#3．最小生成树" class="headerlink" title="3．最小生成树"></a>3．最小生成树</h3><p>在一般情况下，图中的每条边若给定了权，这时，我们所关心的不是生成树，而是生成树中边上权值之和。若生成树中每条边上权值之和达到最小，称为最小生成树。  </p>
+<h2 id="二、求最小生成树"><a href="#二、求最小生成树" class="headerlink" title="二、求最小生成树"></a>二、求最小生成树</h2><p><strong>首先明确：</strong>  </p>
+<ul>
+<li>使用不同的遍历图的方法，可以得到不同的生成树；从不同的顶点出发，也可能得到不同的生成树。  </li>
+<li>按照生成树的定义，n 个顶点的连通网络的生成树有 n 个顶点、n-1 条边。<br><strong>目标：</strong><br>在网络的多个生成树中，寻找一个各边权值之和最小的生成树。<br><strong>构造最小生成树的准则</strong>  </li>
+<li>必须只使用该网络中的边来构造最小生成树；  </li>
+<li>必须使用且仅使用n-1条边来联结网络中的n个顶点；  </li>
+<li><p>不能使用产生回路的边。  </p>
+<h3 id="1-克鲁斯卡尔算法基本思想"><a href="#1-克鲁斯卡尔算法基本思想" class="headerlink" title="1. 克鲁斯卡尔算法基本思想"></a>1. 克鲁斯卡尔算法基本思想</h3><p>克鲁斯卡尔算法的基本思想是：将图中所有边按权值递增顺序排列，依次选定取权值较小的边，但要求后面选取的边不能与前面选取的边构成回路，若构成回路，则放弃该条边，再去选后面权值较大的边，n个顶点的图中，选够n-1条边即可。  </p>
+<p>  #定义<br>  typedef struct  Edge                //定义边集数组元素，v1,v2存顶点，weight存权重。<br>  {</p>
+<pre><code>int v1;
+int v2;
+int weight;
+</code></pre><p>  }Edge;</p>
+<p>  typedef struct ALGraph        //定义图的结构，peak存顶点的数量，edge存边的数量<br>  {                                            //指针p作为边集数组，指针m为作为顶点数组</p>
+<pre><code>int peak;
+int edge;
+Edge *p;
+int *m;
+</code></pre><p>  }ALGraph;<br>  #创建图<br>  void CreatALGraph(ALGraph *G)<br>  {</p>
+<pre><code>int i,j;
+printf(&quot;输入图的顶点数量和边的数量：&quot;);
+scanf(&quot;%d %d&quot;,&amp;G-&gt;peak,&amp;G-&gt;edge);
+G-&gt;p=(Edge *)malloc(sizeof(Edge)*(G-&gt;edge+1));
+G-&gt;m=(int *)malloc(sizeof(int)*G-&gt;peak);
+for(i=0;i&lt;G-&gt;peak;i++)
+{
+      printf(&quot;请输入输入顶点：&quot;);
+      scanf(&quot;%d&quot;,&amp;G-&gt;m[i]);
+}
+for(i=0;i&lt;G-&gt;edge;i++)
+{
+    printf(&quot;请输入(vi-vj)和权重：&quot;);
+    scanf(&quot;%d %d %d&quot;,&amp;G-&gt;p[i].v1,&amp;G-&gt;p[i].v2,&amp;G-&gt;p[i].weight);
+}
+for(i=0 ;i&lt;G-&gt;edge;i++)                //冒泡排序法，权重从小到大存在边集数组中
+{
+    for(j=G-&gt;edge-1;j&gt;i;j--)
+    {
+        if(G-&gt;p[i].weight&gt;G-&gt;p[j].weight)
+        {
+            G-&gt;p[G-&gt;edge]=G-&gt;p[i];
+            G-&gt;p[i]=G-&gt;p[j];
+            G-&gt;p[j]=G-&gt;p[G-&gt;edge];
+        }
+    }
+}
+</code></pre><p>  }<br>  #克鲁斯卡尔算法<br>  int Find(int *parent,int g)                //通过parent[]找到可连接的边<br>  {</p>
+<pre><code>while(parent[g]!=0)
+{
+    g=parent[g];
+}
+return g;
+</code></pre><p>  }<br>  int Finish(ALGraph <em>G,int </em>parent)        //判断生成树是否完成，完成的标志是生成树的边等于顶点的数量减1<br>  {</p>
+<pre><code>int i,n=0;
+
+for(i=0;i&lt;G-&gt;peak;i++)
+{
+    if(parent[i])
+    {
+        n++;
+    }
+}
+if(n==G-&gt;peak-1)
+{
+    return 1;
+}
+return 0;
+</code></pre><p>  }<br>  int FindPeak(ALGraph *G,int g)        //找到顶点的下标<br>  {</p>
+<pre><code>int i;
+for(i=0;i&lt;G-&gt;peak;i++)
+{
+    if(G-&gt;m[i]==g)
+        return i;
+}
+return -1;
+</code></pre><p>  }<br>  void MinTree_Kruskal(ALGraph *G)<br>  {</p>
+<pre><code>int i,a,b;
+
+int parent[G-&gt;peak];
+
+for(i=0;i&lt;G-&gt;peak;i++)        //初始化parent[]
+{
+    parent[i]=0;
+}
+for(i=0;i&lt;G-&gt;edge;i++)
+{
+    a=Find(parent,FindPeak(G,G-&gt;p[i].v1));
+    b=Find(parent,FindPeak(G,G-&gt;p[i].v2));
+
+    if(a!=b)                //如果a==b则表是a和b在同一颗生成树上，如果a和b连接则为生成环，不符合生成树
+    {
+        parent[a]=b;
+        printf(&quot;%d-&gt;%d   %d\n&quot;,G-&gt;p[i].v1,G-&gt;p[i].v2,G-&gt;p[i].weight);
+    }
+    if(Finish(G,parent))        //完成后返回
+    {
+        return;
+    }
+}
+</code></pre><p>  }</p>
+</li>
+</ul>
+<h3 id="2-普里姆-prim-算法思想"><a href="#2-普里姆-prim-算法思想" class="headerlink" title="2. 普里姆(prim)算法思想"></a>2. 普里姆(prim)算法思想</h3><p>普里姆方法的思想是：在图中任取一个顶点K作为开始点，令U={k}，W=V-U，其中V为图中所有顶点集，然后找一个顶点在U中，另一个顶点在W中的边中最短的一条，找到后，将该边作为最小生成树的树边保存起来，并将该边顶点全部加入U集合中，并从W中删去这些顶点，然后重新调整U中顶点到W中顶点的距离, 使之保持最小，再重复此过程，直到W为空集止。  </p>
+<pre><code>#define INFINITE 9999
+#define MAXN 100
+void prim(int cost[][MAXN],int n,int v)
+{  
+    int lowcost[MAXN],min,closest[MAXN],i,j,k;
+    for(i=1;i&lt;=n;i++)
+    {  
+        lowcost[i]=cost[v][i];
+        closest[i]=v;
+    }
+       for(i=1;i&lt;n;i++)
+    {  
+        min=INFINITE;
+        for(j=1;j&lt;=n;j++)
+            if(lowcost[j]!=0&amp;&amp;lowcost[j]&lt;min))
+            {  
+                min=lowcost[j];
+                k=j;   
+            }
+             printf(“%d%d%d”,closest[k],k,min);
+             lowcost[k]=0;
+             for(j=1;j&lt;=n;j++)
+                if((cost[k][j]!=0)&amp;&amp;(cost[k][j]&lt;lowcost[j]))
+                   {  
+                    lowcost[j]=cost[k][j];
+                       closest[j]=k;  
+                }
+     }
+}
+#时间复杂度为O(n2)
+</code></pre></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Data-Struct/">Data Struct</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/08/27/LeetCode-LRU缓存机制/"><span>LeetCode-LRU缓存机制</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2016 - 2019 By 空空</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
