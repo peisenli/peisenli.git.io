@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-08-28T09:14:59.546Z</updated>
+  <updated>2019-08-29T09:38:44.566Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode4.寻找两个有序数组的中位数</title>
+    <link href="http://peisenli.github.io/2019/08/29/LeetCode4-%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/"/>
+    <id>http://peisenli.github.io/2019/08/29/LeetCode4-寻找两个有序数组的中位数/</id>
+    <published>2019-08-29T09:30:32.000Z</published>
+    <updated>2019-08-29T09:38:44.566Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。<br>请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。<br>你可以假设 nums1 和 nums2 不会同时为空。<br>示例 1:<br>nums1 = [1, 3]<br>nums2 = [2]<br>则中位数是 2.0<br>示例 2:<br>nums1 = [1, 2]<br>nums2 = [3, 4]<br>则中位数是 (2 + 3)/2 = 2.5  </p><p><strong>思路：</strong>题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，<br>len为奇数，则中位数为第（len+1）/2 位，如果len为偶数，我们需要知道第 len/2和 len/2+1 个数。<br><a id="more"></a></p><pre><code>class Solution(object):    def findMedianSortedArrays(self, A, B):        &quot;&quot;&quot;        :type nums1: List[int]        :type nums2: List[int]        :rtype: float        &quot;&quot;&quot;        m, n = len(A), len(B)        if m &gt; n:            A, B, m, n = B, A, n, m        if n == 0:            raise ValueError        imin, imax, half_len = 0, m, (m + n + 1) / 2        while imin &lt;= imax:            i = (imin + imax) / 2            j = half_len - i            if i &lt; m and B[j-1] &gt; A[i]:                # i is too small, must increase it                imin = i + 1            elif i &gt; 0 and A[i-1] &gt; B[j]:                # i is too big, must decrease it                imax = i - 1            else:                # i is perfect                if i == 0: max_of_left = B[j-1]                elif j == 0: max_of_left = A[i-1]                else: max_of_left = max(A[i-1], B[j-1])                if (m + n) % 2 == 1:                    return max_of_left                if i == m: min_of_right = B[j]                elif j == n: min_of_right = A[i]                else: min_of_right = min(A[i], B[j])                return (max_of_left + min_of_right) / 2.0</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。&lt;br&gt;请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。&lt;br&gt;你可以假设 nums1 和 nums2 不会同时为空。&lt;br&gt;示例 1:&lt;br&gt;nums1 = [1, 3]&lt;br&gt;nums2 = [2]&lt;br&gt;则中位数是 2.0&lt;br&gt;示例 2:&lt;br&gt;nums1 = [1, 2]&lt;br&gt;nums2 = [3, 4]&lt;br&gt;则中位数是 (2 + 3)/2 = 2.5  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;思路：&lt;/strong&gt;题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，&lt;br&gt;len为奇数，则中位数为第（len+1）/2 位，如果len为偶数，我们需要知道第 len/2和 len/2+1 个数。&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>图-拓扑排序</title>
@@ -423,30 +442,6 @@
     
     
       <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode23_sort-K-lists</title>
-    <link href="http://peisenli.github.io/2019/08/07/Leetcode23-sort-K-lists/"/>
-    <id>http://peisenli.github.io/2019/08/07/Leetcode23-sort-K-lists/</id>
-    <published>2019-08-07T07:35:54.000Z</published>
-    <updated>2019-08-07T07:41:13.436Z</updated>
-    
-    <content type="html"><![CDATA[<p><center><strong>堆-合并 k 个排序链表</strong></center><br>LeetCode23-合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。<br>示例：<br>输入:<br>    [<br>          1-&gt;4-&gt;5,<br>          1-&gt;3-&gt;4,<br>          2-&gt;6<br>    ]<br>输出: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6<br>算法思路：利用一个size为K的优先级队列，每次把K个链表的当前头的val塞进优先级队列。  </p><ul><li>首先将list中的每个链表比较首元素，然后依次加入优先队列。  </li><li>然后判断这个优先队列是否为空，不为空，我们弹出队首元素，接着判断这个弹出的元素作为一个链表节点，其后是否还有元素，如果有元素，将元素加入新队列中。 </li></ul><a id="more"></a><p>python3实现：  </p><pre><code># Definition for singly-linked list.  # class ListNode:  #    def __init__(self, x):  #         self.val = x  #         self.next = None  from heapq import *  #python标准库模块堆操作class Solution:    def mergeKLists(self, lists: List[ListNode]) -&gt; ListNode:        pq = []      #队列列表        for i in range(len(lists)):            if lists[i]:                heappush(pq, (lists[i].val, i))    #以元组的方式加入堆，（链表Val，ith序列链表）                 lists[i] = lists[i].next #改变每个序列的链表指针        dummy = ListNode(1) #新序列节点        p = dummy          while pq:            val, idx = heappop(pq) #弹出pq堆中的最小值的元素值及index            p.next = ListNode(val) #指针指向下一个Val节点            p = p.next #更新指针节点            #重新以顺序进入链表序列            if lists[idx]:                 heappush(pq, (lists[idx].val, idx))                lists[idx] = lists[idx].next        return dummy.next</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;center&gt;&lt;strong&gt;堆-合并 k 个排序链表&lt;/strong&gt;&lt;/center&gt;&lt;br&gt;LeetCode23-合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。&lt;br&gt;示例：&lt;br&gt;输入:&lt;br&gt;    [&lt;br&gt;          1-&amp;gt;4-&amp;gt;5,&lt;br&gt;          1-&amp;gt;3-&amp;gt;4,&lt;br&gt;          2-&amp;gt;6&lt;br&gt;    ]&lt;br&gt;输出: 1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;4-&amp;gt;5-&amp;gt;6&lt;br&gt;算法思路：利用一个size为K的优先级队列，每次把K个链表的当前头的val塞进优先级队列。  &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;首先将list中的每个链表比较首元素，然后依次加入优先队列。  &lt;/li&gt;
-&lt;li&gt;然后判断这个优先队列是否为空，不为空，我们弹出队首元素，接着判断这个弹出的元素作为一个链表节点，其后是否还有元素，如果有元素，将元素加入新队列中。 &lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="leetcode" scheme="http://peisenli.github.io/tags/leetcode/"/>
     
   </entry>
   
