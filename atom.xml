@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-02T10:53:12.256Z</updated>
+  <updated>2019-09-04T08:14:02.870Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode15-三数之和</title>
+    <link href="http://peisenli.github.io/2019/09/03/LeetCode15-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
+    <id>http://peisenli.github.io/2019/09/03/LeetCode15-三数之和/</id>
+    <published>2019-09-03T07:28:43.000Z</published>
+    <updated>2019-09-04T08:14:02.870Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。<br>注意：答案中不可以包含重复的三元组。<br>例如, 给定数组<br>nums = [-1, 0, 1, 2, -1, -4]，<br>满足要求的三元组集合为：<br>[<br>  [-1, 0, 1],<br>  [-1, -1, 2]<br>]<br><a id="more"></a><br>思路：</p><ul><li>先将数组进行排序</li><li>从左侧开始，选定一个值为 定值 ，右侧进行求解，获取与其相加为 0 的两个值</li><li><p>类似于快排，定义首和尾<br>首尾与 定值 相加<br>等于 00，记录这三个值<br>小于 00，首部右移<br>大于 00，尾部左移<br>定值右移，重复该步骤  </p><pre><code>class Solution(object):def threeSum(self, nums):    &quot;&quot;&quot;    :type nums: List[int]    :rtype: List[List[int]]    &quot;&quot;&quot;nums.sort()res =[]i = 0for i in range(len(nums)):    if i == 0 or nums[i]&gt;nums[i-1]:        l = i+1        r = len(nums)-1        while l &lt; r:            s = nums[i] + nums[l] +nums[r]            if s ==0:                res.append([nums[i],nums[l],nums[r]])                l +=1                r -=1                while l &lt; r and nums[l] == nums[l-1]:                    l += 1                while r &gt; l and nums[r] == nums[r+1]:                    r -= 1            elif s&gt;0:                r -=1            else :                l +=1return res</code></pre></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。&lt;br&gt;注意：答案中不可以包含重复的三元组。&lt;br&gt;例如, 给定数组&lt;br&gt;nums = [-1, 0, 1, 2, -1, -4]，&lt;br&gt;满足要求的三元组集合为：&lt;br&gt;[&lt;br&gt;  [-1, 0, 1],&lt;br&gt;  [-1, -1, 2]&lt;br&gt;]&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode11-盛水最多的容器</title>
@@ -420,26 +440,6 @@
     
     
       <category term="Graph" scheme="http://peisenli.github.io/tags/Graph/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>位运算-异或</title>
-    <link href="http://peisenli.github.io/2019/08/12/%E4%BD%8D%E8%BF%90%E7%AE%97-%E5%BC%82%E6%88%96/"/>
-    <id>http://peisenli.github.io/2019/08/12/位运算-异或/</id>
-    <published>2019-08-12T03:39:52.000Z</published>
-    <updated>2019-08-12T03:54:28.469Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>异或</strong>，英文为exclusive OR，缩写成xor<br>异或（xor）是一个数学运算符。它应用于逻辑运算。异或的数学符号  为“⊕”，计算机符号为“xor”。<br>其运算法则为：<br>a⊕b = (¬a ∧ b) ∨ (a ∧¬b)<br>如果a、b两个值不相同，则异或结果为1。<br>如果a、b两个值相同，异或结果为0。<br>异或也叫半加运算，其运算法则相当于不带进位的二进制加法：二进制下用1表示真，0表示假，则异或的运算法则为：<br>0⊕0=0，1⊕0=1，0⊕1=1，1⊕1=0（同为0，异为1），这些法则与加法是相同的，只是不带进位，所以异或常被认作不进位加法。<br><a id="more"></a><br><strong>运算法则：</strong>  </p><ol><li>a ⊕ a = 0  </li><li>a ⊕ b = b ⊕ a  </li><li>a ⊕ b ⊕ c = a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ c;  </li><li>d = a ⊕ b ⊕ c 可以推出 a = d ⊕ b ⊕ c.  </li><li><p>a ⊕ b ⊕ a = b.<br>例：若x是二进制数0101，y是二进制数1011；则x⊕y=1110只有在两个比较的位不同时其结果是1，否则结果为0即“两个输入相同时为0，不同则为1。<br><strong>LeetCode136.只出现一次的数字</strong><br>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。<br>说明：<br>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？<br>示例 1:<br>输入: [2,2,1]<br>输出: 1<br>示例 2:<br>输入: [4,1,2,1,2]<br>输出: 4<br><strong>思路</strong>：一开始直接想的进行暴力破解，但是综合时间复杂度上，考虑位运算，异或具有很好的性质，如果相同的两个数异或则为零，零和任何元素异或为元素本身。那么数组种出现的某个单一元素直接就可以找出来。<br>python实现：</p><p> class Solution:</p><pre><code>def singleNumber(self, nums: List[int]) -&gt; int:    res = nums[0]    for i in range(1,len(nums)):        res ^= nums[i]    return res</code></pre></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;异或&lt;/strong&gt;，英文为exclusive OR，缩写成xor&lt;br&gt;异或（xor）是一个数学运算符。它应用于逻辑运算。异或的数学符号  为“⊕”，计算机符号为“xor”。&lt;br&gt;其运算法则为：&lt;br&gt;a⊕b = (¬a ∧ b) ∨ (a ∧¬b)&lt;br&gt;如果a、b两个值不相同，则异或结果为1。&lt;br&gt;如果a、b两个值相同，异或结果为0。&lt;br&gt;异或也叫半加运算，其运算法则相当于不带进位的二进制加法：二进制下用1表示真，0表示假，则异或的运算法则为：&lt;br&gt;0⊕0=0，1⊕0=1，0⊕1=1，1⊕1=0（同为0，异为1），这些法则与加法是相同的，只是不带进位，所以异或常被认作不进位加法。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
     
   </entry>
   
