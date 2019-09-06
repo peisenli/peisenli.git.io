@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-04T09:08:06.079Z</updated>
+  <updated>2019-09-06T06:20:09.392Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据结构-静态表查找</title>
+    <link href="http://peisenli.github.io/2019/09/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%9D%99%E6%80%81%E8%A1%A8%E6%9F%A5%E6%89%BE/"/>
+    <id>http://peisenli.github.io/2019/09/06/数据结构-静态表查找/</id>
+    <published>2019-09-06T06:19:06.000Z</published>
+    <updated>2019-09-06T06:20:09.392Z</updated>
+    
+    <content type="html"><![CDATA[<p>###静态表查找</p><ol><li><p>顺序查找<br>核心：从数据的第一个元素开始，依次比较，直到找到目标数据或查找失败。  </p><ul><li>从表中的第一个元素开始，依次与关键字比较           </li><li>若某个元素匹配关键字，则 查找成功。</li><li><p>若查找到最后一个元素还未匹配关键字，则 查找失败。<br>特点：顺序查找平均关键字匹配次数为表长的一半，其时间复杂度为O(n),顺序查找的优点是对表无要求，插入数据可在O(1)内完成。缺点是时间复杂度较大，数据规模较大时，效率较低。  </p><a id="more"></a><p>实例代码：</p><pre><code>#include&lt;iostream&gt;using namespace std;struct LNode {    int Element[100];    int Length; };int SequentialSearch(LNode *Tbl, int K){       int i;    Tbl -&gt; Element[0] = K;    for(i = Tbl-&gt;Length; Tbl-&gt;Element[i] != K; i--);    return i;}int main(){    LNode test = { {0,1,2,3,4,5,6,7,8,9}, 9};//待比较数据从第二个开始，第一个位置用来设置哨兵     int result, num = 8;    result = SequentialSearch(&amp;test, num);    if(result == 0)        cout&lt;&lt;&quot;没找到！&quot;&lt;&lt;endl;    else        cout&lt;&lt;&quot;在m[&quot;&lt;&lt;result&lt;&lt;&quot;]里找到&quot;&lt;&lt;num-2 &lt;&lt;endl;    system(&quot;pause&quot;);    return 0;}</code></pre></li></ul></li><li><p>折半查找<br>仅适用有序表<br>首先，假设表中元素是按升序排列，将表中间位置记录的关键字与查找关键字比较，如果两者相等，则查找成功；否则利用中间位置记录将表分成前、后两个子表，如果中间位置记录的关键字大于查找关键字，则进一步查找前一子表，否则进一步查找后一子表。重复以上过程，直到找到满足条件的记录，使查找成功，或直到子表不存在为止，此时查找不成功。  </p><pre><code>#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#define keyType inttypedef struct {    keyType key;//查找表中每个数据元素的值    //如果需要，还可以添加其他属性}ElemType;typedef struct{    ElemType *elem;//存放查找表中数据元素的数组    int length;//记录查找表中数据的总数量}SSTable;//创建查找表void Create(SSTable **st,int length){    (*st)=(SSTable*)malloc(sizeof(SSTable));    (*st)-&gt;length=length;    printf(&quot;输入表中的数据元素：\n&quot;);    //根据查找表中数据元素的总长度，在存储时，从数组下标为 1 的空间开始存储数据    for (int i=1; i&lt;=length; i++) {        scanf(&quot;%d&quot;,&amp;((*st)-&gt;elem[i].key));    }}int Search_Bin(SSTable *ST,keyType key){    int low=1;//初始状态 low 指针指向第一个关键字    int high=ST-&gt;length;//high 指向最后一个关键字    int mid;    while (low&lt;=high) {        mid=(low+high)/2;//int 本身为整形，所以，mid 每次为取整的整数        if (ST-&gt;elem[mid].key==key)//如果 mid 指向的同要查找的相等，返回 mid 所指向的位置        {            return mid;        }else if(ST-&gt;elem[mid].key&gt;key)//如果mid指向的关键字较大，则更新 high 指针的位置        {            high=mid-1;        }        //反之，则更新 low 指针的位置        else{            low=mid+1;        }    }    return 0;}int main(int argc, const char * argv[]) {    SSTable *st;    Create(&amp;st, 11);    getchar();    printf(&quot;请输入查找数据的关键字：\n&quot;);    int key;    scanf(&quot;%d&quot;,&amp;key);    int location=Search_Bin(st, key);    //如果返回值为 0，则证明查找表中未查到 key 值，    if (location==0) {        printf(&quot;查找表中无该元素&quot;);    }else{        printf(&quot;数据在查找表中的位置为：%d&quot;,location);    }    return 0;}</code></pre><p>折半查找过程可用二叉树描述：结点表示记录，其值为该记录在表中位置，比较一次的作为根，比较两次放在第二层，依次类推，得到的二叉树称为判定树。<br>n个元素表的折半查找判定树是唯一的，即：判定树由表中元素个数决定。<br>找到表中任一记录的过程就是走了一条从根结点到与该记录相应的结点的路径。<br>比较的关键字个数：该结点在判定树上的层次数。<br>⑴ 当n=0时，折半查找判定树为空；<br>⑵ 当n＞0时，折半查找判定树的根结点是有序表中序号为mid=(n+1)/2的记录，根结点的左子树是与有序表r[1] ~ r[mid-1]相对应的折半查找判定树，根结点的右子树是与r[mid+1] ~ r[n]相对应的折半查找判定树。<br>查找成功：在表中查找任一记录的过程，即是折半查找判定树中从根结点到该记录结点的路径，和给定值的比较次数等于该记录结点在树中的层数。<br>查找不成功：查找失败的过程就是走了一条从根结点到外部结点的路径，和给定值进行的关键码的比较次数等于该路径上内部结点的个数。  </p></li><li><p>分块查找<br>分块查找又称索引顺序查找。这种查找方法中除了表本身以外尚需建立一个索引表。<br>索引表的构造过程：<br>要查找的表分成几个子表(称为块)。对每个子表建立一个索引项，其中包括两项内容：关键字项（存放该块中最大的关键字 ）指针项（存放该块中第一个记录的地址）。索引表中关键字递增有序，表中记录可以有序，也可以无序。但块之间一定有序（即后一块中的最小关键字都大于前一块中的最大关键字）。<br>查找表构成：<br>让数据分块有序，即分成若干子表（块），要求每个子表（块）中数据元素的关键字都比后一子表中数据元素的关键字小（但子表内部未必有序）。<br>将各子表中的最大关键字构成一个索引表，表中还要包含每个子表的起始地址（即头指针）。<br>① 由索引表确定关键字所在的区域，由于索引表是有序表，可以用折半查找法；<br>② 在顺序表的某个子表中查找关键字，各子表内部数据元素无序，只能采用顺序查找法；  </p><pre><code> typedef struct {       int key;    int start;    int len; }IDX; int blk_search(int a[],IDX idx[],int v,int m) {       int low=0,high=m-1,mid,i,h;    while(low&lt;=high)       {          mid=(low+high)/2;        if(v&lt;idx[mid].key)                 high=mid-1;        else if(v&gt;idx[mid].key)            low=mid+1;        else         {              low=mid;            break;           }    }     if(low&gt;=m)        return(-1);    i=idx[low].start;    h=i+idx[low].len;    while(i&lt;h&amp;&amp;a[i]!=v)          i++ ;    if(a[i]!=v) i=-l;        return(i);} </code></pre></li><li><p>二叉排序树<br>若二叉排序树为空，则查找失败，否则<br>（1）首先将根结点值与待查值进行比较，若相等，则查找成功。<br>（2）若根结点值大于待查值，则进入左子树重复此步骤，否则，进入右子树重复此步骤。<br>（3）若在查找过程中遇到二叉排序树的叶子结点时，还没有找到待查结点，则查找不成功。<br>递归函数 </p><pre><code>NODE *search(NODE t,char x){       if(t==NULL)        return(NULL);    else    {         if(t-&gt;data==x) return(t);        if(x&lt;(t-&gt;data) return(search(t-&gt;lchild,x));        else         return(search(t-&gt;rchild,x));     }}</code></pre><p>非递归函数</p><pre><code>NODE  *search(NODE *t,char x){       NODE *p;    p=t;    while(p!=NULL)    {         if(p-&gt;data==x)  return(p);        if(x&lt;p-&gt;data)   p=p-&gt;lchild;        else   p=p-&gt;rchlid;     }    printf(“ 找不到值为%x的结点!”,x);    return(NULL);} </code></pre></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###静态表查找&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;顺序查找&lt;br&gt;核心：从数据的第一个元素开始，依次比较，直到找到目标数据或查找失败。  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从表中的第一个元素开始，依次与关键字比较           &lt;/li&gt;
+&lt;li&gt;若某个元素匹配关键字，则 查找成功。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;若查找到最后一个元素还未匹配关键字，则 查找失败。&lt;br&gt;特点：顺序查找平均关键字匹配次数为表长的一半，其时间复杂度为O(n),顺序查找的优点是对表无要求，插入数据可在O(1)内完成。缺点是时间复杂度较大，数据规模较大时，效率较低。  &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Data Structure" scheme="http://peisenli.github.io/tags/Data-Structure/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode16-最接近的三数之和</title>
@@ -419,27 +445,6 @@
     
     
       <category term="Leetcode" scheme="http://peisenli.github.io/tags/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>图的存储结构</title>
-    <link href="http://peisenli.github.io/2019/08/13/%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/"/>
-    <id>http://peisenli.github.io/2019/08/13/图的存储结构/</id>
-    <published>2019-08-13T02:41:59.000Z</published>
-    <updated>2019-08-13T02:48:19.645Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="图的存储结构"><a href="#图的存储结构" class="headerlink" title="图的存储结构"></a><center>图的存储结构</center></h2><p>由于图的结构比较复杂，任意两个顶点之间都可能存在关系，因此无法以数据元素在存储区中的物理位置来表示元素之间关系，即图没有顺序映象的存储结构。<br>另一方面，用多重链表表示图是自然的事，它是一种最简单的链式映象结构，即以一个由一个数据域和多个指针域组成的结点表示图中一个顶点，其中数据域存储该顶点的信息，指针域存储指向其邻接点的指针。  </p><p><center><img src="https://i.loli.net/2019/08/13/YLTV6NISDibzh53.png" alt="多重.jpg"><br>图1 有向图多重链表<br><img src="https://i.loli.net/2019/08/13/MRQzS3pCLbJFoZO.png" alt="表.jpg"><br>图2 无向图的多重链表</center><br>我们一般采用一些改进的方式来存储图，常用的有邻接矩阵、邻接表和十字链表及邻接多重表等。除了要存储图中各个顶点本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息）。存储方法的选择，取决于具体的应用。  </p><a id="more"></a><hr><h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>在邻接矩阵表示中，除了存放顶点本身信息外，还用一个矩阵表示各个顶点之间的关系。若(i,j)∈E(G)或&lt;i,j&gt;∈E(G),则矩阵中第i行 第j列元素值为1，否则为0 。<br><strong>无向图：  </strong>  </p><p><center><img src="https://i.loli.net/2019/08/13/eo1HNckBwgzQDiM.png" alt="邻阶矩阵.jpg"><br>图3 无向图的邻接矩阵表示</center><br>分析1：无向图的邻接矩阵是对称的；<br>分析2：顶点i 的度＝第 i 行 (列) 中1 的个数；<br>特别：完全图的邻接矩阵中，对角元素为0，其余1。<br>结论：<br>（1）矩阵是对称的，可压缩存储(上(下)三角);<br>（2）第i行或第i 列中1的个数为顶点i 的度;<br>（3）矩阵中1的个数的一半为图中边的数目;<br>（4）很容易判断顶点i和顶点j之间是否有边相连(看矩阵中i行j列值是否为1)。   </p><hr><p><strong>有向图：</strong>  </p><p><center><img src="https://i.loli.net/2019/08/13/jsqWJYnwrG9HM3X.png" alt="1565661031(1).jpg"><br>有向图的邻接矩阵表示</center><br>分析1：有向图的邻接矩阵可能是不对称的。<br>分析2：顶点的出度=第i行元素之和，顶点的入度=第i列元素之和，顶点的度=第i行元素之和+第i列元素之和。<br>结论：<br>（1） 矩阵不一定是对称的;<br>（2） 第i 行中1的个数为顶点i 的出度;<br>（3） 第i列中1的个数为顶点 i的入度;<br>（4） 矩阵中1的个数为图中弧的数目;<br>（5） 很容易判断顶点i 和顶点j 是否有弧相连.<br>邻接矩阵法优点：<br>容易实现图的操作，如：求某顶点的度、判断顶点之间是否有边（弧）、找顶点的邻接点等等。<br>邻接矩阵法缺点：<br>n个顶点需要n*n个单元存储边(弧);空间效率为O(n2)。 对稀疏图而言尤其浪费空间。</p><pre><code>#define INFINITE 9999       /* 假设的无穷大数 */void  creatadj(int n,int e,int t) /*n为顶点数,e为边数,t为1~4,分别表示无向图、有向图、带权无向图、带权有向图*/{      int i,j,k,w;    for(i=1;i&lt;=n;i++)     {          printf(“输入第%d顶点信息”,i);        v[i]=getchar();      }    for(i=1;i&lt;=n;i++)          for(j=1;j&lt;=n;j++)            if(t&gt;2)                 A[i][j]=INFINITE;            else                     A[i][j]=0;      for(k=1;k&lt;=e;k++)     {          scanf(“%d,%d”,&amp;i,&amp;j);         if(i&gt;n ||j&gt;n)  exit(0);         if(t&gt;2)            {                 scanf(“%d”,&amp;w);            A[i][j]=w;               if(t==3) A[j][i]=w;          }        else                 {             A[i][j]=1;            if(t==1)  A[j][i]=1;          }      }} </code></pre><hr><h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>图的邻接表存储方法是一种顺序分配与链式分配相结合的存储方法，它包括两部分：一部分是单链表，用来存放边的信息；另一部分是数组，主要用来存放顶点本身的数据信息。<br><strong>有向图：</strong>  </p><p><center><img src="https://i.loli.net/2019/08/13/sz1qmV6A5EdBNKb.png" alt="1565662180(1).jpg"><br>有向图的邻接表表示</center><br>出度：OD(Vi)＝单链出边表中链接的结点数<br>入度：ID(Vi)＝邻接点域为Vi的弧个数<br>结论：<br>（1）第i 个链表中结点数目为顶点i的出度；<br>（2）所有链表中结点数目为图中弧数；<br>（3）占用的存储单元数目为n+e 。<br><strong>无向图：</strong>  </p><p><center><img src="https://i.loli.net/2019/08/13/9MOj6Fop7kiV1qG.png" alt="1565662132(1).jpg"><br>无向图的邻接表表示</center><br>注：邻接表不唯一，因各个边结点的链入顺序是任意的<br>空间效率为O(n+2e)。<br>若是稀疏图(e&lt;&lt;n2)，比邻接矩阵表示法O(n2)省空间。<br>结论：<br>（1）第i 个链表中结点数目为顶点i的度；<br>（2）所有链表中结点数目的一半为图中边数；<br>（3）占用的存储单元数目为n+2e 。<br><strong>邻接表优缺点：</strong><br>优：空间效率高；容易寻找顶点的邻接点；<br>缺：判断两顶点间是否有边或弧，需搜索两结点对应的单链表，没有邻接矩阵方便。<br><strong>与邻接矩阵对比：</strong><br>① 对于任一确定的无向图，邻接矩阵是唯一的（行列号与顶点编号一致），但邻接表不唯一（链接次序与顶点编号无关）。<br>② 邻接矩阵的空间复杂度为O(n2),而邻接表的空间复杂度为O(n+e)。<br>③ 邻接矩阵多用于稠密图；而邻接表多用于稀疏图</p><h3 id="十字链表"><a href="#十字链表" class="headerlink" title="十字链表"></a>十字链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/fT7IYKbRoOXiqQN.png" width="250" hegiht="100" align="left">  </p><pre><code>弧结点：typedef  struct  arcnode{       int   tailvex,  headvex;        //弧尾、弧头在表头数组中位置     struct   arcnode   *hlink；//指向弧头相同的下一条弧     struct   arcnode   *tlink;    //指向弧尾相同的下一条弧}AD;    顶点结点：typedef  struct  dnode{       int   data;  //存与顶点有关信息     struct   arcnode   *firstin；//指向以该顶点为弧头的第一个弧结点     struct   arcnode   *firstout; //指向以该顶点为弧尾的第一个弧结点}DD;</code></pre><h3 id="多重链表"><a href="#多重链表" class="headerlink" title="多重链表"></a>多重链表</h3><p>C语言实现及定义：<br><img src="https://i.loli.net/2019/08/13/tEPCrjLlOzBwXY5.png" width="250" hegiht="200" align="left">  </p><pre><code>边结点：typedef   struct  node{       int  mark;   //标志域     int  ivex, jvex;  //该边依附的两个顶点在表头数组中位置     struct  node   *ilink,  *jlink;  //分别指向依附于ivex和jvex的下一条边}JD;顶点结点：typedef   struct  dnode{        int   data;   //存与顶点有关的信息    struct   node  *firstedge;  //指向第一条依附于该顶点的边}DD;</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;图的存储结构&quot;&gt;&lt;a href=&quot;#图的存储结构&quot; class=&quot;headerlink&quot; title=&quot;图的存储结构&quot;&gt;&lt;/a&gt;&lt;center&gt;图的存储结构&lt;/center&gt;&lt;/h2&gt;&lt;p&gt;由于图的结构比较复杂，任意两个顶点之间都可能存在关系，因此无法以数据元素在存储区中的物理位置来表示元素之间关系，即图没有顺序映象的存储结构。&lt;br&gt;另一方面，用多重链表表示图是自然的事，它是一种最简单的链式映象结构，即以一个由一个数据域和多个指针域组成的结点表示图中一个顶点，其中数据域存储该顶点的信息，指针域存储指向其邻接点的指针。  &lt;/p&gt;
-&lt;p&gt;&lt;center&gt;&lt;img src=&quot;https://i.loli.net/2019/08/13/YLTV6NISDibzh53.png&quot; alt=&quot;多重.jpg&quot;&gt;&lt;br&gt;图1 有向图多重链表&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/08/13/MRQzS3pCLbJFoZO.png&quot; alt=&quot;表.jpg&quot;&gt;&lt;br&gt;图2 无向图的多重链表&lt;/center&gt;&lt;br&gt;我们一般采用一些改进的方式来存储图，常用的有邻接矩阵、邻接表和十字链表及邻接多重表等。除了要存储图中各个顶点本身的信息外，同时还要存储顶点与顶点之间的所有关系（边的信息）。存储方法的选择，取决于具体的应用。  &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Data Struct" scheme="http://peisenli.github.io/tags/Data-Struct/"/>
     
   </entry>
   
