@@ -11,7 +11,8 @@
     def merge(self, nums1, m, nums2, n):
         nums1[m:] = nums2
         return nums1.sort()
-</code></pre><p>思路二：从有序数组尾部进行比较，然后在长数组尾部进行写入，注意问题：数组越界及元素个数为0的数组</p>
+</code></pre><a id="more"></a>
+<p>思路二：从有序数组尾部进行比较，然后在长数组尾部进行写入，注意问题：数组越界及元素个数为0的数组</p>
 <pre><code>class Solution(object):
     def merge(self, nums1, m, nums2, n):
         &quot;&quot;&quot;

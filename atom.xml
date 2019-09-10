@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-10T11:45:13.587Z</updated>
+  <updated>2019-09-10T11:48:04.880Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -21,16 +21,18 @@
     <link href="http://peisenli.github.io/2019/09/10/LeetCode88-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/"/>
     <id>http://peisenli.github.io/2019/09/10/LeetCode88-合并两个有序数组/</id>
     <published>2019-09-10T11:39:09.000Z</published>
-    <updated>2019-09-10T11:45:13.587Z</updated>
+    <updated>2019-09-10T11:48:04.880Z</updated>
     
-    <content type="html"><![CDATA[<p>给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。<br>说明:<br>初始化 nums1 和 nums2 的元素数量分别为 m 和 n。<br>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。<br>示例:<br>输入:<br>nums1 = [1,2,3,0,0,0], m = 3<br>nums2 = [2,5,6],       n = 3<br>输出: [1,2,2,3,5,6]<br>思路一：追加后使用sort排序</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        nums1[m:] = nums2        return nums1.sort()</code></pre><p>思路二：从有序数组尾部进行比较，然后在长数组尾部进行写入，注意问题：数组越界及元素个数为0的数组</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        &quot;&quot;&quot;        :type nums1: List[int]        :type m: int        :type nums2: List[int]        :type n: int        :rtype: None Do not return anything, modify nums1 in-place instead.        &quot;&quot;&quot;        p1 = m - 1        p2 = n - 1        # set pointer for nums1        p = m + n - 1        # while there are still elements to compare        while p1 &gt;= 0 and p2 &gt;= 0:            if nums1[p1] &lt; nums2[p2]:                nums1[p] = nums2[p2]                p2 -= 1            else:                nums1[p] =  nums1[p1]                p1 -= 1            p -= 1                # add missing elements from nums2        nums1[:p2 + 1] = nums2[:p2 + 1]</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。<br>说明:<br>初始化 nums1 和 nums2 的元素数量分别为 m 和 n。<br>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。<br>示例:<br>输入:<br>nums1 = [1,2,3,0,0,0], m = 3<br>nums2 = [2,5,6],       n = 3<br>输出: [1,2,2,3,5,6]<br>思路一：追加后使用sort排序</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        nums1[m:] = nums2        return nums1.sort()</code></pre><a id="more"></a><p>思路二：从有序数组尾部进行比较，然后在长数组尾部进行写入，注意问题：数组越界及元素个数为0的数组</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        &quot;&quot;&quot;        :type nums1: List[int]        :type m: int        :type nums2: List[int]        :type n: int        :rtype: None Do not return anything, modify nums1 in-place instead.        &quot;&quot;&quot;        p1 = m - 1        p2 = n - 1        # set pointer for nums1        p = m + n - 1        # while there are still elements to compare        while p1 &gt;= 0 and p2 &gt;= 0:            if nums1[p1] &lt; nums2[p2]:                nums1[p] = nums2[p2]                p2 -= 1            else:                nums1[p] =  nums1[p1]                p1 -= 1            p -= 1                # add missing elements from nums2        nums1[:p2 + 1] = nums2[:p2 + 1]</code></pre>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。&lt;br&gt;说明:&lt;br&gt;初始化 nums1 和 nums2 的元素数量分别为 m 和 n。&lt;br&gt;你可以假设 nums1 有足够的空间（空间大小大于或等
-      
+      &lt;p&gt;给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。&lt;br&gt;说明:&lt;br&gt;初始化 nums1 和 nums2 的元素数量分别为 m 和 n。&lt;br&gt;你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。&lt;br&gt;示例:&lt;br&gt;输入:&lt;br&gt;nums1 = [1,2,3,0,0,0], m = 3&lt;br&gt;nums2 = [2,5,6],       n = 3&lt;br&gt;输出: [1,2,2,3,5,6]&lt;br&gt;思路一：追加后使用sort排序&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Solution(object):
+    def merge(self, nums1, m, nums2, n):
+        nums1[m:] = nums2
+        return nums1.sort()
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
