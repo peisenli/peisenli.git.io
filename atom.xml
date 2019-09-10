@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-09T12:52:15.737Z</updated>
+  <updated>2019-09-10T11:45:13.587Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LeetCode88-合并两个有序数组</title>
+    <link href="http://peisenli.github.io/2019/09/10/LeetCode88-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/"/>
+    <id>http://peisenli.github.io/2019/09/10/LeetCode88-合并两个有序数组/</id>
+    <published>2019-09-10T11:39:09.000Z</published>
+    <updated>2019-09-10T11:45:13.587Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。<br>说明:<br>初始化 nums1 和 nums2 的元素数量分别为 m 和 n。<br>你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。<br>示例:<br>输入:<br>nums1 = [1,2,3,0,0,0], m = 3<br>nums2 = [2,5,6],       n = 3<br>输出: [1,2,2,3,5,6]<br>思路一：追加后使用sort排序</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        nums1[m:] = nums2        return nums1.sort()</code></pre><p>思路二：从有序数组尾部进行比较，然后在长数组尾部进行写入，注意问题：数组越界及元素个数为0的数组</p><pre><code>class Solution(object):    def merge(self, nums1, m, nums2, n):        &quot;&quot;&quot;        :type nums1: List[int]        :type m: int        :type nums2: List[int]        :type n: int        :rtype: None Do not return anything, modify nums1 in-place instead.        &quot;&quot;&quot;        p1 = m - 1        p2 = n - 1        # set pointer for nums1        p = m + n - 1        # while there are still elements to compare        while p1 &gt;= 0 and p2 &gt;= 0:            if nums1[p1] &lt; nums2[p2]:                nums1[p] = nums2[p2]                p2 -= 1            else:                nums1[p] =  nums1[p1]                p1 -= 1            p -= 1                # add missing elements from nums2        nums1[:p2 + 1] = nums2[:p2 + 1]</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。&lt;br&gt;说明:&lt;br&gt;初始化 nums1 和 nums2 的元素数量分别为 m 和 n。&lt;br&gt;你可以假设 nums1 有足够的空间（空间大小大于或等
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>LeetCode62-不同路径</title>
@@ -425,32 +448,6 @@
 2   3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;输出: 6&lt;/p&gt;
 &lt;p&gt;来源：力扣（LeetCode）&lt;br&gt;链接：&lt;a href=&quot;https://leetcode-cn.com/problems/binary-tree-maximum-path-sum&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://leetcode-cn.com/problems/binary-tree-maximum-path-sum&lt;/a&gt;&lt;br&gt;著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode104-二叉树的最大深度</title>
-    <link href="http://peisenli.github.io/2019/08/16/LeetCode104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/"/>
-    <id>http://peisenli.github.io/2019/08/16/LeetCode104-二叉树的最大深度/</id>
-    <published>2019-08-16T09:22:45.000Z</published>
-    <updated>2019-08-16T09:28:36.792Z</updated>
-    
-    <content type="html"><![CDATA[<p>给定一个二叉树，找出其最大深度。<br>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。<br>说明: 叶子节点是指没有子节点的节点。<br>示例：<br>给定二叉树 [3,9,20,null,null,15,7]，  </p><pre><code>  3   / \  9  20    /  \   15   7  </code></pre><p>返回它的最大深度 3 。<br><a id="more"></a><br>python递归实现：</p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def maxDepth(self, root: TreeNode) -&gt; int:        if not root:            return 0        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))# 方法二 迭代class Solution:    &quot;&quot;&quot;    迭代法    &quot;&quot;&quot;    def maxDepth(self, root):        stack = []                                              # 定义一个空栈，栈中的元素是结点及其对应的深度        if root:                                                # 如果根结点不为空            stack.append((root, 1))                             # 则将根节点及其对应深度1组成的元组入栈        max_depth = 0                                           # 初始化最大深度为零        while stack:                                            # 当栈非空时            tree_node, cur_depth = stack.pop()                  # 弹出栈顶结点及其对应的深度            if tree_node:                                       # 如果该结点不为空                max_depth = max(max_depth, cur_depth)           # 更新当前最大深度，如果该结点深度更大的话                stack.append((tree_node.left, cur_depth+1))     # 将该结点的左孩子结点及其对应深度压入栈中                stack.append((tree_node.right, cur_depth+1))    # 将该结点的右孩子结点及其对应深度压入栈中        return max_depth</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;给定一个二叉树，找出其最大深度。&lt;br&gt;二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。&lt;br&gt;说明: 叶子节点是指没有子节点的节点。&lt;br&gt;示例：&lt;br&gt;给定二叉树 [3,9,20,null,null,15,7]，  &lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  3  
- / \  
-9  20  
-  /  \  
- 15   7  
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;返回它的最大深度 3 。&lt;br&gt;
     
     </summary>
     
