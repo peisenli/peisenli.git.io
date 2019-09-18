@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-18T03:19:10.366Z</updated>
+  <updated>2019-09-18T07:15:43.406Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -17,13 +17,84 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>数据结构-归并排序</title>
+    <link href="http://peisenli.github.io/2019/09/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
+    <id>http://peisenli.github.io/2019/09/18/数据结构-归并排序/</id>
+    <published>2019-09-18T07:15:04.000Z</published>
+    <updated>2019-09-18T07:15:43.406Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="归并排序和基数排序"><a href="#归并排序和基数排序" class="headerlink" title="归并排序和基数排序"></a>归并排序和基数排序</h3><p><strong>归并排序</strong>（MERGE-SORT）是建立在归并操作上的一种有效的排序算法,该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。</p><ul><li>申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列  </li><li>设定两个指针，最初位置分别为两个已经排序序列的起始位置</li><li>比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置</li><li>重复步骤3直到某一序列的指针达到序列尾</li><li><p>将另一序列剩下的所有元素直接复制到合并序列尾，一次归并结束</p><a id="more"></a><pre><code>int min(int x, int y) {    return x &lt; y ? x : y;}void merge_sort(int arr[], int len) {    int *a = arr;    int *b = (int *) malloc(len * sizeof(int));    int seg, start;    for (seg = 1; seg &lt; len; seg += seg) {        for (start = 0; start &lt; len; start += seg * 2) {            int low = start, mid = min(start + seg, len), high = min(start + seg * 2, len);            int k = low;            int start1 = low, end1 = mid;            int start2 = mid, end2 = high;            while (start1 &lt; end1 &amp;&amp; start2 &lt; end2)                b[k++] = a[start1] &lt; a[start2] ? a[start1++] : a[start2++];            while (start1 &lt; end1)                b[k++] = a[start1++];            while (start2 &lt; end2)                b[k++] = a[start2++];        }        int *temp = a;        a = b;        b = temp;    }    if (a != arr) {        int i;        for (i = 0; i &lt; len; i++)            b[i] = a[i];        b = a;    }    free(b);}  </code></pre><p>是否稳定：true<br>平均时间复杂度：O(nlogn)<br>最差时间复杂度：O(nlogn)<br>最优时间复杂度：O(n)<br>空间复杂度：　　O(n)</p></li></ul><hr><p><strong>基数排序</strong>（Radix sort）是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。由于整数也可以表达字符串（比如名字或日期）和特定格式的浮点数，所以基数排序也不是只能使用于整数。基数排序的发明可以追溯到1887年赫尔曼·何乐礼在打孔卡片制表机（Tabulation Machine）上的贡献。<br>它是这样实现的：将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后，数列就变成一个有序序列。<br>基数排序的方式可以采用LSD（Least significant digital）或MSD（Most significant digital），LSD的排序方式由键值的最右边开始，而MSD则相反，由键值的最左边开始。<br>排序过程：将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列。<br>基数排序法会使用到桶 (Bucket)，顾名思义，通过将要比较的位（个位、十位、百位…），将要排序的元素分配至 0~9 个桶中，借以达到排序的作用，在某些时候，基数排序法的效率高于其它的比较性排序法</p><pre><code>#include&lt;stdio.h&gt;#define MAX 20//#define SHOWPASS#define BASE 10void print(int *a, int n) {  int i;  for (i = 0; i &lt; n; i++) {    printf(&quot;%d\t&quot;, a[i]);  }}void radixsort(int *a, int n) {  int i, b[MAX], m = a[0], exp = 1;  for (i = 1; i &lt; n; i++)     {        if (a[i] &gt; m) {          m = a[i];        }      }  while (m / exp &gt; 0) {    int bucket[BASE] = { 0 };    for (i = 0; i &lt; n; i++) {      bucket[(a[i] / exp) % BASE]++;    }    for (i = 1; i &lt; BASE; i++) {      bucket[i] += bucket[i - 1];    }    for (i = n - 1; i &gt;= 0; i--) {      b[--bucket[(a[i] / exp) % BASE]] = a[i];    }    for (i = 0; i &lt; n; i++) {      a[i] = b[i];    }    exp *= BASE;#ifdef SHOWPASS    printf(&quot;\nPASS   : &quot;);    print(a, n);#endif  }}int main() {  int arr[MAX];  int i, n;  printf(&quot;Enter total elements (n &lt;= %d) : &quot;, MAX);  scanf(&quot;%d&quot;, &amp;n);  n = n &lt; MAX ? n : MAX;  printf(&quot;Enter %d Elements : &quot;, n);  for (i = 0; i &lt; n; i++) {    scanf(&quot;%d&quot;, &amp;arr[i]);  }  printf(&quot;\nARRAY  : &quot;);  print(&amp;arr[0], n);  radixsort(&amp;arr[0], n);  printf(&quot;\nSORTED : &quot;);  print(&amp;arr[0], n);  printf(&quot;\n&quot;);  return 0;}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;归并排序和基数排序&quot;&gt;&lt;a href=&quot;#归并排序和基数排序&quot; class=&quot;headerlink&quot; title=&quot;归并排序和基数排序&quot;&gt;&lt;/a&gt;归并排序和基数排序&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;归并排序&lt;/strong&gt;（MERGE-SORT）是建立在归并操作上的一种有效的排序算法,该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为二路归并。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列  &lt;/li&gt;
+&lt;li&gt;设定两个指针，最初位置分别为两个已经排序序列的起始位置&lt;/li&gt;
+&lt;li&gt;比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置&lt;/li&gt;
+&lt;li&gt;重复步骤3直到某一序列的指针达到序列尾&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;将另一序列剩下的所有元素直接复制到合并序列尾，一次归并结束&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Data Structure" scheme="http://peisenli.github.io/tags/Data-Structure/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据结构-选择排序</title>
+    <link href="http://peisenli.github.io/2019/09/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/"/>
+    <id>http://peisenli.github.io/2019/09/18/数据结构-选择排序/</id>
+    <published>2019-09-18T07:13:40.000Z</published>
+    <updated>2019-09-18T07:14:23.381Z</updated>
+    
+    <content type="html"><![CDATA[<p>###数据结构-选择排序###<br><strong>选择排序</strong>（Selection sort）是一种简单直观的排序算法。它的工作原理是：第一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，然后再从剩余的未排序元素中寻找到最小（大）元素，然后放到已排序的序列的末尾。以此类推，直到全部待排序的数据元素的个数为零。选择排序是不稳定的排序方法。<br><strong>简单选择排序：</strong><br>该算法的实现思想为：对于具有 n 个记录的无序表遍历 n-1 次，第 i 次从无序表中第 i 个记录开始，找出后序关键字中最小的记录，然后放置在第 i 的位置上。<br>例如对无序表{56，12，80，91，20}采用简单选择排序算法进行排序，具体过程为：<br>第一次遍历时，从下标为 1 的位置即 56 开始，找出关键字值最小的记录 12，同下标为 0 的关键字 56 交换位置：<br>{12，56，80，91，20}<br>第二次遍历时，从下标为 2 的位置即 56 开始，找出最小值 20，同下标为 2 的关键字 56 互换位置：<br>{12，20，80，91，56}<br>第三次遍历时，从下标为 3 的位置即 80 开始，找出最小值 56，同下标为 3 的关键字 80 互换位置：<br>{12，20，56，91，80}<br>第四次遍历时，从下标为 4 的位置即 91 开始，找出最小是 80，同下标为 4 的关键字 91 互换位置：<br>{12，20，56，80，91}<br>到此简单选择排序算法完成，无序表变为有序表。<br><a id="more"></a></p><pre><code>void SelectSort(ElemTypr A[],int n){    for(i=0;i&lt;n-1;i++)    {        min=i;        for(j=i+1;j&lt;n;j++)            if(A[j]&lt;A[min]) min=j;        if(min!=j)            swap(A[i],A[min]);    }}</code></pre><hr><p><strong>堆排序：</strong>若以升序排序说明，把数组转换成最大堆积(Max-Heap Heap)，这是一种满足最大堆积性质(Max-Heap Property)的二叉树：对于除了根之外的每个节点i, A[parent(i)] ≥ A[i]。<br>重复从最大堆积取出数值最大的结点(把根结点和最后一个结点交换，把交换后的最后一个结点移出堆)，并让残余的堆积维持最大堆积性质。<br>通常堆是通过一维数组来实现的。在数组起始位置为0的情形中：<br>父节点i的左子节点在位置(2i+1);<br>父节点i的右子节点在位置(2i+2);<br>子节点i的父节点在位置floor((i-1)/2);<br>在堆的数据结构中，堆中的最大值总是位于根节点（在优先队列中使用堆的话堆中的最小值位于根节点）。堆中定义以下几种操作：<br>最大堆调整（Max Heapify）：将堆的末端子节点作调整，使得子节点永远小于父节点<br>创建最大堆（Build Max Heap）：将堆中的所有数据重新排序<br>堆排序（HeapSort）：移除位在第一个数据的根节点，并做最大堆调整的递归运算  </p><pre><code>#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;void swap(int *a, int *b) {    int temp = *b;    *b = *a;    *a = temp;}void max_heapify(int arr[], int start, int end) {    // 建立父節點指標和子節點指標    int dad = start;    int son = dad * 2 + 1;    while (son &lt;= end) { // 若子節點指標在範圍內才做比較        if (son + 1 &lt;= end &amp;&amp; arr[son] &lt; arr[son + 1]) // 先比較兩個子節點大小，選擇最大的            son++;        if (arr[dad] &gt; arr[son]) //如果父節點大於子節點代表調整完畢，直接跳出函數            return;        else { // 否則交換父子內容再繼續子節點和孫節點比较            swap(&amp;arr[dad], &amp;arr[son]);            dad = son;            son = dad * 2 + 1;        }    }}void heap_sort(int arr[], int len) {    int i;    // 初始化，i從最後一個父節點開始調整    for (i = len / 2 - 1; i &gt;= 0; i--)        max_heapify(arr, i, len - 1);    // 先將第一個元素和已排好元素前一位做交換，再重新調整，直到排序完畢    for (i = len - 1; i &gt; 0; i--) {        swap(&amp;arr[0], &amp;arr[i]);        max_heapify(arr, 0, i - 1);    }}int main() {    int arr[] = { 3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6 };    int len = (int) sizeof(arr) / sizeof(*arr);    heap_sort(arr, len);    int i;    for (i = 0; i &lt; len; i++)        printf(&quot;%d &quot;, arr[i]);    printf(&quot;\n&quot;);    return 0;}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###数据结构-选择排序###&lt;br&gt;&lt;strong&gt;选择排序&lt;/strong&gt;（Selection sort）是一种简单直观的排序算法。它的工作原理是：第一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，然后再从剩余的未排序元素中寻找到最小（大）元素，然后放到已排序的序列的末尾。以此类推，直到全部待排序的数据元素的个数为零。选择排序是不稳定的排序方法。&lt;br&gt;&lt;strong&gt;简单选择排序：&lt;/strong&gt;&lt;br&gt;该算法的实现思想为：对于具有 n 个记录的无序表遍历 n-1 次，第 i 次从无序表中第 i 个记录开始，找出后序关键字中最小的记录，然后放置在第 i 的位置上。&lt;br&gt;例如对无序表{56，12，80，91，20}采用简单选择排序算法进行排序，具体过程为：&lt;br&gt;第一次遍历时，从下标为 1 的位置即 56 开始，找出关键字值最小的记录 12，同下标为 0 的关键字 56 交换位置：&lt;br&gt;{12，56，80，91，20}&lt;br&gt;第二次遍历时，从下标为 2 的位置即 56 开始，找出最小值 20，同下标为 2 的关键字 56 互换位置：&lt;br&gt;{12，20，80，91，56}&lt;br&gt;第三次遍历时，从下标为 3 的位置即 80 开始，找出最小值 56，同下标为 3 的关键字 80 互换位置：&lt;br&gt;{12，20，56，91，80}&lt;br&gt;第四次遍历时，从下标为 4 的位置即 91 开始，找出最小是 80，同下标为 4 的关键字 91 互换位置：&lt;br&gt;{12，20，56，80，91}&lt;br&gt;到此简单选择排序算法完成，无序表变为有序表。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Data structure" scheme="http://peisenli.github.io/tags/Data-structure/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据结构-交换排序</title>
+    <link href="http://peisenli.github.io/2019/09/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F/"/>
+    <id>http://peisenli.github.io/2019/09/18/数据结构-交换排序/</id>
+    <published>2019-09-18T07:11:58.000Z</published>
+    <updated>2019-09-18T07:13:14.749Z</updated>
+    
+    <content type="html"><![CDATA[<p>###数据结构-交换排序###<br>所谓交换，就是根据序列中两个记录键值的比较结果来对换这两个记录在序列中的位置，交换排序的特点是：将键值较大的记录向序列的尾部移动，键值较小的记录向序列的前部移动。<br><strong>冒泡排序（Bubble Sort）</strong>是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。<br>冒泡排序对n个项目需要O(n^2)的比较次数，且可以原地排序。尽管这个算法是最简单了解和实现的排序算法之一，但它对于包含大量的元素的数列排序是很没有效率的。<br>冒泡排序是与插入排序拥有相等的运行时间，但是两种算法在需要的交换次数却很大地不同。在最坏的情况，冒泡排序需要 O(n^2)次交换，而插入排序只要最多O(n)交换。冒泡排序的实现（类似下面）通常会对已经排序好的数列拙劣地运行O(n^2)，而插入排序在这个例子只需要O(n)个运算。因此很多现代的算法教科书避免使用冒泡排序，而用插入排序取代之。冒泡排序如果能在内部循环第一次运行时，使用一个旗标来表示有无需要交换的可能，也可以把最优情况下的复杂度降低到O(n)。在这个情况，已经排序好的数列就无交换的需要。若在每次走访数列时，把走访顺序反过来，也可以稍微地改进效率。有时候称为鸡尾酒排序，因为算法会从数列的一端到另一端之间穿梭往返。<br>冒泡排序算法的运作如下：  </p><ul><li>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</li><li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。</li><li>针对所有的元素重复以上的步骤，除了最后一个。</li><li><p>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</p><a id="more"></a><pre><code>#include &lt;stdio.h&gt;//交换 a 和 b 的位置的函数void swap(int *a, int *b);int main(){    int array[8] = {49,38,65,97,76,13,27,49};    int i, j;    int key;    //有多少记录，就需要多少次冒泡，当比较过程，所有记录都按照升序排列时，排序结束    for (i = 0; i &lt; 8; i++){        key=0;//每次开始冒泡前，初始化 key 值为 0        //每次起泡从下标为 0 开始，到 8-i 结束        for (j = 0; j+1&lt;8-i; j++){            if (array[j] &gt; array[j+1]){                key=1;                swap(&amp;array[j], &amp;array[j+1]);            }        }        //如果 key 值为 0，表明表中记录排序完成        if (key==0) {            break;        }    }    for (i = 0; i &lt; 8; i++){        printf(&quot;%d &quot;, array[i]);    }    return 0;}void swap(int *a, int *b){    int temp;    temp = *a;    *a = *b;    *b = temp;}</code></pre><p>时间复杂度：O(n^2)<br>空间复杂度：O(1)<br>稳定：是</p></li></ul><hr><p><strong>快速排序</strong>使用分治法（Divide and conquer）策略来把一个序列（list）分为较小和较大的2个子序列，然后递归地排序两个子序列。<br>步骤为：  </p><ul><li>挑选基准值：从数列中挑出一个元素，称为“基准”（pivot）</li><li>分割：重新排序数列，所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准后面（与基准值相等的数可以到任何一边）。在这个分割结束之后，对基准值的排序就已经完成  </li><li>递归排序子序列：递归地将小于基准值元素的子序列和大于基准值元素的子序列排序。</li><li><p>递归到最底部的判断条件是数列的大小是零或一，此时该数列显然已经有序。</p><pre><code>void quicksort(int left, int right) {    int i, j, t, temp;    if(left &gt; right)        return;    temp = a[left]; //temp中存的就是基准数    i = left;    j = right;    while(i != j) { //顺序很重要，要先从右边开始找        while(a[j] &gt;= temp &amp;&amp; i &lt; j)            j--;        while(a[i] &lt;= temp &amp;&amp; i &lt; j)//再找右边的            i++;               if(i &lt; j)//交换两个数在数组中的位置        {            t = a[i];            a[i] = a[j];            a[j] = t;        }    }    //最终将基准数归位    a[left] = a[i];    a[i] = temp;    quicksort(left, i-1);//继续处理左边的，这里是一个递归的过程    quicksort(i+1, right);//继续处理右边的 ，这里是一个递归的过程}</code></pre><p>时间复杂度：O(logn)<br>空间复杂度：O(nlogn)<br>稳定：否</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###数据结构-交换排序###&lt;br&gt;所谓交换，就是根据序列中两个记录键值的比较结果来对换这两个记录在序列中的位置，交换排序的特点是：将键值较大的记录向序列的尾部移动，键值较小的记录向序列的前部移动。&lt;br&gt;&lt;strong&gt;冒泡排序（Bubble Sort）&lt;/strong&gt;是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。&lt;br&gt;冒泡排序对n个项目需要O(n^2)的比较次数，且可以原地排序。尽管这个算法是最简单了解和实现的排序算法之一，但它对于包含大量的元素的数列排序是很没有效率的。&lt;br&gt;冒泡排序是与插入排序拥有相等的运行时间，但是两种算法在需要的交换次数却很大地不同。在最坏的情况，冒泡排序需要 O(n^2)次交换，而插入排序只要最多O(n)交换。冒泡排序的实现（类似下面）通常会对已经排序好的数列拙劣地运行O(n^2)，而插入排序在这个例子只需要O(n)个运算。因此很多现代的算法教科书避免使用冒泡排序，而用插入排序取代之。冒泡排序如果能在内部循环第一次运行时，使用一个旗标来表示有无需要交换的可能，也可以把最优情况下的复杂度降低到O(n)。在这个情况，已经排序好的数列就无交换的需要。若在每次走访数列时，把走访顺序反过来，也可以稍微地改进效率。有时候称为鸡尾酒排序，因为算法会从数列的一端到另一端之间穿梭往返。&lt;br&gt;冒泡排序算法的运作如下：  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;比较相邻的元素。如果第一个比第二个大，就交换他们两个。&lt;/li&gt;
+&lt;li&gt;对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。&lt;/li&gt;
+&lt;li&gt;针对所有的元素重复以上的步骤，除了最后一个。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Data structure" scheme="http://peisenli.github.io/tags/Data-structure/"/>
+    
+  </entry>
+  
+  <entry>
     <title>数据结构-插入排序</title>
     <link href="http://peisenli.github.io/2019/09/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/"/>
     <id>http://peisenli.github.io/2019/09/18/数据结构-插入排序/</id>
     <published>2019-09-18T03:12:51.000Z</published>
-    <updated>2019-09-18T03:19:10.366Z</updated>
+    <updated>2019-09-18T05:53:21.671Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>插入排序</strong>（Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用inplace排序（即只需用到 O(1)的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。<br><strong>直接插入排序：</strong>    </p><ol><li>从第一个元素开始，该元素可以认为已经被排序</li><li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li><li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li><li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li><li>将新元素插入到该位置后</li><li><p>重复步骤2~5  </p><pre><code>void Insertionsort(int arr[], int len){        int i,j,key;        for (i=1;i&lt;len;i++){                key = arr[i];                j=i-1;                while((j&gt;=0) &amp;&amp; (arr[j]&gt;key)) {                        arr[j+1] = arr[j];                        j--;                }                arr[j+1] = key;        }}</code></pre><p>时间复杂度：O(n^2)<br>空间复杂度：O(1)<br>稳定：是<br>适用：顺序存储和链式存储的线性表  </p><a id="more"></a><p><strong>折半插入排序：</strong><br>折半插入排序（binary insertion sort）是对插入排序算法的一种改进，由于排序算法过程中，就是不断的依次将元素插入前面已排好序的序列中。由于前半部分为已排好序的数列，这样我们不用按顺序依次寻找插入点，可以采用折半查找的方法来加快寻找插入点的速度。<br>（1） 将一新的元素插入到有序数组中，寻找插入点时，将带插区域的首元素设置为a[low],末元素设置为a[high],比较时则将待插元素与参考元素a[m]（m=(low+high)/2）相比较。；<br>（2）如果待插元素比参考元素小，则选择a[low]到a[m-1]为新的插入区域（即high=m-1）,否则选择a[m+1]到a[high]为插入区域；<br>（3）如此直到low&lt;=high不成立，即将此位置(low)之后所有元素后移一位，并将新元素插入a[high+1]中。  </p><p> void BInsertSort(int a[],int size){</p><pre><code>int i,j,low = 0,high = 0,mid;int temp = 0;for (i=1; i&lt;size; i++) {    low=0;    high=i-1;    temp=a[i];    //采用折半查找法判断插入位置，最终变量 low 表示插入位置    while (low&lt;=high) {        mid=(low+high)/2;        if (a[mid]&gt;temp) {            high=mid-1;        }        else{            low=mid+1;        }    }    //有序表中插入位置后的元素统一后移    for (j=i; j&gt;low; j--) {        a[j]=a[j-1];    }    a[low]=temp;//插入元素}</code></pre><p> }<br>时间复杂度：O(n^2)<br><strong>希尔排序：</strong><br>希尔排序(Shell’s Sort)是插入排序的一种又称“缩小增量排序”（Diminishing Increment Sort），是直接插入排序算法的一种更高效的改进版本。希尔排序是非稳定排序算法。<br>希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。<br>步长取值：d1=n/2 di+1=di/2<br><img src="https://i.loli.net/2019/09/18/QfVThLPImHFqrpE.png" alt="1024555_20161128110416068_1421707828.png">  </p><p> void shell_sort(int arr[], int len) {</p><pre><code>int gap, i, j;int temp;for (gap = len &gt;&gt; 1; gap &gt; 0; gap &gt;&gt;= 1)    for (i = gap; i &lt; len; i++) {        temp = arr[i];        for (j = i - gap; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j -= gap)            arr[j + gap] = arr[j];        arr[j + gap] = temp;    }</code></pre><p> }<br>时间复杂度： O(n^(1.3—2))<br>空间复杂度： O(1)<br>稳定性： 不稳定  </p></li></ol>]]></content>
+    <content type="html"><![CDATA[<p><strong>插入排序</strong>（Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用inplace排序（即只需用到 O(1)的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。<br><strong>直接插入排序：</strong>    </p><ol><li>从第一个元素开始，该元素可以认为已经被排序</li><li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li><li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li><li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li><li>将新元素插入到该位置后</li><li><p>重复步骤2~5  </p><pre><code>void Insertionsort(int arr[], int len){        int i,j,key;        for (i=1;i&lt;len;i++){                key = arr[i];                j=i-1;                while((j&gt;=0) &amp;&amp; (arr[j]&gt;key)) {                        arr[j+1] = arr[j];                        j--;                }                arr[j+1] = key;        }}</code></pre><p>时间复杂度：O(n^2)<br>空间复杂度：O(1)<br>稳定：是<br>适用：顺序存储和链式存储的线性表  </p><a id="more"></a></li></ol><hr><p><strong>折半插入排序：</strong><br>折半插入排序（binary insertion sort）是对插入排序算法的一种改进，由于排序算法过程中，就是不断的依次将元素插入前面已排好序的序列中。由于前半部分为已排好序的数列，这样我们不用按顺序依次寻找插入点，可以采用折半查找的方法来加快寻找插入点的速度。<br>（1） 将一新的元素插入到有序数组中，寻找插入点时，将带插区域的首元素设置为a[low],末元素设置为a[high],比较时则将待插元素与参考元素a[m]（m=(low+high)/2）相比较。；<br>（2）如果待插元素比参考元素小，则选择a[low]到a[m-1]为新的插入区域（即high=m-1）,否则选择a[m+1]到a[high]为插入区域；<br>（3）如此直到low&lt;=high不成立，即将此位置(low)之后所有元素后移一位，并将新元素插入a[high+1]中。  </p><pre><code>void BInsertSort(int a[],int size){    int i,j,low = 0,high = 0,mid;    int temp = 0;    for (i=1; i&lt;size; i++) {        low=0;        high=i-1;        temp=a[i];        //采用折半查找法判断插入位置，最终变量 low 表示插入位置        while (low&lt;=high) {            mid=(low+high)/2;            if (a[mid]&gt;temp) {                high=mid-1;            }            else{                low=mid+1;            }        }        //有序表中插入位置后的元素统一后移        for (j=i; j&gt;low; j--) {            a[j]=a[j-1];        }        a[low]=temp;//插入元素    }}</code></pre><p>时间复杂度：O(n^2)  </p><hr><p><strong>希尔排序：</strong><br>希尔排序(Shell’s Sort)是插入排序的一种又称“缩小增量排序”（Diminishing Increment Sort），是直接插入排序算法的一种更高效的改进版本。希尔排序是非稳定排序算法。<br>希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。<br>步长取值：d1=n/2 di+1=di/2<br><img src="https://i.loli.net/2019/09/18/QfVThLPImHFqrpE.png" alt="1024555_20161128110416068_1421707828.png">    </p><pre><code>void shell_sort(int arr[], int len) {    int gap, i, j;    int temp;    for (gap = len &gt;&gt; 1; gap &gt; 0; gap &gt;&gt;= 1)        for (i = gap; i &lt; len; i++) {            temp = arr[i];            for (j = i - gap; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j -= gap)                arr[j + gap] = arr[j];            arr[j + gap] = temp;        }}</code></pre><p>时间复杂度： O(n^(1.3—2))<br>空间复杂度： O(1)<br>稳定性： 不稳定  </p>]]></content>
     
     <summary type="html">
     
@@ -393,68 +464,6 @@
     
     
       <category term="Data Struct" scheme="http://peisenli.github.io/tags/Data-Struct/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode-LRU缓存机制</title>
-    <link href="http://peisenli.github.io/2019/08/27/LeetCode-LRU%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/"/>
-    <id>http://peisenli.github.io/2019/08/27/LeetCode-LRU缓存机制/</id>
-    <published>2019-08-27T12:32:19.000Z</published>
-    <updated>2019-08-27T12:34:12.667Z</updated>
-    
-    <content type="html"><![CDATA[<p>运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。<br>获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。<br>写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。<br>进阶:<br>你是否可以在 O(1) 时间复杂度内完成这两种操作？<br>示例:<br>LRUCache cache = new LRUCache( 2 /<em> 缓存容量 </em>/ );<br>cache.put(1, 1);<br>cache.put(2, 2);<br>cache.get(1);       // 返回  1<br>cache.put(3, 3);    // 该操作会使得密钥 2 作废<br>cache.get(2);       // 返回 -1 (未找到)<br>cache.put(4, 4);    // 该操作会使得密钥 1 作废<br>cache.get(1);       // 返回 -1 (未找到)<br>cache.get(3);       // 返回  3<br>cache.get(4);       // 返回  4   </p><a id="more"></a><p>###LRU简介###<br>LRU是Least Recently Used的缩写，即最近最少使用，是一种常用的页面置换算法，选择最近最久未使用的页面予以淘汰。该算法赋予每个页面一个访问字段，用来记录一个页面自上次被访问以来所经历的时间 t，当须淘汰一个页面时，选择现有页面中其 t 值最大的，即最近最少使用的页面予以淘汰。<br><strong>寄存器</strong><br>为了记录某进程在内存中各页的使用情况，须为每个在内存中的页面配置一个移位寄存器，可表示为<br>R = Rn-1 Rn-2 Rn-3 … R2 R1 R0<br>当进程访问某物理块时，要将相应寄存器的 R n -1 位置成 1。此时，定时信号将每隔一定时间(例如 100 ms)将寄存器右移一位。 如果我们把 n 位寄存器的数看做是一个整数， 那么，具有最小数值的寄存器所对应的页面，就是最近最久未使用的页面。图2示出了某进程在内存中具有 8 个页面，为每个内存页面配置一个 8 位寄存器时的 LRU 访问情况。这里，把 8 个内存页面的序号分别定为 1～8。由图可以看出，第 3 个内存页面的 R 值最小，当发生缺页时，首先将它置换出去。<br><strong>栈</strong><br>可利用一个特殊的栈来保存当前使用的各个页面的页面号。每当进程访问某页面时，便将该页面的页面号从栈中移出，将它压入栈顶。因此，栈顶始终是最新被访问页面的编号，而栈底则是最近最久未使用页面的页面号。假定现有一进程所访问的页面的页面号序列为：<br>4，7，0，7，1，0，1，2，1，2，6<br>随着进程的访问， 栈中页面号的变化情况如图 3 所示。 在访问页面 6 时发生了缺页，此时页面 4 是最近最久未被访问的页，应将它置换出去。  </p><pre><code>from collections import OrderedDictclass LRUCache(OrderedDict):    def __init__(self, capacity: int):        self.capacity = capacity    def get(self, key: int) -&gt; int:        if key not in self:            return -1        self.move_to_end(key)        return self[key]    def put(self, key: int, value: int) -&gt; None:        if key in self:            self.move_to_end(key)        self[key] = value        if len(self) &gt; self.capacity:            self.popitem(last = False)</code></pre><p><code>    </code></p><pre><code># Your LRUCache object will be instantiated and called as such:  # obj = LRUCache(capacity)   # param_1 = obj.get(key)  # obj.put(key,value)  </code></pre><p></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。&lt;br&gt;获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。&lt;br&gt;写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。&lt;br&gt;进阶:&lt;br&gt;你是否可以在 O(1) 时间复杂度内完成这两种操作？&lt;br&gt;示例:&lt;br&gt;LRUCache cache = new LRUCache( 2 /&lt;em&gt; 缓存容量 &lt;/em&gt;/ );&lt;br&gt;cache.put(1, 1);&lt;br&gt;cache.put(2, 2);&lt;br&gt;cache.get(1);       // 返回  1&lt;br&gt;cache.put(3, 3);    // 该操作会使得密钥 2 作废&lt;br&gt;cache.get(2);       // 返回 -1 (未找到)&lt;br&gt;cache.put(4, 4);    // 该操作会使得密钥 1 作废&lt;br&gt;cache.get(1);       // 返回 -1 (未找到)&lt;br&gt;cache.get(3);       // 返回  3&lt;br&gt;cache.get(4);       // 返回  4   &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode236-二叉树的最近公共祖先</title>
-    <link href="http://peisenli.github.io/2019/08/22/LeetCode236-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/"/>
-    <id>http://peisenli.github.io/2019/08/22/LeetCode236-二叉树的最近公共祖先/</id>
-    <published>2019-08-22T12:23:12.000Z</published>
-    <updated>2019-08-22T12:31:07.009Z</updated>
-    
-    <content type="html"><![CDATA[<p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。</p><p>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”</p><p>例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7,4]<br><img src="https://i.loli.net/2019/08/22/6OtxHWUQA4CvMnX.png" alt="1566476957(1).jpg"><br>示例 1:<br>输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1<br>输出: 3<br>解释: 节点 5 和节点 1 的最近公共祖先是节点 3。<br>示例 2:<br>输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4<br>输出: 5<br>解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。<br>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉树中。<br><a id="more"></a><br>解决思路：<br>首先在二叉树中搜索给定的节点 p 和 q，然后找到它们的最近共同祖先。我们可以使用普通的树遍历来搜索这两个节点。一旦我们达到所需的节点 p 和 q，我们就可以回溯并找到最近的共同祖先。   </p><ul><li>先分析自己，自己是p,q,None中的一者，自然返回自己。  </li><li>然后分析左右子树的返回值，如果其中一个是None，则返回另一个，作为传递，无论是传递最终的答案，还是传递p和q。  </li><li>如果左右子树返回p和q，当然返回root。 Python中的None即C/C++/Java 中的Null/null  </li></ul><hr><p><code></code></p><pre><code># Definition for a binary tree node.  # class TreeNode:  #     def __init__(self, x):  #         self.val = x  #         self.left = None  #         self.right = None  class Solution:    def lowestCommonAncestor(self, root: &apos;TreeNode&apos;, p: &apos;TreeNode&apos;, q: &apos;TreeNode&apos;) -&gt; &apos;TreeNode&apos;:        if root in (None ,p,q):            return root         L = self.lowestCommonAncestor(root.left,p,q)        R =self.lowestCommonAncestor(root.right,p,q)        return R if None==L else L if None==R else root</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。&lt;/p&gt;
-&lt;p&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;/p&gt;
-&lt;p&gt;例如，给定如下二叉树:  root = [3,5,1,6,2,0,8,null,null,7,4]&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/08/22/6OtxHWUQA4CvMnX.png&quot; alt=&quot;1566476957(1).jpg&quot;&gt;&lt;br&gt;示例 1:&lt;br&gt;输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1&lt;br&gt;输出: 3&lt;br&gt;解释: 节点 5 和节点 1 的最近公共祖先是节点 3。&lt;br&gt;示例 2:&lt;br&gt;输入: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4&lt;br&gt;输出: 5&lt;br&gt;解释: 节点 5 和节点 4 的最近公共祖先是节点 5。因为根据定义最近公共祖先节点可以为节点本身。&lt;br&gt;说明:&lt;br&gt;所有节点的值都是唯一的。&lt;br&gt;p、q 为不同节点且均存在于给定的二叉树中。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode235-二叉搜索树的最近公共祖先</title>
-    <link href="http://peisenli.github.io/2019/08/21/LeetCode235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/"/>
-    <id>http://peisenli.github.io/2019/08/21/LeetCode235-二叉搜索树的最近公共祖先/</id>
-    <published>2019-08-21T12:07:00.000Z</published>
-    <updated>2019-08-21T13:28:14.457Z</updated>
-    
-    <content type="html"><![CDATA[<p>给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。<br>百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”<br>例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]<br><img src="https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png" alt="binarysearchtree_improved.png"><br>示例 1:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8<br>输出: 6<br>解释: 节点 2 和节点 8 的最近公共祖先是 6。<br>示例 2:<br>输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4<br>输出: 2<br>解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。<br>说明:<br>所有节点的值都是唯一的。<br>p、q 为不同节点且均存在于给定的二叉搜索树中。<br><a id="more"></a><br>算法<br>从根节点开始遍历树<br>如果节点 p 和节点 q 都在右子树上，那么以右孩子为根节点继续 1 的操作<br>如果节点 p 和节点 q 都在左子树上，那么以左孩子为根节点继续 1 的操作<br>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 p 和节点 q 的 LCA 了  </p><pre><code># Definition for a binary tree node.# class TreeNode:#     def __init__(self, x):#         self.val = x#         self.left = None#         self.right = Noneclass Solution:    def lowestCommonAncestor(self, root: &apos;TreeNode&apos;, p: &apos;TreeNode&apos;, q: &apos;TreeNode&apos;) -&gt; &apos;TreeNode&apos;:        # Value of current node or parent node.        parent_val = root.val        # Value of p        p_val = p.val        # Value of q        q_val = q.val        # If both p and q are greater than parent        if p_val &gt; parent_val and q_val &gt; parent_val:                return self.lowestCommonAncestor(root.right, p, q)        # If both p and q are lesser than parent        elif p_val &lt; parent_val and q_val &lt; parent_val:                return self.lowestCommonAncestor(root.left, p, q)        # We have found the split point, i.e. the LCA node.        else:            return root  </code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。&lt;br&gt;百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”&lt;br&gt;例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/08/21/e4NzuaE9J1jXqn5.png&quot; alt=&quot;binarysearchtree_improved.png&quot;&gt;&lt;br&gt;示例 1:&lt;br&gt;输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8&lt;br&gt;输出: 6&lt;br&gt;解释: 节点 2 和节点 8 的最近公共祖先是 6。&lt;br&gt;示例 2:&lt;br&gt;输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4&lt;br&gt;输出: 2&lt;br&gt;解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。&lt;br&gt;说明:&lt;br&gt;所有节点的值都是唯一的。&lt;br&gt;p、q 为不同节点且均存在于给定的二叉搜索树中。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
     
   </entry>
   
