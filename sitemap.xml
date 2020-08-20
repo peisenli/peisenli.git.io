@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://peisenli.github.io/2019/07/25/BiTree/</loc>
+    
+    <lastmod>2020-08-20T10:46:24.008Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://peisenli.github.io/2019/09/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</loc>
     
     <lastmod>2019-09-18T11:34:27.563Z</lastmod>
@@ -285,13 +292,6 @@
     <loc>http://peisenli.github.io/2019/08/04/Mini-stack/</loc>
     
     <lastmod>2019-08-04T06:49:04.801Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://peisenli.github.io/2019/07/25/BiTree/</loc>
-    
-    <lastmod>2019-07-25T08:14:01.946Z</lastmod>
     
   </url>
   
