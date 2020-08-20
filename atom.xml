@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2019-09-18T11:34:27.563Z</updated>
+  <updated>2020-08-20T10:54:43.326Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Cpp核心编程一</title>
+    <link href="http://peisenli.github.io/2020/08/20/Cpp%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E4%B8%80/"/>
+    <id>http://peisenli.github.io/2020/08/20/Cpp核心编程一/</id>
+    <published>2020-08-20T10:54:19.000Z</published>
+    <updated>2020-08-20T10:54:43.326Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="C-核心编程"><a href="#C-核心编程" class="headerlink" title="C++核心编程"></a>C++核心编程</h3><h4 id="1、内存分区模型"><a href="#1、内存分区模型" class="headerlink" title="1、内存分区模型"></a>1、内存分区模型</h4><p>C++程序执行程序时，将内存大方向划分为4个区域  </p><ul><li><p>代码区：存放函数的二进制代码，由操作系统进行管理的<br>存放CPU执行的机器指令，代码区是共享的，其目的是对于频繁被执行的程序，只需要在内存中有一份代码即可。<br>内存区是只读的，防止程序意外地修改了他的指令。</p></li><li><p>全局区：存放全局变量、静态变量及常量<br>该区的数据在程序结束后由操作系统释放。</p></li><li><p>栈区：由编译器自动分配及释放，存放函数的参数值、局部变量等<br>Notice：不要返回局部变量的地址</p></li><li><p>堆区：有程序员分配和释放。若程序员不释放，程序结束由系统回收。<br>在C++中主要利用new在堆区开辟内存。<br>Eg:  </p><pre><code>int *p = new int(10);   //小括号创建一个变量  int *arr = new int[10];   //中括号表示申请多个变量  </code></pre><p>手动释放利用操作符delete。<br>Eg:    </p><pre><code>delete p;   delete[] arr;  //释放数组</code></pre></li></ul><a id="more"></a><h4 id="2、引用"><a href="#2、引用" class="headerlink" title="2、引用"></a>2、引用</h4><ul><li><p>引用的基本语法<br>作用：给变量取别名<br>语法：数据类型 &amp;别名 = 原名<br>Eg：  </p><pre><code>int main(){    int a = 10 ;    int &amp;b = a ;    b = 20;    cout &lt;&lt; a &lt;&lt; endl; //a的输出为20    return 0;}</code></pre></li><li><p>引用的注意事项<br>引用必须初始化，告诉系统是谁的别名，且一旦初始化就不可再进行更改。  </p></li><li><p>引用做函数参数<br>引用做函数参数的时候相当于对输入实参给予一个别名。</p><pre><code>void swap(int &amp;a,int &amp;b)//形参也可以改编实参，相当于赋值的时候定义别名{    int temp = a;    a = b;    b = a;}</code></pre></li><li><p>引用用作函数返回值<br>不要引用局部变量，引用函数可以作为左值。</p></li><li><p>引用的本质<br>引用的本质实质上是一个指针常量。  </p></li><li><p>常量引用   </p><p>const int &amp;ref = 10;   //ref变为可读，不可修改。</p><pre><code>//防止误操作，引用的变量可以通过别名进行修改。int a = 100;</code></pre></li></ul><pre><code>void showvalue(const int &amp;val){    val = 1000;  //如果没有Const,会对实参进行修改。}</code></pre><h4 id="3、函数的使用"><a href="#3、函数的使用" class="headerlink" title="3、函数的使用"></a>3、函数的使用</h4><ul><li><p>函数的默认参数<br>如果我们自己传入数据，就使用自己的数据，如果没有，即使用默认值。<br>语法：返回值类型 函数名（形式参数等于默认值）</p><pre><code>int Func(int a,int b=20,int c=10){    return a+b+c;}</code></pre><p>注意事项：<br>如果某个形参位置已经有了默认参数那么从这个位置之后从左到右必须全部都有。<br>函数声明或者定义时形式参数智能有一个默认参数。  </p></li><li><p>函数的占位参数<br>返回类型 函数名（数据类型 变量名，数据类型）；<br>占位参数依然可以有默认参数；</p><pre><code>void Test(int a=10; int = 20)  </code></pre><p>在函数调用时必须填补该位置；</p></li><li><p>函数的重载技术<br>作用：函数名可以相同，提高复用性。<br>函数重载满足条件：<br>（1） 同一个作用域下<br>（2） 函数名称相同<br>（3） 函数<strong>参数类型不同</strong>或者<strong>个数不同</strong>或者<strong>顺序不同</strong>，否则程序不知道执行哪一个函数。<br>注意：函数的返回值不可以作为函数重载条件。即不可出现相同名称的不同类型函数返回。</p><pre><code>//引用作为函数参数int func(int &amp;a);int func(const int &amp;a);int a=10;func(a);  //调用第一个函数func(20);  //调用第二个函数</code></pre><p>当函数碰到默认参数时，避免出现二义性的函数调用和定义。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;C-核心编程&quot;&gt;&lt;a href=&quot;#C-核心编程&quot; class=&quot;headerlink&quot; title=&quot;C++核心编程&quot;&gt;&lt;/a&gt;C++核心编程&lt;/h3&gt;&lt;h4 id=&quot;1、内存分区模型&quot;&gt;&lt;a href=&quot;#1、内存分区模型&quot; class=&quot;headerlink&quot; title=&quot;1、内存分区模型&quot;&gt;&lt;/a&gt;1、内存分区模型&lt;/h4&gt;&lt;p&gt;C++程序执行程序时，将内存大方向划分为4个区域  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;代码区：存放函数的二进制代码，由操作系统进行管理的&lt;br&gt;存放CPU执行的机器指令，代码区是共享的，其目的是对于频繁被执行的程序，只需要在内存中有一份代码即可。&lt;br&gt;内存区是只读的，防止程序意外地修改了他的指令。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;全局区：存放全局变量、静态变量及常量&lt;br&gt;该区的数据在程序结束后由操作系统释放。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;栈区：由编译器自动分配及释放，存放函数的参数值、局部变量等&lt;br&gt;Notice：不要返回局部变量的地址&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;堆区：有程序员分配和释放。若程序员不释放，程序结束由系统回收。&lt;br&gt;在C++中主要利用new在堆区开辟内存。&lt;br&gt;Eg:  &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int *p = new int(10);   //小括号创建一个变量  
+int *arr = new int[10];   //中括号表示申请多个变量  
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;手动释放利用操作符delete。&lt;br&gt;Eg:    &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;delete p;   
+delete[] arr;  //释放数组
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>数据结构-归并排序</title>
@@ -438,27 +471,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;strong&gt;最短路径问题&lt;/strong&gt;是图论研究中的一个经典算法问题， 旨在寻找图（由结点和路径组成的）中两结点之间的最短路径。主要特点是以起始点为中心向外层层扩展，直到扩展到终点为止。Dijkstra算法能得出最短路径的最优解，但由于它遍历计算的节点很多，所以效率低。&lt;br&gt;单源点最短路径是指：给定一个出发点(单源点)和一个有向网G=(V，E),求出源点到其它各顶点之间的最短路径。&lt;br&gt;迪杰斯特拉(Dijkstra)在做了大量观察后,首先提出了按路径长度递增序产生各顶点的最短路径算法,我们称之为&lt;strong&gt;迪杰斯特拉算法&lt;/strong&gt;。&lt;br&gt;&lt;strong&gt;算法的基本思想是:&lt;/strong&gt;把图中顶点集合分成两组，第一组为集合S，存放已求出其最短路径的顶点，第二组为尚未确定最短路径的顶点集合是V-S（用U表示），其中V为网中所有顶点集合。按最短路径长度递增的顺序逐个把U中的顶点加到S中，直到S中包含全部顶点，而U为空。在加入的过程中，总保持从源点v到S中各顶点的最短路径长度不大于从源点v到U中任何顶点的最短路径长度。此外，每个顶点对应一个距离，S中的顶点的距离就是从v到此顶点的最短路径长度，U中的顶点的距离从v到此顶点只包括S中的顶点为中间顶点的当前最短路径长度。&lt;br&gt;（1）初始时，S只包含源点，S={v}，v的距离为0。U包含除v外的其他顶点，U中顶点的距离为顶点的权或∞ 。&lt;br&gt;（2）从U中选取一个距离最小的顶点k，把k加入到S中&lt;br&gt;（3）以k 作为新考虑的中间点，修改U中各顶点的距离。&lt;br&gt;（4）重复步骤（2）、（3）直到所有顶点都包含在S中。&lt;br&gt;时间复杂度：O（V^3）&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Data Struct" scheme="http://peisenli.github.io/tags/Data-Struct/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>图的生成树问题</title>
-    <link href="http://peisenli.github.io/2019/08/28/%E5%9B%BE%E7%9A%84%E7%94%9F%E6%88%90%E6%A0%91%E9%97%AE%E9%A2%98/"/>
-    <id>http://peisenli.github.io/2019/08/28/图的生成树问题/</id>
-    <published>2019-08-28T02:48:15.000Z</published>
-    <updated>2019-08-28T02:56:18.434Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一、无向图的连通分量和生成树"><a href="#一、无向图的连通分量和生成树" class="headerlink" title="一、无向图的连通分量和生成树"></a>一、无向图的连通分量和生成树</h2><p>若图是连通的或强连通的，则从图中某一个顶点出发可以访问到图中所有顶点；<br>若图是非连通的或非强连通图，则需从图中多个顶点出发搜索访问。而每一次从一个新的起始点出发进行搜索过程中得到的顶点访问序列恰为每个连通分量中的顶点集。  </p><h3 id="1、生成树"><a href="#1、生成树" class="headerlink" title="1、生成树"></a>1、生成树</h3><p>深度优先搜索遍历算法及广度优先搜索遍历算法中遍历图过程中历经边的集合和顶点集合一起构成连通图的极小连通子图。它是连通图的一颗生成树。<br>生成树：是一个极小连通子图，它含有图中全部n个顶点，但只有n-1条边。<br>由深度优先搜索遍历得到的生成树，称为深度优先生成树，由广度优先搜索遍历得到的生成树，称为广度优先生成树。图中无向图G7的两种生成树见 图(a)、(b)。<br><img src="https://i.loli.net/2019/08/28/Q6cGY2loXtgzDxe.png" alt="生成shu.png"><br><a id="more"></a></p><h3 id="2．生成森林"><a href="#2．生成森林" class="headerlink" title="2．生成森林"></a>2．生成森林</h3><p>若一个图是非连通图或非强连通图，但有若干个连通分量或若干个强连通分量，则通过深度优先搜索遍历或广度优先搜索遍历，不可以得到生成树，但可以得到生成森林，且若非连通图有 n 个顶点，m 个连通分量或强连通分量，则可以遍历得到m棵生成树，合起来为生成森林，森林中包含n-m条树边。<br>生成森林可以利用非连通图的深度优先搜索遍历或非连通图的广度优先搜索遍历算法得到。   </p><h3 id="3．最小生成树"><a href="#3．最小生成树" class="headerlink" title="3．最小生成树"></a>3．最小生成树</h3><p>在一般情况下，图中的每条边若给定了权，这时，我们所关心的不是生成树，而是生成树中边上权值之和。若生成树中每条边上权值之和达到最小，称为最小生成树。  </p><h2 id="二、求最小生成树"><a href="#二、求最小生成树" class="headerlink" title="二、求最小生成树"></a>二、求最小生成树</h2><p><strong>首先明确：</strong>  </p><ul><li>使用不同的遍历图的方法，可以得到不同的生成树；从不同的顶点出发，也可能得到不同的生成树。  </li><li>按照生成树的定义，n 个顶点的连通网络的生成树有 n 个顶点、n-1 条边。<br><strong>目标：</strong><br>在网络的多个生成树中，寻找一个各边权值之和最小的生成树。<br><strong>构造最小生成树的准则</strong>  </li><li>必须只使用该网络中的边来构造最小生成树；  </li><li>必须使用且仅使用n-1条边来联结网络中的n个顶点；  </li><li><p>不能使用产生回路的边。  </p><h3 id="1-克鲁斯卡尔算法基本思想"><a href="#1-克鲁斯卡尔算法基本思想" class="headerlink" title="1. 克鲁斯卡尔算法基本思想"></a>1. 克鲁斯卡尔算法基本思想</h3><p>克鲁斯卡尔算法的基本思想是：将图中所有边按权值递增顺序排列，依次选定取权值较小的边，但要求后面选取的边不能与前面选取的边构成回路，若构成回路，则放弃该条边，再去选后面权值较大的边，n个顶点的图中，选够n-1条边即可。  </p><p>  #定义<br>  typedef struct  Edge                //定义边集数组元素，v1,v2存顶点，weight存权重。<br>  {</p><pre><code>int v1;int v2;int weight;</code></pre><p>  }Edge;</p><p>  typedef struct ALGraph        //定义图的结构，peak存顶点的数量，edge存边的数量<br>  {                                            //指针p作为边集数组，指针m为作为顶点数组</p><pre><code>int peak;int edge;Edge *p;int *m;</code></pre><p>  }ALGraph;<br>  #创建图<br>  void CreatALGraph(ALGraph *G)<br>  {</p><pre><code>int i,j;printf(&quot;输入图的顶点数量和边的数量：&quot;);scanf(&quot;%d %d&quot;,&amp;G-&gt;peak,&amp;G-&gt;edge);G-&gt;p=(Edge *)malloc(sizeof(Edge)*(G-&gt;edge+1));G-&gt;m=(int *)malloc(sizeof(int)*G-&gt;peak);for(i=0;i&lt;G-&gt;peak;i++){      printf(&quot;请输入输入顶点：&quot;);      scanf(&quot;%d&quot;,&amp;G-&gt;m[i]);}for(i=0;i&lt;G-&gt;edge;i++){    printf(&quot;请输入(vi-vj)和权重：&quot;);    scanf(&quot;%d %d %d&quot;,&amp;G-&gt;p[i].v1,&amp;G-&gt;p[i].v2,&amp;G-&gt;p[i].weight);}for(i=0 ;i&lt;G-&gt;edge;i++)                //冒泡排序法，权重从小到大存在边集数组中{    for(j=G-&gt;edge-1;j&gt;i;j--)    {        if(G-&gt;p[i].weight&gt;G-&gt;p[j].weight)        {            G-&gt;p[G-&gt;edge]=G-&gt;p[i];            G-&gt;p[i]=G-&gt;p[j];            G-&gt;p[j]=G-&gt;p[G-&gt;edge];        }    }}</code></pre><p>  }<br>  #克鲁斯卡尔算法<br>  int Find(int *parent,int g)                //通过parent[]找到可连接的边<br>  {</p><pre><code>while(parent[g]!=0){    g=parent[g];}return g;</code></pre><p>  }<br>  int Finish(ALGraph <em>G,int </em>parent)        //判断生成树是否完成，完成的标志是生成树的边等于顶点的数量减1<br>  {</p><pre><code>int i,n=0;for(i=0;i&lt;G-&gt;peak;i++){    if(parent[i])    {        n++;    }}if(n==G-&gt;peak-1){    return 1;}return 0;</code></pre><p>  }<br>  int FindPeak(ALGraph *G,int g)        //找到顶点的下标<br>  {</p><pre><code>int i;for(i=0;i&lt;G-&gt;peak;i++){    if(G-&gt;m[i]==g)        return i;}return -1;</code></pre><p>  }<br>  void MinTree_Kruskal(ALGraph *G)<br>  {</p><pre><code>int i,a,b;int parent[G-&gt;peak];for(i=0;i&lt;G-&gt;peak;i++)        //初始化parent[]{    parent[i]=0;}for(i=0;i&lt;G-&gt;edge;i++){    a=Find(parent,FindPeak(G,G-&gt;p[i].v1));    b=Find(parent,FindPeak(G,G-&gt;p[i].v2));    if(a!=b)                //如果a==b则表是a和b在同一颗生成树上，如果a和b连接则为生成环，不符合生成树    {        parent[a]=b;        printf(&quot;%d-&gt;%d   %d\n&quot;,G-&gt;p[i].v1,G-&gt;p[i].v2,G-&gt;p[i].weight);    }    if(Finish(G,parent))        //完成后返回    {        return;    }}</code></pre><p>  }</p></li></ul><h3 id="2-普里姆-prim-算法思想"><a href="#2-普里姆-prim-算法思想" class="headerlink" title="2. 普里姆(prim)算法思想"></a>2. 普里姆(prim)算法思想</h3><p>普里姆方法的思想是：在图中任取一个顶点K作为开始点，令U={k}，W=V-U，其中V为图中所有顶点集，然后找一个顶点在U中，另一个顶点在W中的边中最短的一条，找到后，将该边作为最小生成树的树边保存起来，并将该边顶点全部加入U集合中，并从W中删去这些顶点，然后重新调整U中顶点到W中顶点的距离, 使之保持最小，再重复此过程，直到W为空集止。  </p><pre><code>#define INFINITE 9999#define MAXN 100void prim(int cost[][MAXN],int n,int v){      int lowcost[MAXN],min,closest[MAXN],i,j,k;    for(i=1;i&lt;=n;i++)    {          lowcost[i]=cost[v][i];        closest[i]=v;    }       for(i=1;i&lt;n;i++)    {          min=INFINITE;        for(j=1;j&lt;=n;j++)            if(lowcost[j]!=0&amp;&amp;lowcost[j]&lt;min))            {                  min=lowcost[j];                k=j;               }             printf(“%d%d%d”,closest[k],k,min);             lowcost[k]=0;             for(j=1;j&lt;=n;j++)                if((cost[k][j]!=0)&amp;&amp;(cost[k][j]&lt;lowcost[j]))                   {                      lowcost[j]=cost[k][j];                       closest[j]=k;                  }     }}#时间复杂度为O(n2)</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;一、无向图的连通分量和生成树&quot;&gt;&lt;a href=&quot;#一、无向图的连通分量和生成树&quot; class=&quot;headerlink&quot; title=&quot;一、无向图的连通分量和生成树&quot;&gt;&lt;/a&gt;一、无向图的连通分量和生成树&lt;/h2&gt;&lt;p&gt;若图是连通的或强连通的，则从图中某一个顶点出发可以访问到图中所有顶点；&lt;br&gt;若图是非连通的或非强连通图，则需从图中多个顶点出发搜索访问。而每一次从一个新的起始点出发进行搜索过程中得到的顶点访问序列恰为每个连通分量中的顶点集。  &lt;/p&gt;
-&lt;h3 id=&quot;1、生成树&quot;&gt;&lt;a href=&quot;#1、生成树&quot; class=&quot;headerlink&quot; title=&quot;1、生成树&quot;&gt;&lt;/a&gt;1、生成树&lt;/h3&gt;&lt;p&gt;深度优先搜索遍历算法及广度优先搜索遍历算法中遍历图过程中历经边的集合和顶点集合一起构成连通图的极小连通子图。它是连通图的一颗生成树。&lt;br&gt;生成树：是一个极小连通子图，它含有图中全部n个顶点，但只有n-1条边。&lt;br&gt;由深度优先搜索遍历得到的生成树，称为深度优先生成树，由广度优先搜索遍历得到的生成树，称为广度优先生成树。图中无向图G7的两种生成树见 图(a)、(b)。&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2019/08/28/Q6cGY2loXtgzDxe.png&quot; alt=&quot;生成shu.png&quot;&gt;&lt;br&gt;
     
     </summary>
     
