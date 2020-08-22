@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>数据结构-插入排序 | Paysonly</title><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><link rel="icon" href="/favicon.ico"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Kong</div><div class="author-info__description text-center">非宁静无以致远，非淡泊无以明志</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">48</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/05/12/5cd78b8a60164.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Paysonly</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">数据结构-插入排序</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-18 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><p><strong>插入排序</strong>（Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用inplace排序（即只需用到 O(1)的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。<br><strong>直接插入排序：</strong>    </p>
+<ol>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li><p>重复步骤2~5  </p>
+<pre><code>void Insertionsort(int arr[], int len){
+        int i,j,key;
+        for (i=1;i&lt;len;i++){
+                key = arr[i];
+                j=i-1;
+                while((j&gt;=0) &amp;&amp; (arr[j]&gt;key)) {
+                        arr[j+1] = arr[j];
+                        j--;
+                }
+                arr[j+1] = key;
+        }
+}
+</code></pre><p>时间复杂度：O(n^2)<br>空间复杂度：O(1)<br>稳定：是<br>适用：顺序存储和链式存储的线性表  </p>
+<a id="more"></a>
+</li>
+</ol>
+<hr>
+<p><strong>折半插入排序：</strong><br>折半插入排序（binary insertion sort）是对插入排序算法的一种改进，由于排序算法过程中，就是不断的依次将元素插入前面已排好序的序列中。由于前半部分为已排好序的数列，这样我们不用按顺序依次寻找插入点，可以采用折半查找的方法来加快寻找插入点的速度。<br>（1） 将一新的元素插入到有序数组中，寻找插入点时，将带插区域的首元素设置为a[low],末元素设置为a[high],比较时则将待插元素与参考元素a[m]（m=(low+high)/2）相比较。；<br>（2）如果待插元素比参考元素小，则选择a[low]到a[m-1]为新的插入区域（即high=m-1）,否则选择a[m+1]到a[high]为插入区域；<br>（3）如此直到low&lt;=high不成立，即将此位置(low)之后所有元素后移一位，并将新元素插入a[high+1]中。  </p>
+<pre><code>void BInsertSort(int a[],int size){
+    int i,j,low = 0,high = 0,mid;
+    int temp = 0;
+    for (i=1; i&lt;size; i++) {
+        low=0;
+        high=i-1;
+        temp=a[i];
+        //采用折半查找法判断插入位置，最终变量 low 表示插入位置
+        while (low&lt;=high) {
+            mid=(low+high)/2;
+            if (a[mid]&gt;temp) {
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        //有序表中插入位置后的元素统一后移
+        for (j=i; j&gt;low; j--) {
+            a[j]=a[j-1];
+        }
+        a[low]=temp;//插入元素
+    }
+
+}
+</code></pre><p>时间复杂度：O(n^2)  </p>
+<hr>
+<p><strong>希尔排序：</strong><br>希尔排序(Shell’s Sort)是插入排序的一种又称“缩小增量排序”（Diminishing Increment Sort），是直接插入排序算法的一种更高效的改进版本。希尔排序是非稳定排序算法。<br>希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，当增量减至1时，整个文件恰被分成一组，算法便终止。<br>步长取值：d1=n/2 di+1=di/2<br><img src="https://i.loli.net/2019/09/18/QfVThLPImHFqrpE.png" alt="1024555_20161128110416068_1421707828.png">    </p>
+<pre><code>void shell_sort(int arr[], int len) {
+    int gap, i, j;
+    int temp;
+    for (gap = len &gt;&gt; 1; gap &gt; 0; gap &gt;&gt;= 1)
+        for (i = gap; i &lt; len; i++) {
+            temp = arr[i];
+            for (j = i - gap; j &gt;= 0 &amp;&amp; arr[j] &gt; temp; j -= gap)
+                arr[j + gap] = arr[j];
+            arr[j + gap] = temp;
+        }
+}
+</code></pre><p>时间复杂度： O(n^(1.3—2))<br>空间复杂度： O(1)<br>稳定性： 不稳定  </p>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Data-struct/">Data struct</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/09/18/数据结构-交换排序/"><i class="fa fa-chevron-left">  </i><span>数据结构-交换排序</span></a></div><div class="next-post pull-right"><a href="/2019/09/11/LeetCode121-买卖股票最佳的时期/"><span>LeetCode121-买卖股票最佳的时期</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2016 - 2020 By Kong</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

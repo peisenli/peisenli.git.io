@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>LeetCode124-二叉树中最大路径和 | Paysonly</title><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><link rel="icon" href="/favicon.ico"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Kong</div><div class="author-info__description text-center">非宁静无以致远，非淡泊无以明志</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">48</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">18</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/05/12/5cd78b8a60164.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Paysonly</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">LeetCode124-二叉树中最大路径和</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-08-18 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><p>给定一个非空二叉树，返回其最大路径和。</p>
+<p>本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。</p>
+<p>示例 1:</p>
+<p>输入: [1,2,3]</p>
+<pre><code>  1
+ / \
+2   3
+</code></pre><p>输出: 6</p>
+<p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum" target="_blank" rel="noopener">https://leetcode-cn.com/problems/binary-tree-maximum-path-sum</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。<br><a id="more"></a><br>思路：<br>对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:   </p>
+<ol>
+<li>其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径  </li>
+<li>左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径      </li>
+</ol>
+<p><code></code></p>
+<pre><code># Definition for a binary tree node.  
+# class TreeNode:  
+#     def __init__(self, x):  
+#         self.val = x  
+#         self.left = None  
+#         self.right = None    
+
+class Solution:
+    res = float(&apos;-inf&apos;)
+    def maxPathSum(self, root: TreeNode) -&gt; int:
+        self.getMax(root)
+        return self.res
+
+    def getMax(self,root):
+        if not root:
+            return 0
+        # 如果子树路径和为负则应当置0表示最大路径不包含子树
+        left = max(0, self.getMax(root.left))
+        right = max(0, self.getMax(root.right))
+        # 以当前节点为根节点,判断在该节点包含左右子树的路径和是否大于当前最大路径和
+        self.res = max(self.res, root.val + left + right)
+        # 当前节点作为父节点的一个子节点和父节点连接的话则需取【单端的最大值】返回
+        return max(left, right) + root.val
+</code></pre></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LeetCode/">LeetCode</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/08/19/LeetCode230-二叉搜索树中第k小的元素/"><i class="fa fa-chevron-left">  </i><span>LeetCode230-二叉搜索树中第k小的元素</span></a></div><div class="next-post pull-right"><a href="/2019/08/16/LeetCode104-二叉树的最大深度/"><span>LeetCode104-二叉树的最大深度</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2016 - 2020 By Kong</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
