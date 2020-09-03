@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2020-09-02T14:50:20.560Z</updated>
+  <updated>2020-09-03T03:45:18.756Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>动态规划-leetcode64最小路径和</title>
+    <link href="http://peisenli.github.io/2020/09/03/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-leetcode64%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/"/>
+    <id>http://peisenli.github.io/2020/09/03/动态规划-leetcode64最小路径和/</id>
+    <published>2020-09-03T01:17:23.000Z</published>
+    <updated>2020-09-03T03:45:18.756Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="动态规划：最小路径和"><a href="#动态规划：最小路径和" class="headerlink" title="动态规划：最小路径和"></a>动态规划：最小路径和</h3><p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p><p>说明：每次只能向下或者向右移动一步。</p><p><strong>示例:</strong></p><p>输入:<br>[<br>  [1,3,1],<br>  [1,5,1],<br>  [4,2,1]<br>]<br>输出: 7<br>解释: 因为路径 1→3→1→1→1 的总和最小。</p><p><strong>题解</strong></p><p>由于路径的方向只能是向下或向右，因此网格的第一行的每个元素只能从左上角元素开始向右移动到达，网格的第一列的每个元素只能从左上角元素开始向下移动到达，此时的路径是唯一的，因此每个元素对应的最小路径和即为对应的路径上的数字总和。</p><p>对于不在第一行和第一列的元素，可以从其上方相邻元素向下移动一步到达，或者从其左方相邻元素向右移动一步到达，元素对应的最小路径和等于其上方相邻元素与其左方相邻元素两者对应的最小路径和中的最小值加上当前元素的值。由于每个元素对应的最小路径和与其相邻元素对应的最小路径和有关，因此可以使用动态规划求解。</p><a id="more"></a><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minpathsum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> rows = grid.size(), columns = grid[<span class="number">0</span>].size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(rows, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(columns));</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rows; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; columns; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[<span class="number">0</span>][i] = dp[<span class="number">0</span>][i - <span class="number">1</span>] + grid[<span class="number">0</span>][i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rows; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; columns; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]) + grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[rows - <span class="number">1</span>][columns - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;动态规划：最小路径和&quot;&gt;&lt;a href=&quot;#动态规划：最小路径和&quot; class=&quot;headerlink&quot; title=&quot;动态规划：最小路径和&quot;&gt;&lt;/a&gt;动态规划：最小路径和&lt;/h3&gt;&lt;p&gt;给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。&lt;/p&gt;
+&lt;p&gt;说明：每次只能向下或者向右移动一步。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;输入:&lt;br&gt;[&lt;br&gt;  [1,3,1],&lt;br&gt;  [1,5,1],&lt;br&gt;  [4,2,1]&lt;br&gt;]&lt;br&gt;输出: 7&lt;br&gt;解释: 因为路径 1→3→1→1→1 的总和最小。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;题解&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由于路径的方向只能是向下或向右，因此网格的第一行的每个元素只能从左上角元素开始向右移动到达，网格的第一列的每个元素只能从左上角元素开始向下移动到达，此时的路径是唯一的，因此每个元素对应的最小路径和即为对应的路径上的数字总和。&lt;/p&gt;
+&lt;p&gt;对于不在第一行和第一列的元素，可以从其上方相邻元素向下移动一步到达，或者从其左方相邻元素向右移动一步到达，元素对应的最小路径和等于其上方相邻元素与其左方相邻元素两者对应的最小路径和中的最小值加上当前元素的值。由于每个元素对应的最小路径和与其相邻元素对应的最小路径和有关，因此可以使用动态规划求解。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
+    
+  </entry>
   
   <entry>
     <title>动态规划—Leetcode62</title>
@@ -465,24 +491,6 @@ delete[] arr;  //释放数组
     
       &lt;p&gt;给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。&lt;br&gt;请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。&lt;br&gt;你可以假设 nums1 和 nums2 不会同时为空。&lt;br&gt;示例 1:&lt;br&gt;nums1 = [1, 3]&lt;br&gt;nums2 = [2]&lt;br&gt;则中位数是 2.0&lt;br&gt;示例 2:&lt;br&gt;nums1 = [1, 2]&lt;br&gt;nums2 = [3, 4]&lt;br&gt;则中位数是 (2 + 3)/2 = 2.5  &lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;思路：&lt;/strong&gt;题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，&lt;br&gt;len为奇数，则中位数为第（len+1）/2 位，如果len为偶数，我们需要知道第 len/2和 len/2+1 个数。&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>图-拓扑排序</title>
-    <link href="http://peisenli.github.io/2019/08/28/%E5%9B%BE-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/"/>
-    <id>http://peisenli.github.io/2019/08/28/图-拓扑排序/</id>
-    <published>2019-08-28T08:59:21.000Z</published>
-    <updated>2019-08-28T09:15:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p><strong>1.定义</strong><br>给出有向图G=(V,E)，对于V中的顶点的线性序列(vi1,vi2,…,vin)，如果满足如下条件：若在G中从顶点 vi 到vj有一条路经，则在序列中顶点vi必在顶点 vj之前；则称该序列为 G的一个拓扑序列(Topological order)。构造有向图的一个拓扑序列的过程称为拓扑排序(Topological sort)。<br><strong>2.说明</strong><br>(1)在AOV网中，若不存在回路，则所有活动可排成一个线性序列，使得每个活动的所有前驱活动都排在该活动的前面，那么该序列为拓扑序列。<br>(2)拓扑序列不是唯一的。<br>(3)AOV网不一定都存在拓扑序列。<br>在AOV网中，&lt;i,j&gt;有向边表示i活动应先于j活动开始，即i活动必须完成后，j活动才可以开始，并称i为j的直接前驱，j为i的直接后继。这种前驱与后继的关系有传递性，此外，任何活动i不能以它自己作为自己的前驱或后继，这叫做反自反性。从前驱和后继的传递性和反自反性来看，AOV网中不能出现有向回路(或称有向环)。在AOV网中如果出现了有向环，则意味着某项活动应以自己作为先决条件，工程将无法进行。对程序流程而言，将出现死循环。<br>因此，对给定的AOV网，应先判断它是否存在有向环。判断AOV网是否有有向环的方法是对该AOV网进行拓扑排序，将AOV网中顶点排列成一个线性有序序列，若该线性序列中包含AOV网全部顶点，则AOV网无环，否则，AOV网中存在有向环，该AOV网所代表的工程是不可行的。<br><a id="more"></a><br><strong>3、拓扑序列的实际意义是:</strong><br>如果按照拓扑序列中的顶点次序进行每一项活动，就能够保证在开始每一项活动时，他的所有前驱活动均已完成，从而使整个工程顺序执行。  </p><h3 id="拓扑排序方法"><a href="#拓扑排序方法" class="headerlink" title="拓扑排序方法"></a>拓扑排序方法</h3><p>(1)在AOV网中选一个入度为0的顶点(没有前驱)且输出之；<br>(2)从AOV网中删除此顶点及该顶点发出来的所有有向边；<br>(3)重复(1)、(2)两步，直到AOV网中所有顶点都被输出或网中不存在入度为0的顶点。<br>从拓扑排序步骤可知，若在第3步中，网中所有顶点都被输出，则表明网中无有向环，拓扑排序成功。若仅输出部分顶点，网中已不存在入度为0的顶点，则表明网中有有向环，拓扑排序不成功。因此，一个AOV网的拓扑序列是不唯一的。  </p><p>###算法步骤###<br>在执行拓扑排序的过程中，当某个顶点的入度为零时，就将此顶点输出，同时将该顶点的所有后续顶点的入度减1，为了避免重复检测入度为零的顶点，设立一个栈，以存放入度为零的顶点。执行拓扑排序的算法步骤如下：<br>（1）输入有向边的序列，建立相应的邻接表。<br>（2）查找邻接表中入度为零的顶点，让入度为零的顶点入栈。<br>（3）当栈不空时<br>（a）使用退栈操作，取得栈顶的顶点j并输出。<br>（b）在邻接表的第j个链表中，查找顶点j的所有后续顶点k，将顶点k的入度减1。若顶点k的入度变为零，则顶点k进栈，转步骤（3）<br>（4）当栈空时，若有向图的所有顶点都输出，则拓扑排序过程正常结束，否则，有向图存在回路。<br>如果给定的有向图有n个顶点和m条边，那么建立邻接表的时间为O(m)，在拓扑排序的过程中，查找入度为零的顶点的时间为O(n)，顶点进栈及退栈输出共执行n次，入度减1的操作执行m次，所以，总的执行时间为O(m+n)。  </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;拓扑排序&quot;&gt;&lt;a href=&quot;#拓扑排序&quot; class=&quot;headerlink&quot; title=&quot;拓扑排序&quot;&gt;&lt;/a&gt;拓扑排序&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1.定义&lt;/strong&gt;&lt;br&gt;给出有向图G=(V,E)，对于V中的顶点的线性序列(vi1,vi2,…,vin)，如果满足如下条件：若在G中从顶点 vi 到vj有一条路经，则在序列中顶点vi必在顶点 vj之前；则称该序列为 G的一个拓扑序列(Topological order)。构造有向图的一个拓扑序列的过程称为拓扑排序(Topological sort)。&lt;br&gt;&lt;strong&gt;2.说明&lt;/strong&gt;&lt;br&gt;(1)在AOV网中，若不存在回路，则所有活动可排成一个线性序列，使得每个活动的所有前驱活动都排在该活动的前面，那么该序列为拓扑序列。&lt;br&gt;(2)拓扑序列不是唯一的。&lt;br&gt;(3)AOV网不一定都存在拓扑序列。&lt;br&gt;在AOV网中，&amp;lt;i,j&amp;gt;有向边表示i活动应先于j活动开始，即i活动必须完成后，j活动才可以开始，并称i为j的直接前驱，j为i的直接后继。这种前驱与后继的关系有传递性，此外，任何活动i不能以它自己作为自己的前驱或后继，这叫做反自反性。从前驱和后继的传递性和反自反性来看，AOV网中不能出现有向回路(或称有向环)。在AOV网中如果出现了有向环，则意味着某项活动应以自己作为先决条件，工程将无法进行。对程序流程而言，将出现死循环。&lt;br&gt;因此，对给定的AOV网，应先判断它是否存在有向环。判断AOV网是否有有向环的方法是对该AOV网进行拓扑排序，将AOV网中顶点排列成一个线性有序序列，若该线性序列中包含AOV网全部顶点，则AOV网无环，否则，AOV网中存在有向环，该AOV网所代表的工程是不可行的。&lt;br&gt;
     
     </summary>
     
