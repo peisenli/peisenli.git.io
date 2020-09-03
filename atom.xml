@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://peisenli.github.io/"/>
-  <updated>2020-09-03T03:45:18.756Z</updated>
+  <updated>2020-09-03T13:36:36.510Z</updated>
   <id>http://peisenli.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>动态规划—-Leetcode74编辑距离</title>
+    <link href="http://peisenli.github.io/2020/09/03/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E2%80%94-Leetcode74%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/"/>
+    <id>http://peisenli.github.io/2020/09/03/动态规划—-Leetcode74编辑距离/</id>
+    <published>2020-09-03T12:10:40.000Z</published>
+    <updated>2020-09-03T13:36:36.510Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。</p><p>你可以对一个单词进行如下三种操作：</p><ol><li>插入一个字符</li><li>删除一个字符</li><li>替换一个字符</li></ol><p><img src="https://paysonly.oss-cn-chengdu.aliyuncs.com/typora/image-20200903201410570.png" alt="image-20200903201410570"></p><a id="more"></a><p><img src="https://paysonly.oss-cn-chengdu.aliyuncs.com/typora/image-20200903201703870.png" alt="image-20200903201703870"></p><p><img src="https://paysonly.oss-cn-chengdu.aliyuncs.com/typora/image-20200903201920834.png" alt="image-20200903201920834"></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> word1, <span class="built_in">string</span> word2)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(word1.size() + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(word2.size() + <span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dp[<span class="number">0</span>].size(); j++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; dp.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; dp[i].size(); j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = min(dp[i - <span class="number">1</span>][j - <span class="number">1</span>], min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>])) + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (word1[i - <span class="number">1</span>] == word2[j - <span class="number">1</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j] = min(dp[i][j], dp[i - <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp.back().back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; title=&quot;题目&quot;&gt;&lt;/a&gt;题目&lt;/h3&gt;&lt;p&gt;给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。&lt;/p&gt;
+&lt;p&gt;你可以对一个单词进行如下三种操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;插入一个字符&lt;/li&gt;
+&lt;li&gt;删除一个字符&lt;/li&gt;
+&lt;li&gt;替换一个字符&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;https://paysonly.oss-cn-chengdu.aliyuncs.com/typora/image-20200903201410570.png&quot; alt=&quot;image-20200903201410570&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leetcode" scheme="http://peisenli.github.io/tags/Leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>动态规划-leetcode64最小路径和</title>
@@ -475,25 +502,6 @@ delete[] arr;  //释放数组
     
     
       <category term="LeetCode" scheme="http://peisenli.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LeetCode4.寻找两个有序数组的中位数</title>
-    <link href="http://peisenli.github.io/2019/08/29/LeetCode4-%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/"/>
-    <id>http://peisenli.github.io/2019/08/29/LeetCode4-寻找两个有序数组的中位数/</id>
-    <published>2019-08-29T09:30:32.000Z</published>
-    <updated>2019-08-29T09:38:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。<br>请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。<br>你可以假设 nums1 和 nums2 不会同时为空。<br>示例 1:<br>nums1 = [1, 3]<br>nums2 = [2]<br>则中位数是 2.0<br>示例 2:<br>nums1 = [1, 2]<br>nums2 = [3, 4]<br>则中位数是 (2 + 3)/2 = 2.5  </p><p><strong>思路：</strong>题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，<br>len为奇数，则中位数为第（len+1）/2 位，如果len为偶数，我们需要知道第 len/2和 len/2+1 个数。<br><a id="more"></a></p><pre><code>class Solution(object):    def findMedianSortedArrays(self, A, B):        &quot;&quot;&quot;        :type nums1: List[int]        :type nums2: List[int]        :rtype: float        &quot;&quot;&quot;        m, n = len(A), len(B)        if m &gt; n:            A, B, m, n = B, A, n, m        if n == 0:            raise ValueError        imin, imax, half_len = 0, m, (m + n + 1) / 2        while imin &lt;= imax:            i = (imin + imax) / 2            j = half_len - i            if i &lt; m and B[j-1] &gt; A[i]:                # i is too small, must increase it                imin = i + 1            elif i &gt; 0 and A[i-1] &gt; B[j]:                # i is too big, must decrease it                imax = i - 1            else:                # i is perfect                if i == 0: max_of_left = B[j-1]                elif j == 0: max_of_left = A[i-1]                else: max_of_left = max(A[i-1], B[j-1])                if (m + n) % 2 == 1:                    return max_of_left                if i == m: min_of_right = B[j]                elif j == n: min_of_right = A[i]                else: min_of_right = min(A[i], B[j])                return (max_of_left + min_of_right) / 2.0</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。&lt;br&gt;请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。&lt;br&gt;你可以假设 nums1 和 nums2 不会同时为空。&lt;br&gt;示例 1:&lt;br&gt;nums1 = [1, 3]&lt;br&gt;nums2 = [2]&lt;br&gt;则中位数是 2.0&lt;br&gt;示例 2:&lt;br&gt;nums1 = [1, 2]&lt;br&gt;nums2 = [3, 4]&lt;br&gt;则中位数是 (2 + 3)/2 = 2.5  &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;思路：&lt;/strong&gt;题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，&lt;br&gt;len为奇数，则中位数为第（len+1）/2 位，如果len为偶数，我们需要知道第 len/2和 len/2+1 个数。&lt;br&gt;
-    
-    </summary>
-    
     
   </entry>
   
